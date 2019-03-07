@@ -1,0 +1,9 @@
+8
+Coke,1.5,3
+Dr. Pepper,1.5,8
+Sprite,1.5,1
+PowerAde,1.5,8
+HelloYello,1.5,5
+Diet Coke,1.5,2
+Cherry Coke,1.5,4
+Dasani Water,1.5,9
