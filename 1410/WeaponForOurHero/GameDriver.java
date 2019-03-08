@@ -26,13 +26,18 @@ public class GameDriver
 		Scanner s = new Scanner(System.in);
 		Field f1 = new Field(20,20);
 		//Create a 20 x 20 field
-		
+
 		//We are going to create a test fight scenario involving a hero and a bad guy
-		//For now, we'll ignore moving around the field. 
+		//For now, we'll ignore moving around the field.
 		//Can you see how this is related to your 1400 semester long project?
-		
-		//15. 
+
+		//15.
 		//Add the ability to take damage and to heal to our hero and bad guy
+
+
+
+
+		// I guess this is more of a JRPG (heh get it ? no character creation options)
 		Hero loser = new Hero("Idiot",f1,200,10);
 		//Baddy g1 = new Baddy("goblin2", f1,25,1);
 		//Baddy g2 = new Baddy("goblin1",f1,25,1);
@@ -42,7 +47,7 @@ public class GameDriver
 		//Create a Hero with strength 10 and hit points 100
 
 		//Create a 3 Bad guys with strength 5 and hit points 200
-		
+
 		//Create a fight function that accepts a hero and a bad guy let them fight it out
 		while (true) {
 			//makes it clear what is being printed on the screen
@@ -51,14 +56,22 @@ public class GameDriver
 			System.out.println("");
 			System.out.println("");
 			travel(loser,f1,s);
+// This section can be used to add a delay after every action, to see what happened.
+			//try {
+			//	Thread.sleep(1000);
+			//}
+			//catch(InterruptedException e) {
+			//	Thread.currentThread().interrupt();
+			//}
 		}
 	}
 	public static int validnumber (int min,int max) {
 		//this method returns a verified number between min and max, for use with all those choices you have to make
+		// it also has error handling if you try to enter a word or something stupid
 		int num =0;
 		Scanner s = new Scanner(System.in);
 		boolean valid = false;
-		while (!valid) { 
+		while (!valid) {
 			try {
 				num = s.nextInt();
 				if (num >= min && num <= max) {
@@ -81,6 +94,7 @@ public class GameDriver
 		c.setY(c.getY()+y);
 		// random encounter, pokemon style, you have a chance to run into an enemy
 		// if you don't see an enemy, something else might happen...
+		// this will happen only on the empty squares of the map (IE ".")
 		if ((int) (Math.random()*2)+1 == 1) {
 			randomencounter(c);
 		}
@@ -90,7 +104,7 @@ public class GameDriver
 		else {
 			System.out.println("you come to a quiet field... seems like those are rare these days");
 		}
-		
+
 		// lets your character wrap on the map, going to the top, or the bottom.
 		if (c.getX() < 0) {
 			c.setX(f1.getWidth()-1);
@@ -151,11 +165,12 @@ public class GameDriver
 					System.out.println("The merchant thanks you for your business, and continues on his way");
 				}
 				else {
+					// You can only buy one item from a merchant, and if you mess it up trying to buy something you can't afford the merchant just leaves. oops
 					System.out.println("You don't have enough money");
 					System.out.println("Stop wasting my time, curses the merchant, as he continues down the road...");
 				}
 			}
-			
+
 	}
 	//creates a monster for you to fight against, which is both random, and near you in stats
 
@@ -179,7 +194,7 @@ public class GameDriver
 			case 5:
 				name = "Country music fan";
 				break;
-			case 6: 
+			case 6:
 				name = "Orc";
 				break;
 			case 7:
@@ -204,7 +219,7 @@ public class GameDriver
 		Baddy b = new Baddy(name, h1.getField(),badhp,badstrength);
 		return b;
 	}
-	// this is the random encounter ( and fight ) handler 
+	// this is the random encounter ( and fight ) handler
 	public static void randomencounter(Hero h1) {
 		boolean ran = false;
 		Scanner s = new Scanner(System.in);
@@ -230,23 +245,24 @@ public class GameDriver
 			System.out.println(r + ": Attack with your fists ( no weapon )");
 			r++;
 			System.out.println(r + ": Attempt to run away like a coward");
-			
-			
+
+
 			/* Static system *
 			System.out.println("1: Normal attack(fists?)");
 			System.out.println("2: Use Weapon");
 			System.out.println("3: Weapon Special attack");
 			System.out.println("4: Run away like a coward");
 			*/
-			
-			
+
+
 			//int x = s.nextInt();
 			int x = validnumber(1,r);
-			
+
 			// this was probably the hardest part... im not sure if I can explain it, other than "it's magic, but it relates the users choice with the dynamic list of weapons"
+			// uses the weapon that you select, or your fists if you so choose.
 			if (x == r) {
 				System.out.println("you run away");
-				// this is a bit hackish, but when you attempt to run away, it just kills the enemy...
+				// sets a flag so you don't get loot for running away from enemies
 				ran = true;
 				b.changeHp(b.getHp()*-1);
 			}
@@ -255,13 +271,13 @@ public class GameDriver
 				System.out.println("You attack for " + h1.getStrength());
 				b.changeHp(h1.getStrength()*-1);
 
-				
+
 			}
 			else if (x > r || r < 1) {
 				System.out.println("INVALID");
 			}
 			else {
-			
+
 				x--;
 				if (x % 2 == 0) {
 					int total= h1.getStrength() + h1.getInventory()[x/2].attack();
@@ -278,10 +294,11 @@ public class GameDriver
 					else {
 						System.out.println("You are out of mana, and so your special attack failed");
 					}
-					
-					
+
+
 				}
 							}
+							// here your enemy attacks.
 				System.out.println(b.getName() + " attacks for " + b.getStrength());
 				h1.changeHp(b.getStrength()*-1);
 				System.out.println("You have " + h1.getHp()+" Remaining");
@@ -289,11 +306,11 @@ public class GameDriver
 					System.out.println(b.getName() + " has "+ b.getHp()+" Remaining");
 				}
 				System.out.println("-----------------");
-				
-							
-							
-							
-			// this part of code didn't work so i commented it out to try something else, and I hate deleting commented code, because you never know if you'll want to go back to that...				
+
+
+
+
+			// this part of code didn't work so i commented it out to try something else, and I hate deleting commented code, because you never know if you'll want to go back to that...
 			/*else if (x==(r/2)) {
 				int total= h1.getStrength() + h1.getInventory()[x].attack();
 				System.out.println("You attack for " + total);
@@ -306,8 +323,9 @@ public class GameDriver
 			}*/
 		}
 		handleDeath(h1,b,ran);
-		
+
 	}
+	// checks if anyone died, and otherwise lets you escape combat if you run away (coward)
 	public static void handleDeath(Hero h1,Baddy b,boolean ran){
 		if (h1.getHp() <= 0) {
 			System.out.println("You Died" );
@@ -329,15 +347,16 @@ public class GameDriver
 		}
 	}
 	// this was the fight I made for the ICE, but I don't think Im using it anymore
+	// I'll leave it here, because I didn;t actually turn in the ICE, lol
 	public static void fight(Hero h1,Baddy b1)
 	{
 		System.out.println("You encounter an enemy " + b1.getName());
-		
-	
+
+
 		//Battle until the bad guys hit points are 0 or lower
 		while (h1.getHp() > 0 && b1.getHp() > 0){
 			// I've rebalanced the encounter so that hero and baddy attack at the same time... would otherwise make instakill weapons overpowered
-			
+
 			//Hero attacks
 			System.out.println("You attack for " + h1.getStrength());
 			b1.changeHp(h1.getStrength()*-1);
@@ -349,23 +368,24 @@ public class GameDriver
 			System.out.println(b1.getName() + " Has "+ b1.getHp()+" Remaining");
 			System.out.println("-----------------");
 		}
-		
+
 		//show the outcome of the battle
 		if(b1.getHp() <= 0) {
 				System.out.println(b1.getName() + " has died... you are victorious!");
 				if (h1.getHp() < 0) {
 					System.out.println("Unfortunately, you died of your wounds before you are able to enjoy your victory");
-					// end the "game" here 
+					// end the "game" here
 				}
 			}
 			else {
 					System.out.println("YOU DIED... git gud");
 					// end the "game" here
 			}
-				
+
 	}
-	
+
 	public static void travel (Hero h1, Field f1,Scanner s) {
+		//prints the field, and asks the player where to go
 		printField(f1,h1);
 		System.out.println("where do you want to go?");
 		System.out.println("1: Up");
@@ -386,11 +406,12 @@ public class GameDriver
 			moveSomeone(h1,0,1,f1);
 		}
 		else if (x==3) {
-			moveSomeone(h1,-1,0,f1);	
+			moveSomeone(h1,-1,0,f1);
 		}
 		else if (x==4) {
 			moveSomeone(h1,1,0,f1);
 		}
+		//print out your current stats.
 		else if (x==5) {
 			System.out.println(h1.getHp() + ":Current HP , " + h1.getMana() + ":Current Mana , " + h1.getStrength() + ":Strength ");
 			System.out.println("~~~ Inventory: ~~~");
@@ -404,15 +425,7 @@ public class GameDriver
 			System.out.println("You dump your broken weapons in a bush... this is technically litering, but you don't see anyone around, so hopefully you're good");
 			discardItems(h1);
 		}
-		// I don't think this ever gets called anymore, because I wrote a better (less mean) input validation method right when the variable gets called in
-		else {
-			// dont cause invaid unput please
-			System.out.println("if you're too dumb to pick a valid number Ill pick one for you");
-			System.out.println("also I'm dealing 1 dmg to you, because that should teach you to input invalid input");
-			h1.changeHp(-1);
-			moveSomeone(h1,0,1,f1);
-		}
-		// passive regeneration... you heal 1hp&1M every time you move 
+		// passive regeneration... you heal 1hp&1M every time you move
 		// #hiddenMechanics
 		h1.changeHp(1);
 		h1.setMana(h1.getMana() + 1);
@@ -429,8 +442,8 @@ public class GameDriver
 			}
 		}
 	}
-	
-	//draws a visual representation of the field 	
+
+	//draws a visual representation of the field
 	public static void printField(Field f1,Hero h1) {
 		for (int i=0;i<f1.getWidth();i++) {
 			for (int j = 0; j<f1.getHeight(); j++){
@@ -438,13 +451,14 @@ public class GameDriver
 					System.out.print("X ");
 				}
 				else {
-					System.out.print(". ");
+					System.out.print (f1.WhereAmI(i,j) + " ");
+					//System.out.print(". ");
 				}
 			}
 			System.out.println("");
 		}
 		System.out.println("");
 	}
-	
-	
+
+
 }
