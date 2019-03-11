@@ -23,6 +23,10 @@ public class Character extends Object
 	//added mana to character so that enemies can have spells as well as hero
 	protected int hitPoints; 
 	protected int strength;
+	
+	// set the max, which would be useful if leveling up was a thing in this game...
+	protected int maxHp;
+	protected int maxMana;
 	// added some extra stats to spice things up a bit
 	protected int mana;
 	// I created a variable for armor, but never really ended up using it... 
@@ -31,6 +35,10 @@ public class Character extends Object
 	protected enum STATUS {DEAD, ALIVE, UNDEAD};
 	protected STATUS status;
 	protected int gold;
+	
+	// with the introduction of merchant, I want this here, so I don't have to rewrite it upstream
+	protected Weapon inventory [];
+	protected int INVENTORY_SIZE = 10; 
 
 	//6. Create this no argument constructor, but notice what happens if you don't have a
 	//no argument object constructor
@@ -40,8 +48,10 @@ public class Character extends Object
 		//call the base class no argument construtor first
 		super();
 		hitPoints = 0;
+		maxHp = 0;
 		strength = 0;
 		mana = 10;
+		maxMana = 10;
 		armor =0;
 		gold =10;
 	}
@@ -56,9 +66,15 @@ public class Character extends Object
 		this.name = name;
 		this.f1 = f1; 
 		//This child's instances
+		
 		this.hitPoints = hitPoints;
+		this.maxHp = hitPoints;
+		
 		this.strength = strength;
+		
 		this.mana = mana;
+		this.maxMana = mana;
+		
 		this.armor = armor;
 		status = STATUS.ALIVE;
 		gold=10;
@@ -70,8 +86,33 @@ public class Character extends Object
 	public Character(int hitPoints, int strength)
 	{
 		this.hitPoints = hitPoints;
+		this.maxHp = hitPoints;
 		this.strength = strength;
 		status = STATUS.ALIVE;
+	}
+	
+	// these inventory systems originally existed in Hero, but I moved them here so that merchant can inherit them
+	// they  aren't called in the contructor like they were in hero ( because they still are in hero) because right now I don't want baddies to have inventory
+	protected void initInventory() {
+		for (int i = 0; i< INVENTORY_SIZE; ++i){
+			inventory[i] = new Weapon("EMPTY"); 
+		}
+		
+	}
+	public void addItemToInventory(Weapon item){
+		for (int z=0;z<inventory.length;z++) {
+			if (inventory[z].getName().equals("EMPTY")){
+				inventory[z] = item;
+				break;
+			}
+			if (z == inventory.length && !inventory[z].getName().equals("EMPTY")) {
+				System.out.println("Sorry, You can't hold anything else");
+				System.out.println("If I was a better coder this would be better... but that sounds hard lol");
+			}
+		}	 
+	}
+	public Weapon[] getInventory(){
+		return this.inventory;
 	}
 	
 	//We'll need some getters for later use, but we'll "set" with damage and heal methods
@@ -106,13 +147,17 @@ public class Character extends Object
 	public void changeHp(int change) {
 		// this method works for both healing and damage, for healing just pass it a negative value
 		hitPoints += change;
+		// can't heal above the max
+		if ( hitPoints > maxHp) {
+			this.hitPoints = maxHp;
+		}
 	}
 	//methods to get and set mana
 	public void setMana(int mana) {
 		this.mana = mana;
-		//can't go above 10 mana
-		if (this.mana > 10) {
-			this.mana = 10;
+		//can't go above (the max num of ) mana
+		if (this.mana > maxMana) {
+			this.mana = maxMana;
 		}
 	}
 	public int getMana() {

@@ -19,8 +19,8 @@
 
 public class Hero extends Character
 {
-	private Weapon inventory [];
-	private final int INVENTORY_SIZE = 10; 
+	//private Weapon inventory [];
+	//protected int INVENTORY_SIZE = 10; 
 
 	//10. Constructors for hero object
 	public Hero()
@@ -31,7 +31,8 @@ public class Hero extends Character
 		}
 	
 	public Hero(String name, Field f1, int hitPoints, int strength)
-		{ 
+		{
+		super();
 		this.name = name;
 		//Start him at position 0
 		x = 1; 
@@ -41,36 +42,44 @@ public class Hero extends Character
 	
 		//only allow for a max of 300 hit points
 		//What is this an example of?
-		if (hitPoints > 300) this.hitPoints = 300; 
-		else this.hitPoints = hitPoints;
+		//if (hitPoints > 300) this.hitPoints = 300; 
+		//else this.hitPoints = hitPoints;
 	
 		//only allow for a max of 100 strength
 		//What is this an example of?
-		if (strength > 100) this.strength =100;
-		else this.strength = strength; 
+		//if (strength > 100) this.strength =100;
+		//else this.strength = strength; 
 	
 		//create an inventory of objects for the hero to carry around
 		inventory = new Weapon [INVENTORY_SIZE];
 	
 		//initialize inventory array
 		initInventory();
-		}
-		
-	//This is the reason for the name only constructor in the object class
-	private void initInventory() {
-		for (int i = 0; i< INVENTORY_SIZE; ++i){
-			inventory[i] = new Weapon("EMPTY"); 
-		}
 		Katana k = new Katana("UgiKatana");
 		Shortsword s = new Shortsword();
 		inventory[0] = k;
 		inventory[1] = s;
+		this.maxHp = hitPoints;
+		this.hitPoints = hitPoints;
+		this.maxMana = 10;
+		this.mana = 10;
+		}
 		
-	}
+	//This is the reason for the name only constructor in the object class
+/*	private void initInventory() {
+		for (int i = 0; i< INVENTORY_SIZE; ++i){
+			inventory[i] = new Weapon("EMPTY"); 
+		}
+		
+		*/
+		
+		
+	/*}
 	public Weapon[] getInventory(){
 		return this.inventory;
-	}
+	}*/
 	//lets you add an item to your inventory
+	/*
 	public void addItemToInventory(Weapon item){
 		for (int z=0;z<inventory.length;z++) {
 			if (inventory[z].getName().equals("EMPTY")){
@@ -82,7 +91,7 @@ public class Hero extends Character
 				System.out.println("If I was a better coder I'd let you drop something, but that sounds hard lol");
 			}
 		}	 
-	}
+	}*/
 	
 	//11. What other functions would we need to give our hero?
 	

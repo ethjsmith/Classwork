@@ -15,6 +15,12 @@
 
 //14. Now let's test our set up so far
 
+
+
+// it occurred to me way late in the creation of the RPG elements (towns dungeons, and random encounters) that it would probably have been better to
+// make all of those things objects, but that would have changed a lot of things about how I wrote the field, so I decided not to do that.
+// anyway, this game works pretty well, except when it doesn't (like when things print on weird parts of the screen, based on what part of the game loop it occurs during.
+
 import java.security.SecureRandom;
 import java.util.Scanner;
 
@@ -38,6 +44,7 @@ public class GameDriver
 
 
 		// I guess this is more of a JRPG (heh get it ? no character creation options)
+		// your name is Idiot, and there's nothing you can do about it :3
 		Hero loser = new Hero("Idiot",f1,200,10);
 		//Baddy g1 = new Baddy("goblin2", f1,25,1);
 		//Baddy g2 = new Baddy("goblin1",f1,25,1);
@@ -92,20 +99,6 @@ public class GameDriver
 		// sets the new coordinates
 		c.setX(c.getX()+x);
 		c.setY(c.getY()+y);
-		// random encounter, pokemon style, you have a chance to run into an enemy
-		// if you don't see an enemy, something else might happen...
-		// this will happen only on the empty squares of the map (IE ".")
-		if ((int) (Math.random()*2)+1 == 1) {
-			randomencounter(c);
-		}
-		else if ((int) (Math.random()*2)+1 == 1) {
-			shopkeeper(c);
-		}
-		else {
-			System.out.println("you come to a quiet field... seems like those are rare these days");
-		}
-
-		// lets your character wrap on the map, going to the top, or the bottom.
 		if (c.getX() < 0) {
 			c.setX(f1.getWidth()-1);
 		}
@@ -118,59 +111,96 @@ public class GameDriver
 		else if (c.getY() > f1.getHeight()-1) {
 			c.setY(0);
 		}
-	}
-	// randomly come across a shopkeeper...
-	public static void shopkeeper(Hero h1) {
-		Weapon ary[] = new Weapon[3];
-		Scanner s = new Scanner (System.in);
-		System.out.println("As you are walking, you come across a traveling merchant. He has many weapons for sale");
-		System.out.println("He shows you a few, and asks if you would like to purchase any");
-		System.out.println("You have " + h1.getGold() + " Gold pieces");
-		//creates a random inventory for the shopkeeper
-		for (int z=0;z<3;z++){
-			int r = (int) (Math.random()*5)+1;
-			if (r == 1) {
-				ary[z] = new Katana();
+		String currentPos = f1.WhereAmI(c.getX(),c.getY());
+		System.out.println(c.getX() + ", "+c.getY());
+		System.out.println(currentPos);
+		if (currentPos == ".") {
+			// random encounter, pokemon style, you have a chance to run into an enemy
+			// if you don't see an enemy, something else might happen...
+			// this will happen only on the empty squares of the map (IE ".")
+			if ((int) (Math.random()*2)+1 == 99) {
+				randomencounter(c);
 			}
-			else if (r ==2 ) {
-				ary[z] = new Ritualsword();
-			}
-			else if (r==3) {
-				ary[z]= new Windsword();
-			}
-			else if (r==4) {
-				ary[z] = new Shortsword();
-			}
+			else if ((int) (Math.random()*2)+1 == 1) {
+				System.out.println("As you are walking, you come across a traveling merchant. He has many weapons for sale");
+				shopkeeper(c);
+			} 
 			else {
-				ary[z] = new Oldsword();
+				System.out.println("you come to a quiet field... seems like those are rare these days");
 			}
 		}
-			int temp = 0;
-			for (int z=0;z<3;z++){
-				temp = z+1;
-				System.out.println(temp + ": Purchase " + ary[z].getName() +"["+ ary[z].getDamage()+" DMG] For " + ary[z].getPrice() + " Gold pieces");
-			}
-			temp++;
-			System.out.println(temp + ": Leave without buying anything");
-			//int choice = s.nextInt();
-			int choice = validnumber(1,temp);
-			if (choice == temp) {
-				System.out.println("you shrug your shoulders, and continue on your journey");
+		else if (currentPos == "T") {
+			//town handler here
+			town(c);
+		}
+		else if (currentPos == "D") {
+			// dungeon handler here
+			dungeon(c);
+		}
+		else {
+			System.out.println("You create a rip in the time space continuum, breaking the game in this place");
+			// whoops
+		}
+		// lets your character wrap on the map, going to the top, or the bottom.
+
+	}
+	
+	public static void town(Hero h1) {
+		// handle the town... IDK
+		System.out.println("You find a small inn, which you could stay at to heal yourself, and restore your mana (COST 10 GOLD)");
+		System.out.println ("1: Pay (10 GOLD) to stay and rest the night");
+		System.out.println("2: Leave the town");
+		int choice = validnumber(1,2);
+		if (choice == 1) {
+			if (h1.getGold() >= 10) {
+				System.out.println("You pay the innkeeper for a room, where you rest the night, quickly healing from your wounds");
+				// this is hackish... it relies on input validation on the other end, and if you somehow get above a million hp you wont fully heal ...oof
+				h1.changeHp(100000);
+				h1.setMana(10000);
+				h1.setGold(h1.getGold()-10);
 			}
 			else {
-				if (h1.getGold() >= ary[choice-1].getPrice()) {
-					h1.addItemToInventory(ary[choice-1]);
-					h1.setGold(h1.getGold() - ary[choice-1].getPrice());
-					System.out.println("You have aquired the " + ary[choice-1].getName());
-					System.out.println("The merchant thanks you for your business, and continues on his way");
-				}
-				else {
-					// You can only buy one item from a merchant, and if you mess it up trying to buy something you can't afford the merchant just leaves. oops
-					System.out.println("You don't have enough money");
-					System.out.println("Stop wasting my time, curses the merchant, as he continues down the road...");
-				}
+				System.out.println("Sorry, you don't have enough money to stay here");
 			}
-
+		}
+		else {
+			System.out.println("You're feeling pretty good, so you decide not to stick around this expensive place");
+		}
+	}
+	public static void dungeon(Hero h1) {
+		System.out.println("you find a mysterious dungeon... You can enter if you want, but you expect that you'll face many monster in a row, with a chance for a greater gold reward...");
+		System.out.println("1: Enter the dungeon");
+		System.out.println("2: Countinue your journey");
+		int choice = validnumber(1,2);
+		if (choice == 1) {
+			System.out.println("You head into the dungeon");
+		int difficulty = (int) (Math.random()*5)+3;
+			for (int z =0;z<difficulty;z++) {
+				randomencounter(h1);
+			}
+			int gold = (int) (Math.random()*(6*difficulty))+3;
+			System.out.println("you best all of the enemies in the dungeon, and at it's heart you find a pile of "+gold+  " gold");
+			h1.setGold(h1.getGold()+gold);
+			System.out.println("you quickly loot the dungeon, and then make your escape before more evil creatures can attack");
+			
+		}
+		else {
+			System.out.println("you decide that you're not feeling a dangerous dungeon right now, so you continue on your way");
+		}
+	}
+	
+	
+	// randomly come across a wandering shopkeeper...
+	// shopkeeper is the wrong work, probably like merchant or something
+	
+	public static void shopkeeper(Hero h1) {
+		//uses a merchant object, which is reused in towns. 
+		Merchant m = new Merchant();
+		System.out.println("He shows you a few, and asks if you would like to purchase any");
+		System.out.println("You have " + h1.getGold() + " Gold pieces");
+		//I think this is a very concise line of code... it prints the inventory while getting the player choice, and also attempts the sale based on it, all in a single line ( here) 
+		m.attemptSale(validnumber(1,m.PrintInventory()),h1);
+		
 	}
 	//creates a monster for you to fight against, which is both random, and near you in stats
 
@@ -330,7 +360,7 @@ public class GameDriver
 		if (h1.getHp() <= 0) {
 			System.out.println("You Died" );
 			Scanner z = new Scanner(System.in);
-			int r = z.nextInt();
+			String r = z.nextLine();
 			// leaves the screen open while you come to terms with the fact that you died...
 			System.exit(0);
 		}
@@ -451,7 +481,7 @@ public class GameDriver
 					System.out.print("X ");
 				}
 				else {
-					System.out.print (f1.WhereAmI(i,j) + " ");
+					System.out.print (f1.WhereAmI(j,i) + " ");
 					//System.out.print(". ");
 				}
 			}
