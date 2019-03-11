@@ -6,10 +6,10 @@ public class Merchant extends Character {
 		INVENTORY_SIZE=3;
 		inventory = new Weapon [INVENTORY_SIZE];
 		initInventory();
-		generateInventory();
+		generateInventory(3);
 	}
-	private void generateInventory() {
-		for (int z=0;z<3;z++){
+	private void generateInventory(int num) {
+		for (int z=0;z<num;z++){
 			Weapon wep;
 			int r = (int) (Math.random()*5)+1;
 			if (r == 1) {
@@ -29,7 +29,10 @@ public class Merchant extends Character {
 			}
 			addItemToInventory(wep);
 		}
-		
+	}
+	private Weapon makeWeapon() {
+		//todo copy the code from generateInventory to here
+		// That way it's easy to create a single new weapon for the merchant to sell after you buy one
 	}
 	public int PrintInventory() {
 		//prints out the merchants inventory in a format that shows what he is selling ( also gives option numbers, and the option to just leave) 

@@ -322,7 +322,7 @@ public class GameDriver
 						h1.getInventory()[x/2].special(h1,b);
 					}
 					else {
-						System.out.println("You are out of mana, and so your special attack failed");
+						System.out.println("You are out of mana,or your weapon is broken,  and so your special attack failed");
 					}
 
 

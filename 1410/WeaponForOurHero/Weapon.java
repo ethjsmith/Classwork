@@ -59,7 +59,7 @@ public class Weapon extends Object {
 	}
 	// try to use your special attack
 	public boolean trySpecial(Hero h) {
-		if (h.getMana() > 0) {
+		if (h.getMana() > 0 && durability >=0) {
 			h.setMana(h.getMana()-1);
 			return true;
 		}

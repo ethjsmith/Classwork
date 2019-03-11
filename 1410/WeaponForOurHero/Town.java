@@ -1,5 +1,5 @@
 public class Town extends Object {
-	
+	Merchant m = new Merchant();
 	public Town() {
 	
 	}
@@ -11,6 +11,6 @@ public class Town extends Object {
 		
 	}
 	public void HandleTown(Hero h1,int choice) {
-		System.out.println(
+		System.out.println("s");
 	}
 }
