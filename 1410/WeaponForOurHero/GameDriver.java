@@ -118,13 +118,13 @@ public class GameDriver
 			// random encounter, pokemon style, you have a chance to run into an enemy
 			// if you don't see an enemy, something else might happen...
 			// this will happen only on the empty squares of the map (IE ".")
-			if ((int) (Math.random()*2)+1 == 99) {
+			if ((int) (Math.random()*2)+1 == 1) {
 				randomencounter(c);
 			}
 			else if ((int) (Math.random()*2)+1 == 1) {
 				System.out.println("As you are walking, you come across a traveling merchant. He has many weapons for sale");
 				shopkeeper(c);
-			} 
+			}
 			else {
 				System.out.println("you come to a quiet field... seems like those are rare these days");
 			}
@@ -144,7 +144,7 @@ public class GameDriver
 		// lets your character wrap on the map, going to the top, or the bottom.
 
 	}
-	
+
 	public static void town(Hero h1) {
 		// handle the town... IDK
 		System.out.println("You find a small inn, which you could stay at to heal yourself, and restore your mana (COST 10 GOLD)");
@@ -182,25 +182,33 @@ public class GameDriver
 			System.out.println("you best all of the enemies in the dungeon, and at it's heart you find a pile of "+gold+  " gold");
 			h1.setGold(h1.getGold()+gold);
 			System.out.println("you quickly loot the dungeon, and then make your escape before more evil creatures can attack");
-			
+
 		}
 		else {
 			System.out.println("you decide that you're not feeling a dangerous dungeon right now, so you continue on your way");
 		}
 	}
-	
-	
+
+
 	// randomly come across a wandering shopkeeper...
 	// shopkeeper is the wrong work, probably like merchant or something
-	
+
 	public static void shopkeeper(Hero h1) {
-		//uses a merchant object, which is reused in towns. 
+		//uses a merchant object, which is reused in towns.
 		Merchant m = new Merchant();
+		boolean buying = true;
 		System.out.println("He shows you a few, and asks if you would like to purchase any");
 		System.out.println("You have " + h1.getGold() + " Gold pieces");
-		//I think this is a very concise line of code... it prints the inventory while getting the player choice, and also attempts the sale based on it, all in a single line ( here) 
-		m.attemptSale(validnumber(1,m.PrintInventory()),h1);
-		
+		//lets you buy multiple items from a vendor, especially important for towns, where the merchant can't just walk away like a wandering merchant could
+		while (buying) {
+			int z = m.PrintInventory();
+			int userinput = validnumber(1,z);
+			m.attemptSale(userinput,h1);
+			//breaks you out of the purchasing loop
+			if (z == userinput) {
+				buying = false;
+			}
+		}
 	}
 	//creates a monster for you to fight against, which is both random, and near you in stats
 
@@ -254,7 +262,8 @@ public class GameDriver
 		boolean ran = false;
 		Scanner s = new Scanner(System.in);
 		//generates a monster and handles the fight against the monster
-		Baddy b = generatemonster(h1);
+		//Baddy b = generatemonster(h1);
+		Baddy b = new Baddy(h1);
 		System.out.println("As you travel, you encounter a " + b.getName());
 		System.out.println("It seems a fight is inevitable");
 		while (b.getHp() > 0 && h1.getHp() > 0) {
@@ -445,11 +454,7 @@ public class GameDriver
 		else if (x==5) {
 			System.out.println(h1.getHp() + ":Current HP , " + h1.getMana() + ":Current Mana , " + h1.getStrength() + ":Strength ");
 			System.out.println("~~~ Inventory: ~~~");
-			for (int r = 0;r<h1.getInventory().length;r++){
-				System.out.println("Name:" + h1.getInventory()[r].getName() + " , Durability: " + h1.getInventory()[r].getDurability());
-				System.out.println("Special Ability: " +h1.getInventory()[r].getSpecial() + ", Special Explaination: " + h1.getInventory()[r].getExplaination());
-				System.out.println("");
-			}
+			h1.showInventory();
 		}
 		else if (x==6) {
 			System.out.println("You dump your broken weapons in a bush... this is technically litering, but you don't see anyone around, so hopefully you're good");
