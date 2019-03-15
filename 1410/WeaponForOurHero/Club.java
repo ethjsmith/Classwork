@@ -1,3 +1,12 @@
+/*
+
+@Author (created/edited by ) Ethan Smith
+@ DATE 3/14/19
+@ Assignment : Weapon for our hero
+@Class : Character
+@Favorite Color : RED
+
+*/
 public class Club extends Weapon {
 	public Club() {
 		super();

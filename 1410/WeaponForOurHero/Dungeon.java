@@ -1,3 +1,12 @@
+/*
+
+@Author (created/edited by ) Ethan Smith
+@ DATE 3/14/19
+@ Assignment : Weapon for our hero
+@Class : Character
+@Favorite Color : RED
+
+*/
 public class Dungeon extends Object {
 // im not really sure that this has to inherit at all
 	//protected Baddy enemies [];
