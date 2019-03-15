@@ -10,31 +10,24 @@ public class Merchant extends Character {
 	}
 	private void generateInventory(int num) {
 		for (int z=0;z<num;z++){
-			Weapon wep = makeWeapon();
+			Weapon wep = Weapon.MakeWeapon();
 			addItemToInventory(wep);
 		}
 	}
-	private Weapon makeWeapon() {
-		//todo copy the code from generateInventory to here
-		// That way it's easy to create a single new weapon for the merchant to sell after you buy one
-		Weapon wep;
-		int r = (int) (Math.random()*5)+1;
-		if (r == 1) {
-			wep = new Katana();
+	public void buyloop(Hero h1) {
+		boolean buying = true;
+		System.out.println("He shows you a few, and asks if you would like to purchase any");
+		System.out.println("You have " + h1.getGold() + " Gold pieces");
+		//lets you buy multiple items from a vendor, especially important for towns, where the merchant can't just walk away like a wandering merchant could
+		while (buying) {
+			int z = this.PrintInventory();
+			int userinput = validnumber(1,z);
+			this.attemptSale(userinput,h1);
+			//breaks you out of the purchasing loop
+			if (z == userinput) {
+				buying = false;
+			}
 		}
-		else if (r ==2 ) {
-			wep = new Ritualsword();
-		}
-		else if (r==3) {
-			wep= new Windsword();
-		}
-		else if (r==4) {
-			wep = new Shortsword();
-		}
-		else {
-			wep = new Oldsword();
-		}
-		return wep;
 	}
 	public int PrintInventory() {
 		//prints out the merchants inventory in a format that shows what he is selling ( also gives option numbers, and the option to just leave)
@@ -54,12 +47,17 @@ public class Merchant extends Character {
 			}
 			else {
 				if (h1.getGold() >= inventory[choice-1].getPrice()) {
-					h1.addItemToInventory(inventory[choice-1]);
-					h1.setGold(h1.getGold() - inventory[choice-1].getPrice());
-					System.out.println("You have aquired the " + inventory[choice-1].getName());
-					System.out.println("The merchant puts another weapon up for sale");
-					//replaces the sold weapon with a new one for sale
-					inventory[choice-1] = makeWeapon();
+					if (h1.canAddItem()) {
+						h1.addItemToInventory(inventory[choice-1]);
+						h1.setGold(h1.getGold() - inventory[choice-1].getPrice());
+						System.out.println("You have aquired the " + inventory[choice-1].getName());
+						System.out.println("The merchant puts another weapon up for sale");
+						//replaces the sold weapon with a new one for sale
+						inventory[choice-1] = Weapon.MakeWeapon();
+					}
+					else {
+						System.out.println("You can't carry any more items!");
+					}
 				}
 				else {
 					// You can only buy one item from a merchant, and if you mess it up trying to buy something you can't afford the merchant just leaves. oops

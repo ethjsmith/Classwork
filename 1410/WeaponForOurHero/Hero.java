@@ -21,13 +21,17 @@ public class Hero extends Character
 {
 	//private Weapon inventory [];
 	//protected int INVENTORY_SIZE = 10;
-
+	
+	// if you whine about my choice to let the player use any weapon they have, then this variable is for you
+	private int numberOfArms;
+	
 	//10. Constructors for hero object
 	public Hero()
 		{
 		//10.1 Call the parents constructor and follow what happens
 		super();
 		inventory = null;
+		numberOfArms = 2;
 		}
 
 	public Hero(String name, Field f1, int hitPoints, int strength)
@@ -64,6 +68,8 @@ public class Hero extends Character
 		this.maxMana = 10;
 		this.mana = 10;
 		this.strength = strength;
+		//see look, number of arms is enough to use all of the weapons at the same time... the character must be pretty tall to have this many...
+		numberOfArms = 10;
 		}
 
 // this stuff has mostly been moved over to the character class, so that merchant can inherit from character, and still have an Inventory

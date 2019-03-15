@@ -56,7 +56,7 @@ public class Baddy extends Character
 	//12.2 How could we have accomplished the above with a parent constructor?
 }
 private void randomize(Hero h1) {
-	int nam = (int) (Math.random()*8)+1;
+	int nam = (int) (Math.random()*22)+1;
 	// trying a switch statement... might be my first time writing one, I usually just use if / elseif
 	switch (nam) {
 		case 1:
@@ -83,17 +83,59 @@ private void randomize(Hero h1) {
 		case 8:
 			name = "Bandit";
 			break;
+		case 9:
+			name ="Large Spider";
+			break;
+		case 10:
+			name = "Even Larger Spider";
+			break;
+		case 11:
+			name = "Largest Spider";
+			break;
+		case 12:
+			name = "Obnoxious Child";
+			break;
+		case 13:
+			name = "Zombie";
+			break;
+		case 14:
+			name = "Skeleton";
+			break;
+		case 15:
+			name = "Generic bad person";
+			break;
+		case 16:
+			name = "Rodent of unusual size";
+			break;
+		case 17:
+			name = "Art Major";
+			break;
+		case 18:
+			name = "Three Dwarves in a single trenchcoat, pretending to be one Orc";
+			break;
+		case 19:
+			name = "Three Orcs in a single trenchcoat, pretending to be one giant Dwarf";
+			break;
+		case 20:
+			name = "Chaotic Neutral Bard";
+			break;
+		case 21:
+			name = "Witch";
+			break;
+		case 22:
+			name = "Time traveling Nazi";
+			break;
 		default:
 			name = "Innocent Civilian";
 			// if theres an error in my code, you as the player get to fight some random innocent person
 			break;
 	}
-	this.hitPoints = (int) (h1.getHp() * Math.random()*.4);
+	this.hitPoints = (int) (h1.getHp() * Math.random()*.5);
 	if (this.hitPoints < 5) {
 		this.hitPoints = 5;
 	}
 	this.maxHp = this.hitPoints;
-	this.strength = (int) (h1.getStrength() * Math.random()*.3);
+	this.strength = (int) (h1.getStrength() * Math.random()*.6);
 	if (this.strength < 2) {
 		this.strength = 2;
 		this.f1 = h1.getField();

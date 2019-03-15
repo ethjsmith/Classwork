@@ -93,21 +93,27 @@ public class Character extends Object
 
 	// these inventory systems originally existed in Hero, but I moved them here so that merchant can inherit them
 	// they  aren't called in the contructor like they were in hero ( because they still are in hero) because right now I don't want baddies to have inventory
-	protected void initInventory() {
+	public void initInventory() {
 		for (int i = 0; i< INVENTORY_SIZE; ++i){
 			inventory[i] = new Weapon("EMPTY");
 		}
 
+	}
+	public boolean canAddItem() {
+		//checks if there is space in the inventory
+		if (inventory[inventory.length-1].getName().equals("EMPTY")) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	public void addItemToInventory(Weapon item){
 		for (int z=0;z<inventory.length;z++) {
 			if (inventory[z].getName().equals("EMPTY")){
 				inventory[z] = item;
 				break;
-			}
-			if (z == inventory.length && !inventory[z].getName().equals("EMPTY")) {
-				System.out.println("Sorry, You can't hold anything else");
-				System.out.println("If I was a better coder this would be better... but that sounds hard lol");
+				// dont keep looping once this happens once
 			}
 		}
 	}
@@ -121,7 +127,12 @@ public class Character extends Object
 	}
 	public void removeItemFromInventory(int item) {
 		item = item-1;
+		System.out.println("You throw away your " + inventory[item].getName());
 		// move the discardItems method from the gameDriver over to here
+		for (int r=item;r<inventory.length-1;r++) {
+			inventory[r] = inventory[r+1];
+		}
+		inventory[inventory.length-1] = new Weapon("EMPTY");
 	}
 	public Weapon[] getInventory(){
 		return this.inventory;
@@ -134,6 +145,9 @@ public class Character extends Object
 	public int getStrength()
 	{
 		return strength;
+	}
+	public void setStrength(int s) {
+		this.strength = s;
 	}
 
 	public int getGold() {
@@ -174,6 +188,18 @@ public class Character extends Object
 	}
 	public int getMana() {
 		return this.mana;
+	}
+	public int getMaxMana() {
+		return this.maxMana;
+	}
+	public void setMaxMana(int max) {
+		this.maxMana = max;
+	}
+	public int getMaxHp() {
+		return this.maxHp;
+	}
+	public void setMaxHp(int max) {
+		this.maxHp = max;
 	}
 	//Destroy the character and move him off the grid
 	public void destroyCharacter()

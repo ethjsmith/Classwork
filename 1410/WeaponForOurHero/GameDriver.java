@@ -1,12 +1,14 @@
 /*
 
 @Author (created/edited by ) Ethan Smith
-@ DATE 2/27/19 - 3/4/19
+@ DATE 2/27/19 - 3/14/19
 @ Assignment : Weapon for our hero
 @Class : Driver
 @Favorite Color : RED
 
 */
+
+// I saved a version of this called "Final" on the 4th... It is now the 12th, and I keep adding stuff ... whoops
 
 //Game driver for testing inheritance demonstration files
 //Dr. G
@@ -118,6 +120,8 @@ public class GameDriver
 			// random encounter, pokemon style, you have a chance to run into an enemy
 			// if you don't see an enemy, something else might happen...
 			// this will happen only on the empty squares of the map (IE ".")
+			// I don't know why I did the comparason this way instead of like
+			// math.random() > .5 ...
 			if ((int) (Math.random()*2)+1 == 1) {
 				randomencounter(c);
 			}
@@ -142,32 +146,19 @@ public class GameDriver
 			// whoops
 		}
 		// lets your character wrap on the map, going to the top, or the bottom.
+		// lol there used to be code to let you wrap on the map here, IDK where that went, afaik you can still do that
+		
 
 	}
 
 	public static void town(Hero h1) {
 		// handle the town... IDK
-		System.out.println("You find a small inn, which you could stay at to heal yourself, and restore your mana (COST 10 GOLD)");
-		System.out.println ("1: Pay (10 GOLD) to stay and rest the night");
-		System.out.println("2: Leave the town");
-		int choice = validnumber(1,2);
-		if (choice == 1) {
-			if (h1.getGold() >= 10) {
-				System.out.println("You pay the innkeeper for a room, where you rest the night, quickly healing from your wounds");
-				// this is hackish... it relies on input validation on the other end, and if you somehow get above a million hp you wont fully heal ...oof
-				h1.changeHp(100000);
-				h1.setMana(10000);
-				h1.setGold(h1.getGold()-10);
-			}
-			else {
-				System.out.println("Sorry, you don't have enough money to stay here");
-			}
-		}
-		else {
-			System.out.println("You're feeling pretty good, so you decide not to stick around this expensive place");
-		}
+		Town t = new Town();
+		t.HandleTown(h1);
 	}
 	public static void dungeon(Hero h1) {
+		// this method should probably be an object, but to do that I would have to make the randomencounter method a method in baddy ( or something)
+		// and fix a bunch of other flaws in my code, so I'll just leave it here as a method... Don't think too poorly of me for being lazy in this.
 		System.out.println("you find a mysterious dungeon... You can enter if you want, but you expect that you'll face many monster in a row, with a chance for a greater gold reward...");
 		System.out.println("1: Enter the dungeon");
 		System.out.println("2: Countinue your journey");
@@ -178,7 +169,7 @@ public class GameDriver
 			for (int z =0;z<difficulty;z++) {
 				randomencounter(h1);
 			}
-			int gold = (int) (Math.random()*(6*difficulty))+3;
+			int gold = (int) (Math.random()*(7*difficulty))+3*difficulty;
 			System.out.println("you best all of the enemies in the dungeon, and at it's heart you find a pile of "+gold+  " gold");
 			h1.setGold(h1.getGold()+gold);
 			System.out.println("you quickly loot the dungeon, and then make your escape before more evil creatures can attack");
@@ -196,67 +187,11 @@ public class GameDriver
 	public static void shopkeeper(Hero h1) {
 		//uses a merchant object, which is reused in towns.
 		Merchant m = new Merchant();
-		boolean buying = true;
-		System.out.println("He shows you a few, and asks if you would like to purchase any");
-		System.out.println("You have " + h1.getGold() + " Gold pieces");
-		//lets you buy multiple items from a vendor, especially important for towns, where the merchant can't just walk away like a wandering merchant could
-		while (buying) {
-			int z = m.PrintInventory();
-			int userinput = validnumber(1,z);
-			m.attemptSale(userinput,h1);
-			//breaks you out of the purchasing loop
-			if (z == userinput) {
-				buying = false;
-			}
-		}
+		m.buyloop(h1);
 	}
 	//creates a monster for you to fight against, which is both random, and near you in stats
 
-	public static Baddy generatemonster(Hero h1){
-		String name = "";
-		int nam = (int) (Math.random()*8)+1;
-		// trying a switch statement... might be my first time writing one, I usually just use if / elseif
-		switch (nam) {
-			case 1:
-				name = "Goblin";
-				break;
-			case 2:
-				name = "Troll";
-				break;
-			case 3:
-				name = "Wolf";
-				break;
-			case 4:
-				name = "Theif";
-				break;
-			case 5:
-				name = "Country music fan";
-				break;
-			case 6:
-				name = "Orc";
-				break;
-			case 7:
-				name = "Used car salesman";
-				break;
-			case 8:
-				name = "Bandit";
-				break;
-			default:
-				name = "Innocent Civilian";
-				// if theres an error in my code, you as the player get to fight some random innocent person
-				break;
-		}
-		int badhp = (int) (h1.getHp() * Math.random()*.4);
-		if (badhp < 5) {
-			badhp = 5;
-		}
-		int badstrength = (int) (h1.getStrength() * Math.random()*.3);
-		if (badstrength < 2) {
-			badstrength = 2;
-		}
-		Baddy b = new Baddy(name, h1.getField(),badhp,badstrength);
-		return b;
-	}
+	
 	// this is the random encounter ( and fight ) handler
 	public static void randomencounter(Hero h1) {
 		boolean ran = false;
@@ -284,15 +219,6 @@ public class GameDriver
 			System.out.println(r + ": Attack with your fists ( no weapon )");
 			r++;
 			System.out.println(r + ": Attempt to run away like a coward");
-
-
-			/* Static system *
-			System.out.println("1: Normal attack(fists?)");
-			System.out.println("2: Use Weapon");
-			System.out.println("3: Weapon Special attack");
-			System.out.println("4: Run away like a coward");
-			*/
-
 
 			//int x = s.nextInt();
 			int x = validnumber(1,r);
@@ -346,20 +272,6 @@ public class GameDriver
 				}
 				System.out.println("-----------------");
 
-
-
-
-			// this part of code didn't work so i commented it out to try something else, and I hate deleting commented code, because you never know if you'll want to go back to that...
-			/*else if (x==(r/2)) {
-				int total= h1.getStrength() + h1.getInventory()[x].attack();
-				System.out.println("You attack for " + total);
-			}
-			else if (x==4) {
-				System.out.println("try something else for now bith");
-			}
-			else {
-				System.out.println("INVALID");
-			}*/
 		}
 		handleDeath(h1,b,ran);
 
@@ -379,6 +291,8 @@ public class GameDriver
 				int g = (int) (Math.random()*4)+1;
 				System.out.println("You found " + g + " Gold pieces on his corpse");
 				h1.setGold(h1.getGold() + g);
+				System.out.println(".");
+				System.out.println(".");
 			}
 			else {
 				System.out.println("you managed to escape with your life");
@@ -432,10 +346,7 @@ public class GameDriver
 		System.out.println("3: Left");
 		System.out.println("4: Right");
 		System.out.println("5: Check stats/Inventoy");
-		System.out.println("6: Discard broken weapons");
-		// test code to check where you currently are
-		//System.out.println(h1.getX() +","+ h1.getY());
-		//int x = s.nextInt();
+		System.out.println("6: Discard Item");
 		int x = validnumber(1,6);
 		// moves your character based on your actions
 		if (x == 1) {
@@ -457,7 +368,6 @@ public class GameDriver
 			h1.showInventory();
 		}
 		else if (x==6) {
-			System.out.println("You dump your broken weapons in a bush... this is technically litering, but you don't see anyone around, so hopefully you're good");
 			discardItems(h1);
 		}
 		// passive regeneration... you heal 1hp&1M every time you move
@@ -466,16 +376,9 @@ public class GameDriver
 		h1.setMana(h1.getMana() + 1);
 	}
 	public static void discardItems(Hero h1) {
-		//removes broken weapons from your inventory
-		// be careful to not accidentally purge your Oldsword if you don't repair it after a battle...
-		for (int h=0;h<h1.getInventory().length;h++) {
-			if (h1.getInventory()[h].getDurability() < 0) {
-				for (int r=h;r<h1.getInventory().length-1;r++) {
-					h1.getInventory()[r] = h1.getInventory()[r+1];
-				}
-				h1.getInventory()[h1.getInventory().length-1] = new Weapon("EMPTY");
-			}
-		}
+		h1.showInventory();
+		System.out.println("Enter the number for the item you wish to discard!");
+		h1.removeItemFromInventory(validnumber(1,h1.getInventory().length+1));
 	}
 
 	//draws a visual representation of the field

@@ -15,6 +15,7 @@
 
 //4. Create an object class for something that we want to place in our field. 
 //Review all of the code below. 
+import java.util.Scanner;
 
 public class Object
 {
@@ -84,6 +85,30 @@ public class Object
 		this.f1 = null; 
 		this.x = -1;
 		this.y = -1;
+	}
+	// A huge number of weird design stuff happened because I didn't think to put this in here, allowing it to be accessed from any object.
+	public static int validnumber (int min,int max) {
+		//this method returns a verified number between min and max, for use with all those choices you have to make
+		// it also has error handling if you try to enter a word or something stupid
+		int num =0;
+		Scanner s = new Scanner(System.in);
+		boolean valid = false;
+		while (!valid) {
+			try {
+				num = s.nextInt();
+				if (num >= min && num <= max) {
+					valid = true;
+				}else {
+					throw new Exception("wrong number");
+				}
+			}
+			catch (Exception E) {
+				s.nextLine();
+				System.out.println("please enter an INT between " + min  +" and " + max);
+
+			}
+		}
+		return num;
 	}	
 	
 	//MOVE TO THE CHARACTER CLASS

@@ -36,6 +36,29 @@ public class Weapon extends Object {
 		explaination = "";
 	}
 	// all args contructor
+	public static Weapon MakeWeapon(){
+		//creates a subweapon
+		
+		// some weapons can't be bought by merchants... there are currently 2 that can only be obtained by talking to random townfolk
+		Weapon w;
+		int r = (int) (Math.random()*5)+1;
+		if (r == 1) {
+			w = new Katana();
+		}
+		else if (r ==2 ) {
+			w = new Club();
+		}
+		else if (r==3) {
+			w= new Windsword();
+		}
+		else if (r==4) {
+			w = new Shortsword();
+		}
+		else {
+			w = new Oldsword();
+		}
+		return w;
+	}
 	public Weapon(int damage, int durability) {
 		super();
 		this.damage = damage;
@@ -76,7 +99,7 @@ public class Weapon extends Object {
 		else {
 			System.out.println("Your weapon is out of durability!");
 			// you deall less damage with a broken weapon than with your fists
-			return -1;
+			return -3;
 		}
 	}
 	public int getDamage() {
