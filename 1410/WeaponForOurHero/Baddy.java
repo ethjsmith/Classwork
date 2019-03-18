@@ -15,6 +15,7 @@
 //Edited: 2-17-19
 
 import java.security.SecureRandom;
+import java.util.Scanner;
 
 public class Baddy extends Character
 {
@@ -139,6 +140,111 @@ private void randomize(Hero h1) {
 	if (this.strength < 2) {
 		this.strength = 2;
 		this.f1 = h1.getField();
+	}
+}
+public void fight(Hero h1) {
+	boolean ran = false;
+	Scanner s = new Scanner(System.in);
+	//generates a monster and handles the fight against the monster
+	//Baddy b = generatemonster(h1);
+	//Baddy b = new Baddy(h1);
+	System.out.println("As you travel, you encounter a " + this.getName());
+	System.out.println("It seems a fight is inevitable");
+	while (this.getHp() > 0 && h1.getHp() > 0) {
+		System.out.println("what would you like to do? ");
+		// a counter to keep track of options
+		int r = 0;
+		// sets up combat options based on hero's inventory ( weapons )
+		for (int z =0;z<h1.getInventory().length;z++) {
+			// well that's pretty complicated, isn't it ?
+			if (!h1.getInventory()[z].getName().equals("EMPTY")){
+				r++;
+				System.out.println(r + ": use " + h1.getInventory()[z].getName() + "'s Normal attack");
+				r++;
+				System.out.println(r + ": use " + h1.getInventory()[z].getName() + "'s Special attack, ");
+			}
+		}
+		r++;
+		System.out.println(r + ": Attack with your fists ( no weapon )");
+		r++;
+		System.out.println(r + ": Attempt to run away like a coward");
+
+		//int x = s.nextInt();
+		int x = validnumber(1,r);
+
+		// this was probably the hardest part... im not sure if I can explain it, other than "it's magic, but it relates the users choice with the dynamic list of weapons"
+		// uses the weapon that you select, or your fists if you so choose.
+		if (x == r) {
+			System.out.println("you run away");
+			// sets a flag so you don't get loot for running away from enemies
+			ran = true;
+			this.changeHp(this.getHp()*-1);
+		}
+		else if (x ==r-1) {
+			//normal fist attack
+			System.out.println("You attack for " + h1.getStrength());
+			this.changeHp(h1.getStrength()*-1);
+
+
+		}
+		else if (x > r || r < 1) {
+			System.out.println("INVALID");
+		}
+		else {
+
+			x--;
+			if (x % 2 == 0) {
+				int total= h1.getStrength() + h1.getInventory()[x/2].attack();
+				System.out.println("You attack for " + total + " Using " +h1.getInventory()[x/2].getName());
+				this.changeHp(total*-1);
+			}
+			else {
+				x--;
+				//System.out.println("you use your special attack, which is not yet implimented");
+				//System.out.println("this is for the " + h1.getInventory()[x/2].getName());
+				if (h1.getInventory()[x/2].trySpecial(h1)) {
+					h1.getInventory()[x/2].special(h1,this);
+				}
+				else {
+					System.out.println("You are out of mana,or your weapon is broken,  and so your special attack failed");
+				}
+
+
+			}
+						}
+						// here your enemy attacks.
+			System.out.println(this.getName() + " attacks for " + this.getStrength());
+			h1.changeHp(this.getStrength()*-1);
+			System.out.println("You have " + h1.getHp()+" Remaining");
+			if (!ran) {
+				System.out.println(this.getName() + " has "+ this.getHp()+" Remaining");
+			}
+			System.out.println("-----------------");
+
+	}
+	handleDeath(h1,ran);
+
+}
+public void handleDeath(Hero h1,boolean ran){
+	if (h1.getHp() <= 0) {
+		System.out.println("You Died" );
+		Scanner z = new Scanner(System.in);
+		String r = z.nextLine();
+		// leaves the screen open while you come to terms with the fact that you died...
+		System.exit(0);
+	}
+	else if (this.getHp() <= 0) {
+		if (!ran) {
+			System.out.println(this.getName() + " Died");
+			int g = (int) (Math.random()*4)+1;
+			System.out.println("You found " + g + " Gold pieces on his corpse");
+			h1.setGold(h1.getGold() + g);
+			System.out.println(".");
+			System.out.println(".");
+		}
+		else {
+			System.out.println("you managed to escape with your life");
+		}
 	}
 }
 

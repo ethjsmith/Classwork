@@ -17,11 +17,33 @@ public class Dungeon extends Object {
 		//something here
 	}
 	// shoot, randomencounter is in main... might have to change that
-	
+
 	// edit, OR DUNGEON DIES HERE HAHAHAHAHA
-	/*public void dungeonHandler(Hero h1) {
+
+	//edit2 : moved randomencounter , which is now baddy.fight();
+	// dungeon is back on Boys
+	public void enterdungeon(Hero h1) {
+		System.out.println("you find a mysterious dungeon... You can enter if you want, but you expect that you'll face many monster in a row, with a chance for a greater gold reward...");
+		System.out.println("1: Enter the dungeon");
+		System.out.println("2: Countinue your journey");
+		int choice = validnumber(1,2);
+		if (choice == 1) {
+			System.out.println("You head into the dungeon");
+			dungeonHandler(h1);
+	}
+	else {
+		System.out.println("you decide that you're not feeling a dangerous dungeon right now, so you continue on your way");
+	}
+}
+	public void dungeonHandler(Hero h1) {
 		for (int z =0;z<difficulty;z++) {
-			randomencounter(h1);
+			Baddy b = new Baddy(h1);
+			b.fight(h1);
 		}
-	}*/
+		int gold = (int) (Math.random()*(8*difficulty))+5*difficulty;
+		System.out.println("you best all of the enemies in the dungeon, and at it's heart you find a pile of "+gold+  " gold");
+		h1.setGold(h1.getGold()+gold);
+		System.out.println("you quickly loot the dungeon, and then make your escape before more evil creatures can attack");
+
+	}
 }
