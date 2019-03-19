@@ -25,6 +25,8 @@ public class Field
 	private int height;
 	// this array mirrors field, but this one holds "location" data
 	private String [][] map;
+	// trying something new, so that dungeons are persistant, and go away when you beat them
+	private Object [][] map2;
 
 	public Field()
 	{
@@ -35,6 +37,8 @@ public class Field
 	{
 		field = new int [width][height];
 		map = new String[width][height];
+		map2 = new Object[width][height];
+		
 		this.width = width;
 		this.height = height;
 		//2. Create a function to initialize the field with random numbers between 1-10
@@ -53,6 +57,9 @@ public class Field
 	public String WhereAmI(int i,int j) {
 		return map[i][j];
 	}
+	public Object WhereAmI2(int i,int j) {
+		return map2[i][j];
+	}
 	private void initializeField()
 		{
 			// this is where I want to change it from random numbers to a letter code.
@@ -65,12 +72,15 @@ public class Field
 					whatmap = sr.nextInt(25)+1;
 					if (whatmap == 1) {
 						map[i][j] = "T";
+						map2[i][j] = new Town();
 					}
 					else if (whatmap == 2) {
 						map[i][j] = "D";
+						map2[i][j] = new Dungeon();
 					}
 					else {
 						map[i][j] = ".";
+						map2[i][j] = new Object("Nowhere");
 					}
 				}
 			}

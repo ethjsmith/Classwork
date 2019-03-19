@@ -116,6 +116,24 @@ public class GameDriver
 		String currentPos = f1.WhereAmI(c.getX(),c.getY());
 		System.out.println(c.getX() + ", "+c.getY());
 		System.out.println(currentPos);
+		if (f1.WhereAmI2(c.getX(),c.getY()) instanceof Town) {
+			((Town)f1.WhereAmI2(c.getX(),c.getY())).HandleTown(c);
+		}
+		else if (f1.WhereAmI2(c.getX(),c.getY()) instanceof Dungeon) {
+			((Dungeon)f1.WhereAmI2(c.getX(),c.getY())).enterdungeon(c);
+		}
+		else {
+			if ((int) (Math.random()*2)+1 == 1) {
+				randomencounter(c);
+			}
+			else if ((int) (Math.random()*2)+1 == 1) {
+				System.out.println("As you are walking, you come across a traveling merchant. He has many weapons for sale");
+				shopkeeper(c);
+			}
+			else {
+				System.out.println("you come to a quiet field... seems like those are rare these days");
+			}
+		}/*
 		if (currentPos == ".") {
 			// random encounter, pokemon style, you have a chance to run into an enemy
 			// if you don't see an enemy, something else might happen...
@@ -143,8 +161,8 @@ public class GameDriver
 		}
 		else {
 			System.out.println("You create a rip in the time space continuum, breaking the game in this place");
-			// whoops
-		}
+			// whoops*/
+		//}
 		// lets your character wrap on the map, going to the top, or the bottom.
 		// lol there used to be code to let you wrap on the map here, IDK where that went, afaik you can still do that
 
