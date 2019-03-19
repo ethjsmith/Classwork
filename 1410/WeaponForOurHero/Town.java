@@ -14,6 +14,7 @@ public class Town extends Object {
 	public Town() {
 		super();
 		price = (int)(Math.random()*10)+7;
+		townsman = false;
 	}
 	public void nameGenerate() {
 		//it would be cool to have a random town name for every town... sounds like a bit of a pain tho
@@ -63,7 +64,7 @@ public class Town extends Object {
 	}
 	public void HandleTown(Hero h1) {
 		boolean intown = true;
-		townsman = false;
+		//townsman = false;
 		while (intown) {
 			PrintTownOptions();
 			if (!townsman) {
