@@ -18,7 +18,7 @@ public class Dungeon extends Object {
 		//creates a bunch of enemies based on the difficulty of the dungeon
 		//something here
 	}
-	// shoot, randomencounter is in main... which means I can't call it form here afaik ( I don't know how I would ) 
+	// shoot, randomencounter is in main... which means I can't call it form here afaik ( I don't know how I would )
 
 	// edit, OR DUNGEON DIES HERE HAHAHAHAHA Ill just scrap dungeon
 
@@ -43,11 +43,13 @@ public class Dungeon extends Object {
 			System.out.println("having killed all the enemies within, this is a very safe place to camp");
 		}
 	}
+	// there is a bug, where if you just run away from all the enemies in the dungeon , you can loot it as if you beat it .... not really optimal, but whatever
 	// a loop that makes you fight a bunch of enemies based on the difficulty of the dungeon
 	public void dungeonHandler(Hero h1) {
 		for (int z =0;z<difficulty;z++) {
 			//75% that you fight a monster, 25% chance that you run into a trap
-			if (Math.random() > .35) {
+			// now 80 and 20 chances
+			if (Math.random() > .2) {
 				Baddy b = new Baddy(h1);
 				b.fight(h1);
 			}else {
@@ -56,7 +58,8 @@ public class Dungeon extends Object {
 				System.out.println("");
 			}
 		}
-		int gold = (int) (Math.random()*(8*difficulty))+5*difficulty;
+		//dungeons reward a LOT of gold (possibly)
+		int gold = (int) (Math.random()*(8*difficulty))+3*difficulty;
 		System.out.println("you best all of the enemies in the dungeon, and at it's heart you find a pile of "+gold+  " gold");
 		h1.setGold(h1.getGold()+gold);
 		System.out.println("you quickly loot the dungeon, and then make your escape before more evil creatures can attack");
@@ -66,19 +69,19 @@ public class Dungeon extends Object {
 		//some random traps, to make dungeons more interesting
 		//most of this is just if/elseif/else chains... nothing too impressive programmatically...
 		double whichtrap = Math.random();
-		if (whichtrap > .6) {
+		if (whichtrap > .7) {
 			System.out.println("You see some odd tiles on the floor... looks like it could be a trap");
 			System.out.println("1: Step on the Black Tiles");
 			System.out.println("2: Step on the White Tiles");
 			int choice = validnumber(1,2);
 			// lol 50% chance whatever you pick hehhehehehehehehehahahahahahHAAHAHAHAHAHAHAHAHA screw the player xD
-			if (Math.random() > .45) {
+			if (Math.random() > .5) {
 				System.out.println("Nothing happens, I guess you picked the right tiles this time");
 			}else {
 				System.out.println("as soon as you step on the tile, some darts shoot out of the wall, hitting you, and dealing 5 dmg");
 				h1.changeHp(-5);
 			}
-		}else if (whichtrap > .3) {// 2 kinds of traps... how interesting
+		}else if (whichtrap > .2) {// 2 kinds of traps... how interesting
 			System.out.println("You see something glittering in the darkness... it could be some gold, or another trap!");
 			System.out.println("1: Grab the glittering thing");
 			System.out.println("2: Leave it alone");

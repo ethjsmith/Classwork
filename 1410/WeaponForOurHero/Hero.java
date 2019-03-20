@@ -21,10 +21,10 @@ public class Hero extends Character
 {
 	//private Weapon inventory [];
 	//protected int INVENTORY_SIZE = 10;
-	
+
 	// if you whine about my choice to let the player use any weapon they have, then this variable is for you
 	private int numberOfArms;
-	
+
 	//10. Constructors for hero object
 	public Hero()
 		{
@@ -71,6 +71,28 @@ public class Hero extends Character
 		this.strength = strength;
 		//see look, number of arms is enough to use all of the weapons at the same time... the character must be pretty tall to have this many...
 		numberOfArms = 10;
+		}
+		public void changeHp(int change) {
+// this is an overridden version of the method, which checks if you are dead whenever your hp changes
+
+			// this method works for both healing and damage, for healing just pass it a negative value
+			hitPoints += change;
+			// can't heal above the max
+			if ( hitPoints > maxHp) {
+				this.hitPoints = maxHp;
+			}
+			// you can live with 0 HP lol nice
+			if (hitPoints < 0) {
+				death();
+				// end the fakken game lel
+
+			}
+		}
+		public void death() {
+			System.out.println("You Died!");
+			System.out.println("Enter 0 to agknowledge that you are dead");
+			int z = validnumber(0,0);
+			System.exit(0);
 		}
 
 

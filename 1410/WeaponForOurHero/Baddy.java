@@ -148,9 +148,9 @@ public void fight(Hero h1) {
 	boolean ran = false;
 	//Scanner s = new Scanner(System.in);
 	//generates a monster and handles the fight against the monster
-	//originall it did this, but now it just uses the monster that this method is running from 
-	
-	
+	//originall it did this, but now it just uses the monster that this method is running from
+
+
 	System.out.println("As you travel, you encounter a " + this.getName());
 	System.out.println("It seems a fight is inevitable");
 	System.out.println("");
@@ -198,7 +198,7 @@ public void fight(Hero h1) {
 			System.out.println("INVALID");
 		}
 		else {
-			// count x down one, because arrays start at 0, but player input starts at 1 
+			// count x down one, because arrays start at 0, but player input starts at 1
 			x--;
 			// this basically dynamiclly uses the weapon that you choose with choice.
 			if (x % 2 == 0) {
@@ -236,11 +236,8 @@ public void fight(Hero h1) {
 }
 public void handleDeath(Hero h1,boolean ran){
 	if (h1.getHp() <= 0) {
-		System.out.println("You Died" );
-		Scanner z = new Scanner(System.in);
-		String r = z.nextLine();
-		// leaves the screen open while you come to terms with the fact that you died...
-		System.exit(0);
+		h1.death();
+		// I don't think this will ever run here, because it will run in hero.changeHP()... but this is legacy code, and I dont want to change it
 	}
 	// running away is counted as death, (because it kills the monster, so you don't get any loot(gold) for "killing" it)
 	// you can use this to beat dungeons really easily ( and get the loot at the end) ... this is a bug I guess
