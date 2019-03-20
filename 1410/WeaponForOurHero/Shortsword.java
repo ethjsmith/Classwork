@@ -7,6 +7,7 @@
 @Favorite Color : RED
 
 */
+// I like dark souls... if you can't tell by this weapon with the parry, or maybe the Katana that has the Chaos blade ( or darkdrift in ds3) ability
 public class Shortsword extends Weapon {
 	public Shortsword() {
 		super();

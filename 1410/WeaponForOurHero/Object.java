@@ -86,12 +86,12 @@ public class Object
 		this.x = -1;
 		this.y = -1;
 	}
-	// A huge number of weird design stuff happened because I didn't think to put this in here, allowing it to be accessed from any object.
 	public static int validnumber (int min,int max) {
 		//this method returns a verified number between min and max, for use with all those choices you have to make
 		// it also has error handling if you try to enter a word or something stupid
 		int num =0;
 		Scanner s = new Scanner(System.in);
+		System.out.println("please enter an INT between " + min  +" and " + max);
 		boolean valid = false;
 		while (!valid) {
 			try {
@@ -108,8 +108,14 @@ public class Object
 
 			}
 		}
+		clearScreen();
 		return num;
-	}	
+	}
+public static void clearScreen() {
+	for (int clear=0;clear<100;clear++){
+		System.out.println("");
+	}
+}	
 	
 	//MOVE TO THE CHARACTER CLASS
 }

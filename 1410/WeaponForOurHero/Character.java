@@ -53,7 +53,7 @@ public class Character extends Object
 		mana = 10;
 		maxMana = 10;
 		armor =0;
-		gold =1000;
+		gold =10;
 	}
 
 	//7. Now comment out both constructors and watch what happens.
@@ -77,7 +77,7 @@ public class Character extends Object
 
 		this.armor = armor;
 		status = STATUS.ALIVE;
-		gold=1000;
+		gold=10;
 	}
 
 
@@ -100,7 +100,7 @@ public class Character extends Object
 
 	}
 	public boolean canAddItem() {
-		//checks if there is space in the inventory
+		//checks if there is space in the inventory to add an item
 		if (inventory[inventory.length-1].getName().equals("EMPTY")) {
 			return true;
 		}
@@ -108,6 +108,7 @@ public class Character extends Object
 			return false;
 		}
 	}
+	// it might be better to combine with canAddItem, as they should always be called together anyways
 	public void addItemToInventory(Weapon item){
 		for (int z=0;z<inventory.length;z++) {
 			if (inventory[z].getName().equals("EMPTY")){
@@ -117,7 +118,12 @@ public class Character extends Object
 			}
 		}
 	}
+	public void showStats(){
+		System.out.println("Current HP:"+ getHp()+", Current Mana: "+ getMana()+", Strength:"+ getStrength());
+		System.out.println("Gold:" + getGold());
+	}
 	public void showInventory() {
+		//prints out the contents of your inventory
 		for (int r =0;r<inventory.length;r++) {
 			int r2 = r+1;
 			System.out.println("Item #"+r2+" Name:" + inventory[r].getName() + " , Durability: " + inventory[r].getDurability() + " , Attack: " + inventory[r].getDamage());
@@ -126,6 +132,9 @@ public class Character extends Object
 		}
 	}
 	public void removeItemFromInventory(int item) {
+		//remove an item from your inventory, and moves everything else up
+		// if it didn;t work like this, it would be possible for the game to think your inventory was full even when it isn't 
+		// it might be easier with a linked-list (or whatever those things are called)
 		item = item-1;
 		System.out.println("You throw away your " + inventory[item].getName());
 		// move the discardItems method from the gameDriver over to here
@@ -159,12 +168,16 @@ public class Character extends Object
 	}
 
 	//So we can test our creation
-	public void showStats()
+
+	// lol I didn't even know this was here... I wrote something just like it in like 6 lines above lol
+	// ill rename it so that I can leave it in , and leave this amusing comment as well
+	public void showStats2()
 	{
 	System.out.printf("Name: %s%n Hit Points: %d%n Strength: %d%n X = %d y = %d%n", name, hitPoints, strength, x, y );
 	}
 
 	//Is the character still alive?
+	// I didn't use this at all...
 	public boolean isAlive()
 	{
 		if (status==STATUS.DEAD) return false;
@@ -186,6 +199,7 @@ public class Character extends Object
 			this.mana = maxMana;
 		}
 	}
+	//getters and setters at the bottom again lol
 	public int getMana() {
 		return this.mana;
 	}

@@ -7,11 +7,13 @@
 @Favorite Color : RED
 
 */
+// a special sword that you can only get from a rare chance, on a rare encounter... it's probably the strongest weapon in the game
+// originally you could buy it from the merchant, but it's too powerful, so it was replaced by club
 public class Ritualsword extends Weapon {
 	public Ritualsword(){
 		super();
 		name = "Ritual Sword";
-		damage = (int) (Math.random()*12)+5;
+		damage = (int) (Math.random()*14)+7;
 		special = "lifesteal";
 		explaination ="your next attack heals you the amount of damage it deals";
 		price = (int) (Math.random()*16)+damage;

@@ -59,6 +59,7 @@ public class Weapon extends Object {
 		}
 		return w;
 	}
+	// I don't think I wrote this method, I think it was a default
 	public Weapon(int damage, int durability) {
 		super();
 		this.damage = damage;
@@ -92,6 +93,7 @@ public class Weapon extends Object {
 		// this is only here so that it can get overridden by a specific weapon ability, because otherwise all the special abilities would be unusable
 		System.out.println("this is the nonoverloaded method and should never run, this is for testing");
 	}
+	// this method returns the actual attack damage... 
 	public int attack(){
 		if (tryAttacking()) {
 			return (int) (Math.random() * damage)+1;
@@ -102,6 +104,7 @@ public class Weapon extends Object {
 			return -3;
 		}
 	}
+	// putting the setters and getters at the end is good code practice right? 
 	public int getDamage() {
 		return this.damage;
 	}

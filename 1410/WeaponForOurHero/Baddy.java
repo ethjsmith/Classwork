@@ -26,6 +26,7 @@ public class Baddy extends Character
 	super();
 	}
 	public Baddy(Hero h1) {
+		//creates a baddy based on the hero's stats... this is the one that's most often used
 		super();
 		randomize(h1);
 	}
@@ -131,26 +132,32 @@ private void randomize(Hero h1) {
 			// if theres an error in my code, you as the player get to fight some random innocent person
 			break;
 	}
-	this.hitPoints = (int) (h1.getHp() * Math.random()*.5);
+	this.hitPoints = (int) (h1.getHp() * (Math.random()*.7)+.2);
 	if (this.hitPoints < 5) {
 		this.hitPoints = 5;
 	}
 	this.maxHp = this.hitPoints;
-	this.strength = (int) (h1.getStrength() * Math.random()*.6);
+	this.strength = (int) (h1.getStrength() * (Math.random()*.6)+.3);
 	if (this.strength < 2) {
 		this.strength = 2;
 		this.f1 = h1.getField();
 	}
 }
+// here is the logic for the actual fight... it's here so that you can start a fight from anywhere, just by having a baddy
 public void fight(Hero h1) {
 	boolean ran = false;
-	Scanner s = new Scanner(System.in);
+	//Scanner s = new Scanner(System.in);
 	//generates a monster and handles the fight against the monster
-	//Baddy b = generatemonster(h1);
-	//Baddy b = new Baddy(h1);
+	//originall it did this, but now it just uses the monster that this method is running from 
+	
+	
 	System.out.println("As you travel, you encounter a " + this.getName());
 	System.out.println("It seems a fight is inevitable");
+	System.out.println("");
 	while (this.getHp() > 0 && h1.getHp() > 0) {
+		System.out.println("You have "+h1.getHp()+"/"+h1.getMaxHp()+":HP, "+h1.getStrength()+":Strength, and "+h1.getMana()+"/"+h1.getMaxMana()+":Mana");
+		System.out.println(this.getName() + " Has "+this.getHp()+"/"+this.getMaxHp()+":Hp, and "+this.getStrength()+":Strength");
+		System.out.println("-----------------");
 		System.out.println("what would you like to do? ");
 		// a counter to keep track of options
 		int r = 0;
@@ -159,7 +166,7 @@ public void fight(Hero h1) {
 			// well that's pretty complicated, isn't it ?
 			if (!h1.getInventory()[z].getName().equals("EMPTY")){
 				r++;
-				System.out.println(r + ": use " + h1.getInventory()[z].getName() + "'s Normal attack");
+				System.out.println(r + ": use " + h1.getInventory()[z].getName() + "'s Normal attack (+" + h1.getInventory()[z].getDamage() +" DMG)("+h1.getInventory()[z].getDurability()+" DUR)");
 				r++;
 				System.out.println(r + ": use " + h1.getInventory()[z].getName() + "'s Special attack, ");
 			}
@@ -191,8 +198,9 @@ public void fight(Hero h1) {
 			System.out.println("INVALID");
 		}
 		else {
-
+			// count x down one, because arrays start at 0, but player input starts at 1 
 			x--;
+			// this basically dynamiclly uses the weapon that you choose with choice.
 			if (x % 2 == 0) {
 				int total= h1.getStrength() + h1.getInventory()[x/2].attack();
 				System.out.println("You attack for " + total + " Using " +h1.getInventory()[x/2].getName());
@@ -200,13 +208,13 @@ public void fight(Hero h1) {
 			}
 			else {
 				x--;
-				//System.out.println("you use your special attack, which is not yet implimented");
-				//System.out.println("this is for the " + h1.getInventory()[x/2].getName());
 				if (h1.getInventory()[x/2].trySpecial(h1)) {
+					//special handles it's self instead of returning a value, because that allows you to do more interesting things, other than just returning a bunch of bigger numbers
 					h1.getInventory()[x/2].special(h1,this);
 				}
 				else {
-					System.out.println("You are out of mana,or your weapon is broken,  and so your special attack failed");
+					// this is the worst thing that can happen in a fight... only time you deal no damage...
+					System.out.println("You are out of mana, so your special attack failed");
 				}
 
 
@@ -215,10 +223,11 @@ public void fight(Hero h1) {
 						// here your enemy attacks.
 			System.out.println(this.getName() + " attacks for " + this.getStrength());
 			h1.changeHp(this.getStrength()*-1);
-			System.out.println("You have " + h1.getHp()+" Remaining");
-			if (!ran) {
-				System.out.println(this.getName() + " has "+ this.getHp()+" Remaining");
-			}
+			//System.out.println("You have " + h1.getHp()+" HP Remaining");
+			//checks if you ran away
+			//if (!ran) {
+			//	System.out.println(this.getName() + " has "+ this.getHp()+"HP Remaining");
+			//}
 			System.out.println("-----------------");
 
 	}
@@ -233,6 +242,8 @@ public void handleDeath(Hero h1,boolean ran){
 		// leaves the screen open while you come to terms with the fact that you died...
 		System.exit(0);
 	}
+	// running away is counted as death, (because it kills the monster, so you don't get any loot(gold) for "killing" it)
+	// you can use this to beat dungeons really easily ( and get the loot at the end) ... this is a bug I guess
 	else if (this.getHp() <= 0) {
 		if (!ran) {
 			System.out.println(this.getName() + " Died");

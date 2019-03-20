@@ -7,6 +7,7 @@
 @Favorite Color : RED
 
 */
+//frying pan weapon, which you can only get via some special events in the town ... the special attack is probably a little OP
 public class FryingPan extends Weapon {
 	public FryingPan() {
 		super();

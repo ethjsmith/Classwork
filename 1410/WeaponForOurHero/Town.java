@@ -21,18 +21,24 @@ public class Town extends Object {
 		// if there is code in this method it means that I decided to do it
 	}
 	public void PrintTownOptions() {
+		//townsman is a  variable that basically checks if you've already done a special event in town... 
+		// you can only do 1 special event per town, otherwise it wouldn't make sense lore-wise, if you kept getting mugged by the same group of thugs
 		if (!townsman) {
 		System.out.println ("You come to a small town, with a shopkeeper, and an inn");
 		System.out.println("1: Go check what the merchant has for sale");
 		System.out.println("2: Go check the price to stay at the inn");
 		System.out.println("3: Talk to the civilians in the town");
-		System.out.println("4: Leave the town");
+		System.out.println("4: Check stats/inventory");
+		System.out.println("5: Discard Item");
+		System.out.println("6: Leave the town");
 		}
 		else {
 		System.out.println ("You come to a small town, with a shopkeeper, and an inn");
 		System.out.println("1: Go check what the merchant has for sale");
 		System.out.println("2: Go check the price to stay at the inn");
-		System.out.println("3: Leave the town");	
+		System.out.println("3: Check stats/inventory");
+		System.out.println("4: Discard Item");
+		System.out.println("5: Leave the town");	
 		}
 		
 	}
@@ -49,7 +55,8 @@ public class Town extends Object {
 		if (choice == 1) {
 			if (h1.getGold() >= price) {
 				System.out.println("You pay the innkeeper for a room, where you rest the night, quickly healing from your wounds");
-				// this is hackish... it relies on input validation on the other end, and if you somehow get above a million hp you wont fully heal ...oof
+				// this is hackish... it relies on input validation on the other end, and if you somehow get above a million hp you wont fully heal, which is bad, because enemies scale just like you
+				
 				h1.changeHp(100000);
 				h1.setMana(10000);
 				h1.setGold(h1.getGold()-price);
@@ -63,12 +70,13 @@ public class Town extends Object {
 		}
 	}
 	public void HandleTown(Hero h1) {
+		//handles the town... 
 		boolean intown = true;
 		//townsman = false;
 		while (intown) {
 			PrintTownOptions();
 			if (!townsman) {
-				int choice = this.validnumber(1,4);
+				int choice = this.validnumber(1,6);
 				if (choice ==1 ) {
 					merchant(h1);
 				}
@@ -77,6 +85,17 @@ public class Town extends Object {
 				}
 				else if (choice ==3 ) {
 					people(h1);
+					System.out.println("");
+					System.out.println("");
+				}
+				else if (choice ==4) {
+					h1.showStats();
+					h1.showInventory();
+				}
+				else if (choice ==5) {
+					h1.showInventory();
+					System.out.println("Enter the number for the item you wish to discard!");
+					h1.removeItemFromInventory(Object.validnumber(1,h1.getInventory().length+1));
 				}
 				else {
 					// leave the town
@@ -84,12 +103,21 @@ public class Town extends Object {
 					
 				}
 			}else {
-				int choice = this.validnumber(1,3);
+				int choice = this.validnumber(1,5);
 				if (choice ==1 ) {
 					merchant(h1);
 				}
 				else if (choice == 2) {
 					inn(h1);
+				}
+				else if (choice ==3) {
+					h1.showStats();
+					h1.showInventory();
+				}
+				else if (choice ==4) {
+					h1.showInventory();
+					System.out.println("Enter the number for the item you wish to discard!");
+					h1.removeItemFromInventory(Object.validnumber(1,h1.getInventory().length+1));
 				}
 				else {
 					// leave the town
@@ -99,6 +127,10 @@ public class Town extends Object {
 			}
 		}
 	}
+	//if you pick to talk to the townspeople it picks a random "story method"
+	// everything below this point is basiclly just a bunch of if/elseif/else statement trees to add some RPG elements to the game
+	// some interesting stuff can happen here... it's kind of inbalanced, because most of the time you're going to loose (money or hp, or weapons), 
+	// and most of the rewards aren't great ( although there is some stuff that you can only get here ) 
 	public void people (Hero h1) {
 		int who = (int)(Math.random()*4)+1;
 		if (who == 1) {
@@ -119,28 +151,34 @@ public class Town extends Object {
 		int price = (int)(Math.random()*10)+5;
 		System.out.println("You meet a villager to claims to have a potion that can increase your health and strength");
 		System.out.println("He offers to sell it to you for only " + price + " Gold pieces");
+		System.out.println("You have " + h1.getGold() + "GOLD");
 		System.out.println("1: Buy the potion for " + price + " GOLD");
 		System.out.println("2: Decline the offer");
 		int choose = validnumber(1,2);
 		if (choose == 1) {
 			//drink the potion
-			h1.setGold(h1.getGold()-price);
-			System.out.println("You buy the potion, and immediatly drink it");
-			if (Math.random() > .5) {
-				System.out.println ("You feel yourself get stronger... that town'smans potion was legit!");
-				System.out.println("");
-				System.out.println("");
-				h1.setMaxHp(h1.getMaxHp()+5);
-				h1.setStrength(h1.getStrength()+3);
-			}else {
-				System.out.println("Your vision immediately goes dark");
-				System.out.println("You wake up laying in a bathtub filled with Ice");
-				System.out.println("There is a scar in your stomache, and it feels like something was cut out of you");
-				System.out.println("you feel permanently weaker");
-				System.out.println("");
-				System.out.println("");
-				h1.setMaxHp(h1.getMaxHp()-5);
-				h1.setStrength(h1.getStrength()-1);
+			if (h1.getGold() >= price) {
+				h1.setGold(h1.getGold()-price);
+				System.out.println("You buy the potion, and immediatly drink it");
+				if (Math.random() > .5) {
+					System.out.println ("You feel yourself get stronger... that town'smans potion was legit!");
+					System.out.println("");
+					System.out.println("");
+					h1.setMaxHp(h1.getMaxHp()+5);
+					h1.setStrength(h1.getStrength()+3);
+				}else {
+					System.out.println("Your vision immediately goes dark");
+					System.out.println("You wake up laying in a bathtub filled with Ice");
+					System.out.println("There is a scar in your stomache, and it feels like something was cut out of you");
+					System.out.println("you feel permanently weaker");
+					System.out.println("");
+					System.out.println("");
+					h1.setMaxHp(h1.getMaxHp()-5);
+					h1.setStrength(h1.getStrength()-1);
+				}
+			}
+			else {
+				System.out.println("You don't have enough money!");
 			}
 		}
 		else {
@@ -323,6 +361,11 @@ public class Town extends Object {
 		}
 	}
 	public void encounter4(Hero h1) {
+		// yo dawg I heard you liked quests that are based entirely on RNG 
+		// good luck on that 50 gold quests
+		
+		// also this one is a bit buggy, because of the 50 gold one only showing up if you have 50 gold...
+		// and I think you can still pick 4, even when it's not on the list... whoops
 		System.out.println("you come across a begger, who asks for a coin so that he can buy some bread for the night");
 		System.out.println("1:Give him nothing");
 		System.out.println("2: Give him 1 Gold");

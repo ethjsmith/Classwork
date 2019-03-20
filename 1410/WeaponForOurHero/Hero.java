@@ -60,9 +60,9 @@ public class Hero extends Character
 		//initialize inventory array
 		initInventory();
 		Katana k = new Katana("UgiKatana");
-		Shortsword s = new Shortsword();
+		//Shortsword s = new Shortsword();
 		inventory[0] = k;
-		inventory[1] = s;
+		//inventory[1] = s;
 		this.maxHp = hitPoints;
 		this.hitPoints = hitPoints;
 		this.maxMana = 10;
@@ -72,35 +72,6 @@ public class Hero extends Character
 		numberOfArms = 10;
 		}
 
-// this stuff has mostly been moved over to the character class, so that merchant can inherit from character, and still have an Inventory
-
-	//This is the reason for the name only constructor in the object class
-/*	private void initInventory() {
-		for (int i = 0; i< INVENTORY_SIZE; ++i){
-			inventory[i] = new Weapon("EMPTY");
-		}
-
-		*/
-
-
-	/*}
-	public Weapon[] getInventory(){
-		return this.inventory;
-	}*/
-	//lets you add an item to your inventory
-	/*
-	public void addItemToInventory(Weapon item){
-		for (int z=0;z<inventory.length;z++) {
-			if (inventory[z].getName().equals("EMPTY")){
-				inventory[z] = item;
-				break;
-			}
-			if (z == inventory.length && !inventory[z].getName().equals("EMPTY")) {
-				System.out.println("Sorry, You can't hold anything else");
-				System.out.println("If I was a better coder I'd let you drop something, but that sounds hard lol");
-			}
-		}
-	}*/
 
 	//11. What other functions would we need to give our hero?
 

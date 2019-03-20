@@ -7,13 +7,14 @@
 @Favorite Color : RED
 
 */
+// just a cool weapon ability idea I had... makes having money a little pointless, although it does deteriorate slowly(dmg)
 public class Oldsword extends Weapon {
 	public Oldsword() {
 		super();
 		name = "reliable old Sword";
 		damage = (int) (Math.random()*4)+5;
 		special = "Repair";
-		explaination = "Apply some oil to the blade, and the sword is good to go again, like it wasn't even broken";
+		explaination = "Apply some oil to the blade, and the sword is good to go again, almost as good as new";
 		price = (int) (Math.random()*13)+damage;
 	}
 	public void special(Hero h1, Baddy b) {

@@ -24,9 +24,8 @@ public class Field
 	private int width;
 	private int height;
 	// this array mirrors field, but this one holds "location" data
-	private String [][] map;
 	// trying something new, so that dungeons are persistant, and go away when you beat them
-	private Object [][] map2;
+	private Object [][] map;
 
 	public Field()
 	{
@@ -35,9 +34,9 @@ public class Field
 
 	public Field(int width, int height)
 	{
+		//map holds the objects, so when you hit a town, there's actually a town object there
 		field = new int [width][height];
-		map = new String[width][height];
-		map2 = new Object[width][height];
+		map = new Object[width][height];
 		
 		this.width = width;
 		this.height = height;
@@ -54,11 +53,9 @@ public class Field
 
 	//3. We don't have to make every method public.
 	//Why would we want to make this one private?
-	public String WhereAmI(int i,int j) {
+
+	public Object WhereAmI(int i,int j) {
 		return map[i][j];
-	}
-	public Object WhereAmI2(int i,int j) {
-		return map2[i][j];
 	}
 	private void initializeField()
 		{
@@ -71,16 +68,13 @@ public class Field
 					field[i][j] = sr.nextInt(9)+1;
 					whatmap = sr.nextInt(25)+1;
 					if (whatmap == 1) {
-						map[i][j] = "T";
-						map2[i][j] = new Town();
+						map[i][j] = new Town();
 					}
 					else if (whatmap == 2) {
-						map[i][j] = "D";
-						map2[i][j] = new Dungeon();
+						map[i][j] = new Dungeon();
 					}
 					else {
-						map[i][j] = ".";
-						map2[i][j] = new Object("Nowhere");
+						map[i][j] = new Object("Nowhere");
 					}
 				}
 			}

@@ -16,10 +16,10 @@ public class Merchant extends Character {
 	}
 	public void buyloop(Hero h1) {
 		boolean buying = true;
-		System.out.println("He shows you a few, and asks if you would like to purchase any");
-		System.out.println("You have " + h1.getGold() + " Gold pieces");
+		System.out.println("The merchant shows you a few of his items, and asks if you would like to purchase any");
 		//lets you buy multiple items from a vendor, especially important for towns, where the merchant can't just walk away like a wandering merchant could
 		while (buying) {
+			System.out.println("You have " + h1.getGold() + " Gold pieces");
 			int z = this.PrintInventory();
 			int userinput = validnumber(1,z);
 			this.attemptSale(userinput,h1);
