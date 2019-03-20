@@ -20,7 +20,7 @@ public class Katana extends Weapon{
 	public Katana(String name) {
 		super();
 		this.name = name;
-		damage = (int) ((Math.random() * 7) +1);
+		damage = (int) ((Math.random() * 6) +3);
 		special = "Bloody Blade";
 		explaination = "You coat your blade in blood, taking 2 dmg, but dealing a critial strike";
 	}

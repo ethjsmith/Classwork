@@ -59,7 +59,8 @@ public class Hero extends Character
 
 		//initialize inventory array
 		initInventory();
-		Katana k = new Katana("UgiKatana");
+		// this is a unique weapon, there are no others like it in the game
+		Katana k = new Katana("Starting Katana");
 		//Shortsword s = new Shortsword();
 		inventory[0] = k;
 		//inventory[1] = s;

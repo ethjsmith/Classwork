@@ -64,6 +64,7 @@ public class Dungeon extends Object {
 	}
 	public void trap(Hero h1) {
 		//some random traps, to make dungeons more interesting
+		//most of this is just if/elseif/else chains... nothing too impressive programmatically...
 		double whichtrap = Math.random();
 		if (whichtrap > .6) {
 			System.out.println("You see some odd tiles on the floor... looks like it could be a trap");

@@ -20,6 +20,7 @@ public class Merchant extends Character {
 		//lets you buy multiple items from a vendor, especially important for towns, where the merchant can't just walk away like a wandering merchant could
 		while (buying) {
 			System.out.println("You have " + h1.getGold() + " Gold pieces");
+			System.out.println("");
 			int z = this.PrintInventory();
 			int userinput = validnumber(1,z);
 			this.attemptSale(userinput,h1);
@@ -35,6 +36,8 @@ public class Merchant extends Character {
 		for (int z=0;z<3;z++){
 			temp = z+1;
 			System.out.println(temp + ": Purchase " + inventory[z].getName() +"["+ inventory[z].getDamage()+" DMG] For " + inventory[z].getPrice() + " Gold pieces");
+			System.out.println("Special Ability:" + inventory[z].getSpecial() + ", Ability Explaination: " +inventory[z].getExplaination());
+			System.out.println("");
 			}
 			temp++;
 			System.out.println(temp + ": Stop shopping");
