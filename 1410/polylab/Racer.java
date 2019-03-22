@@ -37,8 +37,8 @@ public abstract class Racer {
 	public void setLocation(int l) {
 		location = l;
 		//input validation so racers can't leave the track backwards
-		if (l <= 0) {
-			l = 0;
+		if (location <= 0) {
+			location = 0;
 		}
 	}
 	public int getLocation() {
