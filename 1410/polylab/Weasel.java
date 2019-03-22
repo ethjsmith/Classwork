@@ -5,7 +5,7 @@ public class Weasel extends Racer {
 	}
 	public void move(Racer r){
 		if (Math.random() > .66) {
-			location++;
+			setLocation(getLocation()+1);
 	}else {
 		changeOther(r);
 	}

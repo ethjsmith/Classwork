@@ -4,10 +4,9 @@ public class Raccon extends Racer {
 		name = "raccon";
 	}
 	public void move(Racer r){
-		// 50% chance to move twice
-		location++;
-		if (Math.random() > .5) {
-			location ++;
-		}
+		// Racoons can move a lot, but can also move backwards
+		int movement = (int)(Math.random()*8)-3;
+		//they can move anywhere from -3 spaces to +5 spaces ... crazy 
+		setLocation(getLocation() + movement);
 	}
 }

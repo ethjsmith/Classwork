@@ -6,10 +6,8 @@ public class Rabbit extends Racer {
 	public void move(Racer r){
 		// 40% chance
 		if (Math.random() > .6) {
-			location = location+3;
+			setLocation(getLocation()+3);
 		}
-		else {
-			// nothing
-		}
+		//otherwise nothing happens, mr rabbit just sits there on the track
 	}
 }

@@ -4,6 +4,6 @@ public class Turtle extends Racer {
 		name = "turtle";
 	}
 	public void move(Racer r){
-		location++;
+		setLocation(getLocation()+1);
 	}
 }

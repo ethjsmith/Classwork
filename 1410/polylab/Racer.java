@@ -10,6 +10,7 @@ public abstract class Racer {
 	public abstract void move(Racer r);
 
 	public static Racer makeRacer() {
+		//makes a random racer from the types available
 		double chance = Math.random();
 		Racer r;
 		if (chance > .75) {
@@ -26,6 +27,7 @@ public abstract class Racer {
 		}
 		return r;
 	}
+	//some getters and setters
 	public void setName(String n) {
 		name = n;
 	}
@@ -34,6 +36,10 @@ public abstract class Racer {
 	}
 	public void setLocation(int l) {
 		location = l;
+		//input validation so racers can't leave the track backwards
+		if (l <= 0) {
+			l = 0;
+		}
 	}
 	public int getLocation() {
 		return location;
