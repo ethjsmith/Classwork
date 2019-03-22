@@ -5,10 +5,10 @@ public abstract class Racer {
 
 	}
 	//public Racer(int n,String n) {
-		
+
 	//}
 	public abstract void move(Racer r);
-	
+
 	public static Racer makeRacer() {
 		double chance = Math.random();
 		Racer r;
@@ -22,7 +22,7 @@ public abstract class Racer {
 			r = new Weasel();
 		}
 		else {
-			r = new Raccoon();
+			r = new Raccon();
 		}
 		return r;
 	}

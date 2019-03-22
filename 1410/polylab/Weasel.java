@@ -11,10 +11,8 @@ public class Weasel extends Racer {
 	}
 	}
 	public void changeOther(Racer r) {
-		if (r instanceof Weasel) {
+		if (!(r instanceof Weasel)) {
 			// I don't know how ! works
-		}
-		else {
 			r.setLocation(r.getLocation()-1);
 		}
 	}
