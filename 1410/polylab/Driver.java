@@ -1,3 +1,9 @@
+/*
+@ Author Ethan Smith
+@ DATE 3/22/19
+@ Project: Polymorphism Lab
+@ File: Driver
+*/
 public class Driver {
 	public static void main(String args[]) {
 		Racer [] people = new Racer[10];

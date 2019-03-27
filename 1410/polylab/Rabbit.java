@@ -1,3 +1,9 @@
+/*
+@ Author Ethan Smith
+@ DATE 3/22/19
+@ Project: Polymorphism Lab
+@ File: Rabbit
+*/
 public class Rabbit extends Racer {
 	public Rabbit() {
 		//super();

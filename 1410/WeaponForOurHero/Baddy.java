@@ -132,7 +132,9 @@ private void randomize(Hero h1) {
 			// if theres an error in my code, you as the player get to fight some random innocent person
 			break;
 	}
-	this.hitPoints = (int) (h1.getHp() * (Math.random()*.7)+.2);
+	// right as I was about to turn this in, I realized that I was using current strength instead of max to generate monsters
+	// and that's why the game seemed so easy
+	this.hitPoints = (int) (h1.getMaxHp() * (Math.random()*.5)+.35);
 	if (this.hitPoints < 5) {
 		this.hitPoints = 5;
 	}

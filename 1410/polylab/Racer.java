@@ -1,3 +1,9 @@
+/*
+@ Author Ethan Smith
+@ DATE 3/22/19
+@ Project: Polymorphism Lab
+@ File: Driver
+*/
 public abstract class Racer {
 	int location;
 	String name;
