@@ -1,3 +1,11 @@
+
+/*
+@ Author (EDITED BY) Ethan Smith
+@ DATE 3/28/19
+@ Project : Fireball
+@ Favorite Color : Red
+
+*/
 //stationary object to add to our window
 
 import java.awt.image.BufferedImage;
@@ -23,6 +31,7 @@ public class StationaryObject
 	//renders our object to the screen
 	public void drawImage(Graphics g)
 	{
+		
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
 	}
 

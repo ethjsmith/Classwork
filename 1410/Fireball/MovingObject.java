@@ -1,3 +1,11 @@
+
+/*
+@ Author (EDITED BY) Ethan Smith
+@ DATE 3/28/19
+@ Project : Fireball
+@ Favorite Color : Red
+
+*/
 //stationary object to add to our window
 
 import java.awt.image.BufferedImage;
@@ -25,7 +33,11 @@ private int vy;
 	{
 		//because we added the bullet functions what should go here?
 		//I intentionally left something out here for you to figure out
-		g.drawImage(bi,posx+vx, posy+vy,imageW,imageH,null);
+		posx += vx;
+		posy += vy;
+		g.drawImage(bi,posx, posy,imageW,imageH,null);
+		//debugging the best way \/ 
+		//System.out.println(posx+","+posy);
 	
 	}
 	
