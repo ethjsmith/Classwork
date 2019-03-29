@@ -33,4 +33,7 @@ public class Map extends TDobj {
             System.out.println("");
         }
     }
+	public int getPos(int x,int y) {
+		return gamearray[x][y];
+	}
 }
