@@ -1,7 +1,8 @@
 public class ReduceTheCode { 	// @Edited by Ethan Smith
-	private int foo,bar;		// @Edited on 4/8/2019
+	private int foo;			// @File : ReduceTheCode
+	private int bar;			// @Edited on 4/8/2019
 	private int [][] tao;		// @Project : Reduce the code
-	public ReduceTheCode(){		// @File : ReduceTheCode
+	public ReduceTheCode(){
 		setVariables(5);
 	}
 	public int getFoo(){
@@ -18,7 +19,7 @@ public class ReduceTheCode { 	// @Edited by Ethan Smith
 		}
 	}
 	public static int a(int i){
-		if (i >= 0 && i <= 20) 
+		if (i >= 0 && i <= 20)
 			return i+12;
 		return -1;
 	}
@@ -28,6 +29,6 @@ public class ReduceTheCode { 	// @Edited by Ethan Smith
 			return z[i];
 		return -1;
 	}
-	public static void c(int i){// This method didn't do anything 
+	public static void c(int i){// This method didn't do anything
 	}
 }
