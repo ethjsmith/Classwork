@@ -1,3 +1,21 @@
+/*
+@
+@ Author/edited by : Ethan Smith
+@ Date : 4/3/19
+@ Assignment : File IO
+@ Favorite Color : Red
+@ I don't know why I add that, but it makes me chuckle
+@
+*/
+
+// ***********************************************************************************************************
+
+// IMPORTANT RUN THIS PROGRAM BY PASSING THE FILENAME OF THE MAZE YOU WANT TO CREATE AS A COMMANDLINE ARGUMENT
+
+// LIKE THIS `java FileReader Maze[number].txt`
+
+// ***********************************************************************************************************
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,66 +27,37 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- * 
- * @author
- *
- */
+
 @SuppressWarnings({ "serial", "unused" })
 public class FileReader extends JFrame {
 
 	public FileReader(String[] args){
 		super("Maze");
-		int numRows = 7;
-		int numCols = 9;
-		MyCanvas myCanvas = null; 
+		try {
+		// make scanner based on a file ( preparring for optimization lab) 
+		Scanner z = new Scanner(new File(args[0]));
+		// I don't like colums and rows... but set them here based on the first 2 characters in the file
+		
+		int numCols = z.nextInt();
+		int numRows = z.nextInt();
+		MyCanvas myCanvas = new MyCanvas(numCols, numRows);
+		// Don't tell me what to do -_- 
 		//Do Not Make Any Changes Above This Line
 
-		//Here is where you need to ask the user to enter the name of the maze file, or just hard code it in
 		
-		
-		// fukken use the args lol 
-		
-		//Use the first 2 integers in the file to make the following method call work
-		myCanvas = new MyCanvas(numRows, numCols);
-		String s = "A";
-		
-		
-		//Now the hard part.  Figure out what picture should be printed at each position
-		//Using a Scanner you can read in ints and doubles, and Strings
-		//Note: loops are very good for this type of exercise
-		//The following method call adds picture A at position 0 0
-		
-	try {
-		File f = new File(args[0]);
-	
-		Scanner z = new Scanner(f);
-		
-		// get rid of the first two letters 
-		
-		s=z.next();
-		s=z.next();
+		//loops through all the values in the file ( based on the dimensions from the first 2 characters)
+		// and creates an image for each of them
 		for(int x = 0;x<numCols;x++) {
 			for (int y =0;y<numRows;y++) {
-				
-				s = z.next();
-			if (s.contains("+")) {
-				break;
-			}
-				//System.out.print(s);
-				myCanvas.addPicture(x, y, s + ".png");
+				myCanvas.addPicture(x, y, z.next() + ".png");
 			}
 
-			//System.out.println("");
 		}
 		
 		
-		//myCanvas.addPicture(0, 0, s + ".png");
-		
-		
 		
 
-		
+		// I didn't make any of this code, so expect no snarky comments here
 		
 		//You can change the size of the Frame if you want
 		this.setSize(600, 600);
@@ -81,9 +70,17 @@ public class FileReader extends JFrame {
 		this.setVisible(true);
 		}
 	catch (FileNotFoundException e){
-			// fuck
+			// Don't do this
 			System.out.println("ERR");
 		}
+	catch (ArrayIndexOutOfBoundsException e) {
+		// if you don't read the instructions, or if you try to run the program before looking at the code
+		// then you get to look at this nice little message 
+		System.out.println("==============================================");
+		System.out.println("Pass the maze you want rendered as a commandline argument");
+		System.out.println("Like this `java FileReader Maze1.txt`");
+		System.out.println("==============================================");
+	}
 	}
 
 	public static void main(String[] args) {

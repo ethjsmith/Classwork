@@ -11,8 +11,9 @@ public class Driver {
     public static void main(String args[]) {
 		
 		// swing method which controls stuff IDK
-		Driver d = new Driver();
-		d.run();
+		//Driver d = new Driver();
+		//d.run();
+		Map m1 = new Map();
 		//SwingUtilities.invokeLater(new Runnable() {
 	}
 		public void run() {
