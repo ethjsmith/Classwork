@@ -22,17 +22,17 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class Tower extends MapObject{
-	
+
 	private Bullet1 b1;
 	private int range;
 	private ArrayList<Bullet1> bullets = new ArrayList<Bullet1>(0);
 	private Enemy target;
 	private int canfire=0;
 	public BufferedImage[] t = new BufferedImage[4];
-	
+
 	// tower stats
 	private int power,speed,level;
-	
+
 	public Tower(int posx, int posy, BufferedImage bi, int imageW, int imageH)
 	{
 		super(posx, posy, bi, imageW, imageH);
@@ -43,10 +43,10 @@ public class Tower extends MapObject{
 		level = 1;
 		try {
 			//initalize all of the tower images and save them as files to be accessed
-			t[0] = ImageIO.read(new File("Tower1.png"));
-			t[1] = ImageIO.read(new File("Tower2.png"));
-			t[2] = ImageIO.read(new File("Tower3.png"));
-			t[3] = ImageIO.read(new File("Tower4.png"));
+			t[0] = ImageIO.read(new File("tower1.png"));
+			t[1] = ImageIO.read(new File("tower2.png"));
+			t[2] = ImageIO.read(new File("tower3.png"));
+			t[3] = ImageIO.read(new File("tower4.png"));
 		}
 		catch (IOException e) {
 			System.out.println("Unable to generate tower due to IO exception");
@@ -109,30 +109,30 @@ public class Tower extends MapObject{
 				target = enemies.get(z);
 				//System.out.println("firing");
 				fire();
-				
+
 				return true;
 			}
 		}
 		target=null;
 		return false;
 	}
-	//fires at an enemy?  
+	//fires at an enemy?
 	public void fire() {
 		//bullets.add(new bullet1(midX,midY,10,10));
-		// i hate trig, almost as much as I hate Calc lmao fuck me 
+		// i hate trig, almost as much as I hate Calc lmao fuck me
 		if (canfire >speed) {
 			double shootme = target.getMidY() + (target.getVy()*20);
 			if (target != null) {
 				double angle = Math.atan2((double)(shootme-midY),(double)(target.getMidX()-midX));
-				double vx = 25*(Math.cos(angle));
-				double vy = 25*(Math.sin(angle));
+				double vx = 15*(Math.cos(angle));
+				double vy = 15*(Math.sin(angle));
 				bullets.add(new Bullet1(midX,midY,vx,vy));
 				canfire=0;
 			}
 		}else {
 			canfire++;
 		}
-		
+
 		// is it fucking Trigonometry time ? I fucking hate everything
 	}
 	//Got to return the bullet to check the position
@@ -140,7 +140,7 @@ public class Tower extends MapObject{
 	{
 		return b1;
 	}
-	
+
 	public void destroyBullet()
 	{
 		b1 = null;
@@ -150,4 +150,3 @@ public class Tower extends MapObject{
 	}
 
 }
-

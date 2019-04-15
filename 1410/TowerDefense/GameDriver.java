@@ -21,27 +21,27 @@ public class GameDriver extends JFrame{
 	public int mx,my;
 	public int money,lives,difficulty;
 	public GameDriver() {
-		
+
 		super("Tower Defense"); //added
 		lives = 10;
 		money = 20;
 		difficulty = 3;
 		getContentPane().setLayout(null);
-		
+
 		JPanel Controls = new JPanel();
 		Controls.setBounds(0, 0, 120, 278);
 		getContentPane().add(Controls);
 		Controls.setLayout(null);
 		//Controls.setSize(200,600);
-		
+
 		JLabel lblMoney = new JLabel("Money:" + money);
 		lblMoney.setBounds(6, 5, 45, 16);
 		Controls.add(lblMoney);
-		
+
 		JLabel lblLives = new JLabel("Lives: " + lives);
 		lblLives.setBounds(6, 22, 40, 16);
 		Controls.add(lblLives);
-		
+
 		JPanel Map = new MapLoader();
 		Map.setBounds(123, 0, 600, 600);
 		getContentPane().add(Map);
@@ -56,30 +56,37 @@ public class GameDriver extends JFrame{
 			//lazy midpoint workaround for now
 			mx = e.getX()-20;
 			my = e.getY()-20;
-			// if mx is within the bounds of a tower and y then select that tower 
+			// if mx is within the bounds of a tower and y then select that tower
 			((MapLoader)Map).selectTower(mx,my);
 			}
 		});
+		// these buttons will be used to show on the map when you select a tower.
+		JButton btnUpgrade = new JButton("Upgrade tower");
+		JButton btnDelete = new JButton ("Destroy Tower");
+		//Map.add(btnUpgrade);
+		//Map.add(btnDelete);
+		//btnUpgrade.setVisible(false);
+		//btnDelete.setVisible(false);
 		//added
-		ImageIcon GIcon = new ImageIcon("Tower1.png");
+		ImageIcon GIcon = new ImageIcon("tower1.png");
 			Image image = GIcon.getImage();
 			Image newImage = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 			GIcon = new ImageIcon(newImage);
-		
+
 		//JButton btnStart = new JButton("Tower 0");
 		JButton btnStart = new JButton(GIcon);
 		btnStart.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			
+
 			((MapLoader)Map).createTower(mx,my);
 			}
 		});
 		//btnStart.setBounds(6, 45, 117, 29);
 		btnStart.setBounds(6, 45, 117, 60);
 		Controls.add(btnStart);
-		
-		
+
+
 		JButton btnNewButton = new JButton("START");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -94,14 +101,14 @@ public class GameDriver extends JFrame{
 	}
 
 	public static void main(String[] args) {
-	
+
 		//1. Answer the questions found in Questions.txt
-		
+
 		GameDriver m = new GameDriver();
 		m.setSize(760, 650);
 		m.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		m.setVisible(true);
-		
+
 
 	}
 }

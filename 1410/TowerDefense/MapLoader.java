@@ -26,20 +26,20 @@ public class MapLoader extends JPanel {
 	public BufferedImage t1,t2,t3,t4;
 	//Tower t1;
 	Enemy e1;
-		
+
 	public MapLoader(){
 
 		int rows = 10;
 		int cols = 10;
-		
-		MyCanvas myCanvas = null; 
+
+		MyCanvas myCanvas = null;
 		myCanvas = new MyCanvas(rows, cols);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
-			t1 = ImageIO.read(new File("Tower1.png"));
-			t2 = ImageIO.read(new File("Tower2.png"));
-			t3 = ImageIO.read(new File("Tower3.png"));
-			t4 = ImageIO.read(new File("Tower4.png"));
+			t1 = ImageIO.read(new File("tower1.png"));
+			t2 = ImageIO.read(new File("tower2.png"));
+			t3 = ImageIO.read(new File("tower3.png"));
+			t4 = ImageIO.read(new File("tower4.png"));
 		}
 		catch (IOException e) {
 			System.out.println("Unable to generate tower due to IO exception");
@@ -48,27 +48,27 @@ public class MapLoader extends JPanel {
 		for (int x = 0; x< rows; x++)
 			for (int y = 0; y < cols; y++)
 				myCanvas.addPicture(x, y,"grass_02_RS.png");
-		
+
 		if (myCanvas != null){
 			this.add(myCanvas);
 		}
 		this.setVisible(true);
 	}
- 
-	
+
+
 	//public void createTower(int x, int y, int style)
 	public void selectTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
 			if (towers.get(z).isColliding(new MovingObject(x,y,8))) {
-				
+
 				int pwr = towers.get(z).getPowerLevel();
 				//towers.get(z).changeImage(t2);
 				towers.get(z).upgrade();
 				System.out.println("Upgrading tower");
 			}
 			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
-				// do some stuff to add some buttons and upgrade towers... idk 
-				
+				// do some stuff to add some buttons and upgrade towers... idk
+
 			//}
 		}
 	}
@@ -87,7 +87,7 @@ public class MapLoader extends JPanel {
 	public void createTower(int x, int y)
 	{
 			Tower tow1 = new Tower(x,y,t1, 40,40);
-			// don't put towers on top of each other! 
+			// don't put towers on top of each other!
 			boolean place = true;
 			if (towers.size() > 0) {
 				for (int z=0;z<towers.size();z++) {
@@ -108,23 +108,23 @@ public class MapLoader extends JPanel {
 				towers.add(new Tower(x,y,t1, 40,40));
 			}
 	}
-	
+
 	public void start()
 	{
-		
+
 		//try {
-		
+
 	//	}
 	//	catch (IOException e)
 	//	{
 			System.out.println("Unable to generate enemies due to IO exception");
 	//	}
 	}
-	
+
 	public void paint(Graphics g){
 		super.paint(g);
 		try{
-		
+
 		//bullet and enemy position
 		int bx = 0;
 		int by = 0;
@@ -149,10 +149,10 @@ public class MapLoader extends JPanel {
 						}
 					}
 				}
-				/*if(t1 != null) 
+				/*if(t1 != null)
 				{
 					t1.drawImage(g);
-					
+
 					if (t1.getBullet() != null)
 					{
 						bx = t1.getBullet().getXpos();
@@ -161,7 +161,7 @@ public class MapLoader extends JPanel {
 						//System.out.println(by);
 					}
 				}*/
-				
+
 				if (e1 != null)
 				{
 					e1.drawImage(g);
@@ -170,22 +170,22 @@ public class MapLoader extends JPanel {
 					//System.out.println(ex);
 					//System.out.println(ey);
 				}
-				
+
 				/*//check bullet and enemy position
 				if (((ex >= (bx - 5)) && (ex <= (bx + 5))) && ((ey >= (by - 5)) && (ey <= (by + 5))) )
 				{
 					e1 = null;
-					//t1.destroyBullet();	
+					//t1.destroyBullet();
 				}*/
-				
-				Thread.sleep(25);
+
+				Thread.sleep(15);
 				repaint();
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
 
 
