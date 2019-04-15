@@ -4,7 +4,18 @@
 @ Assignment : Tower defense
 @ File: Tower
 */
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.util.*;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -17,13 +28,44 @@ public class Tower extends MapObject{
 	private ArrayList<Bullet1> bullets = new ArrayList<Bullet1>(0);
 	private Enemy target;
 	private int canfire=0;
+	public BufferedImage[] t = new BufferedImage[4];
+	
+	// tower stats
+	private int power,speed,level;
+	
 	public Tower(int posx, int posy, BufferedImage bi, int imageW, int imageH)
 	{
 		super(posx, posy, bi, imageW, imageH);
 		//b1 = new Bullet1(posx, posy, 10,10);
 		range = (int)(hitboxRadius*5);
+		speed = 60;
+		power = 1;
+		level = 1;
+		try {
+			//initalize all of the tower images and save them as files to be accessed
+			t[0] = ImageIO.read(new File("Tower1.png"));
+			t[1] = ImageIO.read(new File("Tower2.png"));
+			t[2] = ImageIO.read(new File("Tower3.png"));
+			t[3] = ImageIO.read(new File("Tower4.png"));
+		}
+		catch (IOException e) {
+			System.out.println("Unable to generate tower due to IO exception");
+		}
 	}
-
+	public int getPowerLevel() {
+		return level;
+	}
+	public void upgrade () {
+		if (level < 4) {
+			level++;
+			power++;
+			speed-=12;
+			range +=hitboxRadius;
+			this.changeImage(t[level-1]);
+		}else {
+			System.out.println("MAX LEVEL ALREADY");
+		}
+	}
 	//Added this to override parent
 	//Wanted it to draw a bullet when the tower was drawn
 	public void drawImage(Graphics g)
@@ -53,7 +95,7 @@ public class Tower extends MapObject{
 			for (int r=0;r<bullets.size();r++) {
 				if (bullets.get(r).isColliding(enemies.get(z))) {
 					bullets.remove(r);
-					enemies.get(z).takeDamage(1);
+					enemies.get(z).takeDamage(power);
 					System.out.println("hit");
 				}
 			}
@@ -78,7 +120,7 @@ public class Tower extends MapObject{
 	public void fire() {
 		//bullets.add(new bullet1(midX,midY,10,10));
 		// i hate trig, almost as much as I hate Calc lmao fuck me 
-		if (canfire >10) {
+		if (canfire >speed) {
 			double shootme = target.getMidY() + (target.getVy()*20);
 			if (target != null) {
 				double angle = Math.atan2((double)(shootme-midY),(double)(target.getMidX()-midX));

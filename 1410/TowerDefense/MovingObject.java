@@ -14,6 +14,15 @@ public class MovingObject extends MapObject {
 	private double vx;
 	private double vy;
 	
+	public MovingObject(int posx,int posy,int radius) {
+		// creates a generic object which isn't actually moving
+		// used for checking if you've clicked on a tower.
+		super(posx,posy,radius);
+		midX= posx;
+		midY=posy;
+		this.hitboxRadius = radius;
+	}
+	
 	public MovingObject(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy)
 	{
 		super(posx, posy, bi,  imageW, imageH);

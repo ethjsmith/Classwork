@@ -17,6 +17,11 @@ public abstract class MapObject
 	protected int midX,midY;
 	protected int hitboxRadius;
 
+	MapObject(int x,int y,int z) {
+		// this trash is only here because this method is abstract...
+		// I don't like abstract methods, because I needed a generic object and couldn't use
+		// this one 
+	}
 	MapObject(int posx, int posy, BufferedImage bi, int imageW, int imageH)
 	{
 		this.posx = posx;
@@ -31,6 +36,9 @@ public abstract class MapObject
 		// the radius of the circle that will be the hitbox of everything
 		// probably a bit clunky
 		hitboxRadius = (int)(((imageW * .5) + (imageH * .5)) / 2); 
+	}
+	public void changeImage(BufferedImage b) {
+		bi = b;
 	}
 	public int getRadius() {
 		return hitboxRadius;
@@ -54,5 +62,17 @@ public abstract class MapObject
 	public void drawImage(Graphics g)
 	{
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
+	}
+	public int getX() {
+		return posx;
+	}
+	public int getY() {
+		return posy;
+	}
+	public int getWidth() {
+		return imageW;
+	}
+	public int getHeight() {
+		return imageH;
 	}
 }

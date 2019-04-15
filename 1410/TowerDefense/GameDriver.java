@@ -19,12 +19,13 @@ import java.awt.Image; //added
 
 public class GameDriver extends JFrame{
 	public int mx,my;
-	public int money,lives;
+	public int money,lives,difficulty;
 	public GameDriver() {
 		
 		super("Tower Defense"); //added
 		lives = 10;
 		money = 20;
+		difficulty = 3;
 		getContentPane().setLayout(null);
 		
 		JPanel Controls = new JPanel();
@@ -55,6 +56,8 @@ public class GameDriver extends JFrame{
 			//lazy midpoint workaround for now
 			mx = e.getX()-20;
 			my = e.getY()-20;
+			// if mx is within the bounds of a tower and y then select that tower 
+			((MapLoader)Map).selectTower(mx,my);
 			}
 		});
 		//added
@@ -81,6 +84,8 @@ public class GameDriver extends JFrame{
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				((MapLoader)Map).createEnemies(difficulty);
+				difficulty++;
 			}
 		});
 		//btnNewButton.setBounds(6, 74, 117, 29);
