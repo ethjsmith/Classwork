@@ -8,12 +8,20 @@
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Enemy extends MovingObject{
 	
 	private int hitPoints;
 	private int maxHp;
 	private int scale;
+	private int animation=1;
+	private int ani_counter;
+	public BufferedImage[] t = new BufferedImage[2];
 	
 	public Enemy(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, int hitPoints)
 	{
@@ -22,6 +30,14 @@ public class Enemy extends MovingObject{
 		// this stuff is for drawing the HP box
 		this.maxHp = hitPoints;
 		scale = imageW /maxHp;
+		ani_counter = (int)(Math.random()*20)+1;
+		try {
+		t[0] = ImageIO.read(new File("orc1.png"));
+		t[1] = ImageIO.read(new File("orc2.png"));
+		}
+		catch (IOException e) {
+			System.out.println("error my dude");
+		}
 	}
 	public boolean outside() {
 		if (posy > 650)
@@ -38,6 +54,22 @@ public class Enemy extends MovingObject{
 		hitPoints -=dmg;
 	}
 	//overriding the child method 
+	// switch between 2 animations 
+	public void animate() {
+		if (ani_counter > 20) {
+		if (animation == 1) {
+			animation = 2;
+			changeImage(t[1]);
+		}
+		else if (animation == 2) {
+			animation = 1;
+			changeImage(t[0]);
+		}
+		ani_counter=0;
+		}else {
+			ani_counter++;
+		}
+	}
 	public void drawImage(Graphics g)
 	{
 		super.drawImage(g);

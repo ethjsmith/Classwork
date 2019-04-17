@@ -57,26 +57,30 @@ public class MapLoader extends JPanel {
 
 
 	//public void createTower(int x, int y, int style)
-	public void selectTower(int x,int y) {
+	public void upgradeTower(Tower t) {
+		t.upgrade();
+	}
+	public Tower selectTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
 			if (towers.get(z).isColliding(new MovingObject(x,y,8))) {
-
-				int pwr = towers.get(z).getPowerLevel();
+				return towers.get(z);
+				//int pwr = towers.get(z).getPowerLevel();
 				//towers.get(z).changeImage(t2);
-				towers.get(z).upgrade();
-				System.out.println("Upgrading tower");
+				//towers.get(z).upgrade();
+				//System.out.println("Upgrading tower");
 			}
 			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
 				// do some stuff to add some buttons and upgrade towers... idk
 
 			//}
 		}
+		return null;
 	}
 	public void createEnemies(int z) {
 		try {
 			while ( z >= 0) {
 				int enY = (int)((Math.random()*550)+10);
-				enemies.add(new Enemy(0, enY, ImageIO.read(new File("Goblin1.png")), 40, 40, 1, 0, 3));
+				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 1, 0, 3));
 				z--;
 			}
 		}
@@ -140,6 +144,7 @@ public class MapLoader extends JPanel {
 				}
 				if (enemies.size() > 0) {
 					for (int z=0;z<enemies.size();z++) {
+						enemies.get(z).animate();
 						enemies.get(z).drawImage(g);
 						if (enemies.get(z).outside()) {
 							enemies.remove(z);

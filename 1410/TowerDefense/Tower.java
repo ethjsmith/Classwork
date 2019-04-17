@@ -119,11 +119,14 @@ public class Tower extends MapObject{
 	//fires at an enemy?
 	public void fire() {
 		//bullets.add(new bullet1(midX,midY,10,10));
-		// i hate trig, almost as much as I hate Calc lmao fuck me
+		// i hate trig, almost as much as I hate Calc lmao help 
 		if (canfire >speed) {
-			double shootme = target.getMidY() + (target.getVy()*20);
+			//targets with a guess based on where the orc is moving
+			// 20 can be changed if the tower is over or underfiring
+			double predictedVy = target.getMidY() + (target.getVy()*20);
+			double predictedVx = target.getMidX() + target.getVx()*20;
 			if (target != null) {
-				double angle = Math.atan2((double)(shootme-midY),(double)(target.getMidX()-midX));
+				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				double vx = 15*(Math.cos(angle));
 				double vy = 15*(Math.sin(angle));
 				bullets.add(new Bullet1(midX,midY,vx,vy));

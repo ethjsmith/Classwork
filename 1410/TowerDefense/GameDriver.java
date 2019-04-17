@@ -18,8 +18,9 @@ import javax.swing.ImageIcon; //added
 import java.awt.Image; //added
 
 public class GameDriver extends JFrame{
-	public int mx,my;
+	public int mx,my,midx,midy;
 	public int money,lives,difficulty;
+	public Tower t1;
 	public GameDriver() {
 
 		super("Tower Defense"); //added
@@ -44,8 +45,12 @@ public class GameDriver extends JFrame{
 
 		JPanel Map = new MapLoader();
 		Map.setBounds(123, 0, 600, 600);
+		midx = Map.getWidth()/2;
+		midy = Map.getHeight()/2;
 		getContentPane().add(Map);
 		Map.setLayout(new GridLayout(1, 0, 0, 0));
+		JButton btnUpgrade = new JButton("Upgrade tower");
+		JButton btnDelete = new JButton ("Destroy Tower");
 		Map.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -57,12 +62,45 @@ public class GameDriver extends JFrame{
 			mx = e.getX()-20;
 			my = e.getY()-20;
 			// if mx is within the bounds of a tower and y then select that tower
-			((MapLoader)Map).selectTower(mx,my);
+			// x y width height
+			//((MapLoader)Map).selectTower(mx,my);
+			//logic structure for placing buttons
+			
+			
+			if (mx >= midx) {
+				if (my >= midy) {
+					btnUpgrade.setBounds(mx,my,-20,-50);
+					System.out.println("1 selected");
+				}
+				else {
+					btnUpgrade.setBounds(mx,my,-20,50);
+					System.out.println("2 selected");
+				}
+			}
+			else {
+				if (my >= midy) {
+					btnUpgrade.setBounds(mx,my,20,-50);
+					System.out.println("3 selected");
+				}
+				else {
+					btnUpgrade.setBounds(mx,my,20,50);
+					System.out.println("4 selected");
+				}
+			}
+			Map.add(btnUpgrade);
+			btnUpgrade.setVisible(true);
+			System.out.println(mx +"-" + my);
+			Map.revalidate();
 			}
 		});
+		
+		// make the buttons appear on the screen instead of clipped off
+		
+		// determines button position based on these constraintss
+		
+		
 		// these buttons will be used to show on the map when you select a tower.
-		JButton btnUpgrade = new JButton("Upgrade tower");
-		JButton btnDelete = new JButton ("Destroy Tower");
+		
 		//Map.add(btnUpgrade);
 		//Map.add(btnDelete);
 		//btnUpgrade.setVisible(false);
@@ -80,6 +118,13 @@ public class GameDriver extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 
 			((MapLoader)Map).createTower(mx,my);
+			}
+		});
+		btnUpgrade.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			((MapLoader)Map).upgradeTower(t1);
+			btnUpgrade.setVisible(false);
 			}
 		});
 		//btnStart.setBounds(6, 45, 117, 29);
