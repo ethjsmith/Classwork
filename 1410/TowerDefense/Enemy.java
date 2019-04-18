@@ -79,16 +79,14 @@ public class Enemy extends MovingObject{
 		
 		//draw a healthbar
 		g.setColor(Color.RED);
-		g.fillRect(posx,posy-5,imageW,5);
+		g.fillRect(posx,posy-3,imageW,2);
 		g.setColor(Color.GREEN);
 		if (hitPoints >= 0) {
-			g.fillRect(posx,posy-5,scale*hitPoints,5);
+			g.fillRect(posx,posy-3,scale*hitPoints,2);
 		}
 		else {
 			g.fillRect(posx,posy-5,0,5);
 		}
-		//complex to think about
-		//x/100 = n/10
 		
 		
 	}

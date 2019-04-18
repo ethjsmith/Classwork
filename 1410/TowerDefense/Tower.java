@@ -21,17 +21,20 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
+import java.awt.Color;
+
 public class Tower extends MapObject{
 
-	private Bullet1 b1;
-	private int range;
-	private ArrayList<Bullet1> bullets = new ArrayList<Bullet1>(0);
-	private Enemy target;
-	private int canfire=0;
+	protected Bullet1 b1;
+	protected int range;
+	protected ArrayList<Bullet1> bullets = new ArrayList<Bullet1>(0);
+	protected Enemy target;
+	protected int canfire=0;
 	public BufferedImage[] t = new BufferedImage[4];
+	
 
 	// tower stats
-	private int power,speed,level;
+	protected int power,speed,level;
 
 	public Tower(int posx, int posy, BufferedImage bi, int imageW, int imageH)
 	{
@@ -74,11 +77,12 @@ public class Tower extends MapObject{
 		//draws all the bullets associated with a tower
 		for ( int z=0;z<bullets.size();z++) {
 			if (bullets.get(z).isOutside()) {
+					bullets.get(z);
 					bullets.remove(z);
 				}
 		}
 		for ( int z=0;z<bullets.size();z++) {
-			bullets.get(z).drawImage(g);
+			bullets.get(z).drawImage(g,Color.BLACK);
 		}
 	}
 	//checks if there is an enemy within range of the tower
@@ -129,7 +133,7 @@ public class Tower extends MapObject{
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				double vx = 15*(Math.cos(angle));
 				double vy = 15*(Math.sin(angle));
-				bullets.add(new Bullet1(midX,midY,vx,vy));
+				bullets.add(new Bullet1(midX,midY,vx,vy,this));
 				canfire=0;
 			}
 		}else {

@@ -16,19 +16,30 @@ public class Bullet1  {
 	private double posX;
 	private double posY;
 	private int midX,midY,hitboxRadius;
+	private int range;
+	private Tower parent;
 
-	public Bullet1(int posX, int posY, double vx, double vy) {
+	public Bullet1(int posX, int posY, double vx, double vy,Tower parent) {
 		this.posX = (double)posX;
 		this.posY = (double)posY;
 		this.vx=vx;
 		this.vy=vy;
+		this.parent = parent;
 		midX=posX+4;
 		midY=posY+4;
 		hitboxRadius = 10;
+		if (parent instanceof FireTower) {
+			range = 35;
+		}
+		else if (parent instanceof Tower) {
+			range = 300;
+		}
+		else {range = 10;}
+		
 	}
 	//renders our object to the screen
-	public void drawImage(Graphics g) {
-		g.setColor(Color.BLACK);
+	public void drawImage(Graphics g, Color c) {
+		g.setColor(c);
 		g.fillOval((int)(posX +=vx), (int)(posY+=vy), 7,7);
 		midX +=vx;
 		midY += vy;
@@ -50,11 +61,20 @@ public class Bullet1  {
 		}
 		return false;
 	}
+	//change this to the range of the tower ( give or take) to make the fire towers a bit better
 	public boolean isOutside() {
-		// if the bullet is outside the boundaries of the map, destroy it 
-		if (posX < -10 || posX > 610 || posY < -10 || posX > 610) {
+		int distance = (int)Math.sqrt(Math.pow((midX-parent.getMidX()),2)+Math.pow((midY-parent.getMidY()),2));
+		if (distance > range) {
 			return true;
 		}
 		return false;
 	}
+	//public boolean isOutside() {
+		// if the bullet is outside the boundaries of the map, destroy it 
+		
+	//	if (posX < -10 || posX > 610 || posY < -10 || posX > 610) {
+		//	return true;
+		//}
+		//return false;
+	//}
 }

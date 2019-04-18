@@ -12,6 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import java.awt.*; 
+import java.awt.event.*; 
+import javax.swing.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -53,12 +57,35 @@ public class MapLoader extends JPanel {
 			this.add(myCanvas);
 		}
 		this.setVisible(true);
+		//JPopupMenu upgrade = new JPopupMenu("upgrade");
+		//this.add(upgrade);
 	}
 
 
 	//public void createTower(int x, int y, int style)
 	public void upgradeTower(Tower t) {
 		t.upgrade();
+	}
+	public boolean isTower(int x,int y) {
+		// is there a tower where you are clicking? 
+		for (int z=0;z<towers.size();z++) {
+			// this is pretty crappy adding the extra to these parameters
+			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public void removeTower(int x,int y) {
+		for (int z=0;z<towers.size();z++) {
+			if (towers.get(z).isColliding(new MovingObject(x,y,8))) {
+				towers.remove(z);
+			}
+			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
+				// do some stuff to add some buttons and upgrade towers... idk
+
+			//}
+		}
 	}
 	public Tower selectTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
@@ -87,6 +114,28 @@ public class MapLoader extends JPanel {
 		catch (IOException e) {
 			System.out.println("IO ERROR");
 		}
+	}
+	public void createTower2(int x,int y) {
+		Tower tow1 = new FireTower(x,y,t1, 40,40);
+		boolean place = true;
+			if (towers.size() > 0) {
+				for (int z=0;z<towers.size();z++) {
+					if (tow1.isColliding(towers.get(z))) {
+						System.out.println("too close to another tower");
+						place = false;
+					}
+
+				}
+				if (place) {
+					towers.add(tow1);
+				}
+				else {
+					tow1 = null;
+				}
+			}
+			else {
+				towers.add(new FireTower(x,y,t1, 40,40));
+			}
 	}
 	public void createTower(int x, int y)
 	{
@@ -134,14 +183,6 @@ public class MapLoader extends JPanel {
 		int by = 0;
 		int ex = 999;
 		int ey = 999;
-				if (towers.size() > 0 ) {
-					for (int z=0;z<towers.size();z++) {
-						towers.get(z).drawImage(g);
-						if (towers.get(z).checkForEnemy(enemies)) {
-							towers.get(z).fire();
-						}
-					}
-				}
 				if (enemies.size() > 0) {
 					for (int z=0;z<enemies.size();z++) {
 						enemies.get(z).animate();
@@ -154,6 +195,15 @@ public class MapLoader extends JPanel {
 						}
 					}
 				}
+				if (towers.size() > 0 ) {
+					for (int z=0;z<towers.size();z++) {
+						towers.get(z).drawImage(g);
+						if (towers.get(z).checkForEnemy(enemies)) {
+							towers.get(z).fire();
+						}
+					}
+				}
+				
 				/*if(t1 != null)
 				{
 					t1.drawImage(g);
