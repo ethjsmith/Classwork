@@ -118,6 +118,9 @@ public class Tower extends MapObject{
 			}
 		}
 		target=null;
+		for (int r=bullets.size()-1;r>0;r--) {
+			bullets.remove(r);
+		}
 		return false;
 	}
 	//fires at an enemy?

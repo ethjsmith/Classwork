@@ -107,7 +107,7 @@ public class MapLoader extends JPanel {
 		try {
 			while ( z >= 0) {
 				int enY = (int)((Math.random()*550)+10);
-				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 10, 0, 3));
+				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 1, 0, 3));
 				z--;
 			}
 		}
