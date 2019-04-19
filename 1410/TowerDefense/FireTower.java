@@ -18,7 +18,7 @@ import java.util.*;
 import java.awt.Color;
 
 public class FireTower extends Tower{
-	
+
 	public FireTower(int posx, int posy, BufferedImage bi, int imageW, int imageH) {
 		super(posx, posy, bi, imageW, imageH);
 		range = hitboxRadius*2;
@@ -49,7 +49,7 @@ public class FireTower extends Tower{
 	{
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
 		//draws all the bullets associated with a tower
-		for ( int z=0;z<bullets.size();z++) {
+		for ( int z=bullets.size()-1;z>0;z--) {
 			if (bullets.get(z).isOutside()) {
 					bullets.remove(z);
 				}
@@ -69,25 +69,25 @@ public class FireTower extends Tower{
 			else {
 				c = Color.RED;
 			}
-			
+
 			bullets.get(z).drawImage(g,c);
 		}
 	}
 	public void fire() {
 		//bullets.add(new bullet1(midX,midY,10,10));
-		// i hate trig, almost as much as I hate Calc lmao help 
+		// i hate trig, almost as much as I hate Calc lmao help
 			//targets with a guess based on where the orc is moving
 			// 20 can be changed if the tower is over or underfiring
-			double predictedVy = target.getMidY() + (target.getVy()*20);
-			double predictedVx = target.getMidX() + target.getVx()*20;
+			double predictedVy = target.getMidY() + (target.getVy()*3);
+			double predictedVx = target.getMidX() + target.getVx()*3;
 			if (target != null) {
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				int zz = speed;
 				while (zz > 0) {
 					double vx = 1*(Math.cos(angle))+(Math.random()* .3);
 					double vy = 1*(Math.sin(angle))+(Math.random()* .3);
-					
-					bullets.add(new Bullet1(midX,midY,vx,vy,this));
+
+					bullets.add(new Bullet1(midX,midY,vx,vy,this,42));
 					zz--;
 				}
 

@@ -3,7 +3,7 @@
 @ Date : 4/14/29
 @ Assignment : Tower defense
 @ File: Bullet1
-@ Why TF doesn't this inherit from movingobject? 
+@ Why TF doesn't this inherit from movingobject?
 */
 
 import java.awt.Graphics;
@@ -19,7 +19,7 @@ public class Bullet1  {
 	private int range;
 	private Tower parent;
 
-	public Bullet1(int posX, int posY, double vx, double vy,Tower parent) {
+	public Bullet1(int posX, int posY, double vx, double vy,Tower parent, int range) {
 		this.posX = (double)posX;
 		this.posY = (double)posY;
 		this.vx=vx;
@@ -28,14 +28,9 @@ public class Bullet1  {
 		midX=posX+4;
 		midY=posY+4;
 		hitboxRadius = 10;
-		if (parent instanceof FireTower) {
-			range = 35;
-		}
-		else if (parent instanceof Tower) {
-			range = 300;
-		}
-		else {range = 10;}
-		
+
+		this.range = range;
+
 	}
 	//renders our object to the screen
 	public void drawImage(Graphics g, Color c) {
@@ -48,7 +43,7 @@ public class Bullet1  {
 	public double getXpos() {
 		return posX;
 	}
-	
+
 	public double getYpos() {
 		return posY;
 	}
@@ -70,8 +65,8 @@ public class Bullet1  {
 		return false;
 	}
 	//public boolean isOutside() {
-		// if the bullet is outside the boundaries of the map, destroy it 
-		
+		// if the bullet is outside the boundaries of the map, destroy it
+
 	//	if (posX < -10 || posX > 610 || posY < -10 || posX > 610) {
 		//	return true;
 		//}

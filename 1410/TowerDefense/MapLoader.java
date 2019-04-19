@@ -12,8 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import java.awt.*; 
-import java.awt.event.*; 
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 import javax.imageio.ImageIO;
@@ -67,7 +67,7 @@ public class MapLoader extends JPanel {
 		t.upgrade();
 	}
 	public boolean isTower(int x,int y) {
-		// is there a tower where you are clicking? 
+		// is there a tower where you are clicking?
 		for (int z=0;z<towers.size();z++) {
 			// this is pretty crappy adding the extra to these parameters
 			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
@@ -107,7 +107,7 @@ public class MapLoader extends JPanel {
 		try {
 			while ( z >= 0) {
 				int enY = (int)((Math.random()*550)+10);
-				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 1, 0, 3));
+				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 10, 0, 3));
 				z--;
 			}
 		}
@@ -203,7 +203,7 @@ public class MapLoader extends JPanel {
 						}
 					}
 				}
-				
+
 				/*if(t1 != null)
 				{
 					t1.drawImage(g);

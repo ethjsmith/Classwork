@@ -31,7 +31,7 @@ public class Tower extends MapObject{
 	protected Enemy target;
 	protected int canfire=0;
 	public BufferedImage[] t = new BufferedImage[4];
-	
+
 
 	// tower stats
 	protected int power,speed,level;
@@ -95,8 +95,8 @@ public class Tower extends MapObject{
 		return false;
 	}
 	public void hitEnemy(ArrayList<Enemy> enemies) {
-		for (int z=0;z<enemies.size();z++) {
-			for (int r=0;r<bullets.size();r++) {
+		for (int z=enemies.size()-1;z>0;z--) {
+			for (int r=bullets.size()-1;r>0;r--) {
 				if (bullets.get(r).isColliding(enemies.get(z))) {
 					bullets.remove(r);
 					enemies.get(z).takeDamage(power);
@@ -123,7 +123,7 @@ public class Tower extends MapObject{
 	//fires at an enemy?
 	public void fire() {
 		//bullets.add(new bullet1(midX,midY,10,10));
-		// i hate trig, almost as much as I hate Calc lmao help 
+		// i hate trig, almost as much as I hate Calc lmao help
 		if (canfire >speed) {
 			//targets with a guess based on where the orc is moving
 			// 20 can be changed if the tower is over or underfiring
@@ -133,7 +133,7 @@ public class Tower extends MapObject{
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				double vx = 15*(Math.cos(angle));
 				double vy = 15*(Math.sin(angle));
-				bullets.add(new Bullet1(midX,midY,vx,vy,this));
+				bullets.add(new Bullet1(midX,midY,vx,vy,this,300));
 				canfire=0;
 			}
 		}else {
