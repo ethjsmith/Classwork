@@ -28,6 +28,8 @@ public class MapLoader extends JPanel {
 	public ArrayList<Tower> towers = new ArrayList<Tower>(0);
 	public ArrayList<Enemy> enemies = new ArrayList<Enemy>(0);
 	public BufferedImage t1,t2,t3,t4;
+	public int timer;
+	public boolean running;
 	//Tower t1;
 	Enemy e1;
 	int money,lives;
@@ -37,10 +39,10 @@ public class MapLoader extends JPanel {
 		lblMoney = m;
 		int rows = 10;
 		int cols = 10;
-		
+
 		money = 1000000;
 		lives = 20;
-		
+
 		MyCanvas myCanvas = null;
 		myCanvas = new MyCanvas(rows, cols);
 		try {
@@ -115,67 +117,37 @@ public class MapLoader extends JPanel {
 			int enY = (int)((Math.random()*550)+10);
 			enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
 	}
-	public void createTower2(int x,int y) {
-		if (money > 20) {
-			money-=20;
-			Tower tow1 = new FireTower(x,y,t1, 40,40);
-		boolean place = true;
-			if (towers.size() > 0) {
-				for (int z=0;z<towers.size();z++) {
-					if (tow1.isColliding(towers.get(z))) {
-						System.out.println("too close to another tower");
-						place = false;
-					}
 
-				}
-				if (place) {
-					towers.add(tow1);
-				}
-				else {
-					tow1 = null;
-				}
+	public void createTower(int x, int y, int type) {
+		Tower tow1=null;
+		if (type == 1) {
+			if (money > 10) {
+				money-=10;
+				tow1 = new Tower(x,y,t1, 40,40);
 			}
 			else {
-				towers.add(new FireTower(x,y,t1, 40,40));
+				System.out.println("not enough money");
 			}
-		}else {
-			System.out.println("not enough money");
 		}
-		
-	}
-	public void createTower3(int x,int y) {
-		if (money > 15) {
-			money-=15;
-			Tower tow1 = new WizardTower(x,y,t1, 40,40);
-		boolean place = true;
-			if (towers.size() > 0) {
-				for (int z=0;z<towers.size();z++) {
-					if (tow1.isColliding(towers.get(z))) {
-						System.out.println("too close to another tower");
-						place = false;
-					}
-
-				}
-				if (place) {
-					towers.add(tow1);
-				}
-				else {
-					tow1 = null;
-				}
+		else if (type == 2){
+			if (money > 15) {
+				money-=15;
+				tow1 = new FireTower(x,y,t1, 40,40);
 			}
 			else {
-				towers.add(new WizardTower(x,y,t1, 40,40));
+				System.out.println("not enough money");
 			}
-		}else {
-			System.out.println("not enough money");
 		}
-		
-	}
-	public void createTower(int x, int y) {	
-		if (money > 10) {
-			money-=10;
-			Tower tow1 = new Tower(x,y,t1, 40,40);
-			// don't put towers on top of each other!
+		else {
+			if (money > 20) {
+				money-=20;
+				tow1 = new WizardTower(x,y,t1, 40,40);
+			}
+			else {
+				System.out.println("not enough money");
+			}
+		}
+		if (tow1 != null) {
 			boolean place = true;
 			if (towers.size() > 0) {
 				for (int z=0;z<towers.size();z++) {
@@ -193,17 +165,18 @@ public class MapLoader extends JPanel {
 				}
 			}
 			else {
-				towers.add(new Tower(x,y,t1, 40,40));
+				towers.add(tow1);
 			}
-		}else {
-			System.out.println("not enough money");
 		}
-			
 	}
-
 	public void start()
 	{
-
+		if (running) {
+			running = false;
+		}else {
+			running = true;
+		}
+		timer = 250;
 		//try {
 
 	//	}
@@ -224,6 +197,13 @@ public class MapLoader extends JPanel {
 		int by = 0;
 		int ex = 999;
 		int ey = 999;
+		timer--;
+		if (running) {
+			if (timer < 0) {
+				createEnemies(1);
+				timer = 250;
+			}
+		}
 				if (enemies.size() > 0) {
 					for (int z=0;z<enemies.size();z++) {
 						enemies.get(z).animate();
