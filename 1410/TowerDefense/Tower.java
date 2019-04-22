@@ -17,10 +17,6 @@ import javax.swing.JPanel;
 
 import java.util.*;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.*;
-
 import java.awt.Color;
 
 public class Tower extends MapObject{
@@ -31,7 +27,7 @@ public class Tower extends MapObject{
 	protected Enemy target;
 	protected int canfire=0;
 	public BufferedImage[] t = new BufferedImage[4];
-
+	protected int velocity;
 
 	// tower stats
 	protected int power,speed,level;
@@ -42,8 +38,9 @@ public class Tower extends MapObject{
 		//b1 = new Bullet1(posx, posy, 10,10);
 		range = (int)(hitboxRadius*5);
 		speed = 60;
-		power = 1;
+		power = 5;
 		level = 1;
+		velocity=15;
 		try {
 			//initalize all of the tower images and save them as files to be accessed
 			t[0] = ImageIO.read(new File("tower1.png"));
@@ -61,7 +58,7 @@ public class Tower extends MapObject{
 	public void upgrade () {
 		if (level < 4) {
 			level++;
-			power++;
+			power+=3;
 			speed-=12;
 			range +=hitboxRadius;
 			this.changeImage(t[level-1]);
@@ -95,8 +92,8 @@ public class Tower extends MapObject{
 		return false;
 	}
 	public void hitEnemy(ArrayList<Enemy> enemies) {
-		for (int z=enemies.size()-1;z>0;z--) {
-			for (int r=bullets.size()-1;r>0;r--) {
+		for (int z=0;z<enemies.size();z++) {
+			for (int r=0;r<bullets.size();r++) {
 				if (bullets.get(r).isColliding(enemies.get(z))) {
 					bullets.remove(r);
 					enemies.get(z).takeDamage(power);
@@ -118,7 +115,8 @@ public class Tower extends MapObject{
 			}
 		}
 		target=null;
-		for (int r=bullets.size()-1;r>0;r--) {
+		// stops the fire towers from breaking as enemies pass them
+		for (int r=bullets.size()-1;r>=0;r--) {
 			bullets.remove(r);
 		}
 		return false;
@@ -130,12 +128,12 @@ public class Tower extends MapObject{
 		if (canfire >speed) {
 			//targets with a guess based on where the orc is moving
 			// 20 can be changed if the tower is over or underfiring
-			double predictedVy = target.getMidY() + (target.getVy()*20);
-			double predictedVx = target.getMidX() + target.getVx()*20;
+			double predictedVy = target.getMidY() + (target.getVy()*15);
+			double predictedVx = target.getMidX() + target.getVx()*15;
 			if (target != null) {
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
-				double vx = 15*(Math.cos(angle));
-				double vy = 15*(Math.sin(angle));
+				double vx = velocity*(Math.cos(angle));
+				double vy = velocity*(Math.sin(angle));
 				bullets.add(new Bullet1(midX,midY,vx,vy,this,300));
 				canfire=0;
 			}

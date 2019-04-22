@@ -16,15 +16,16 @@ import javax.imageio.ImageIO;
 
 public class Enemy extends MovingObject{
 	
-	private int hitPoints;
-	private int maxHp;
-	private int scale;
-	private int animation=1;
-	private int ani_counter;
+	protected double hitPoints;
+	protected double maxHp;
+	protected double scale;
+	protected int animation=1;
+	protected int ani_counter;
 	public BufferedImage[] t = new BufferedImage[2];
 	
-	public Enemy(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, int hitPoints)
+	public Enemy(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, double hitPoints)
 	{
+
 		super(posx, posy, bi, imageW, imageH, vx, vy);
 		this.hitPoints = hitPoints;
 		// this stuff is for drawing the HP box
@@ -34,6 +35,7 @@ public class Enemy extends MovingObject{
 		try {
 		t[0] = ImageIO.read(new File("orc1.png"));
 		t[1] = ImageIO.read(new File("orc2.png"));
+		changeImage(t[0]);
 		}
 		catch (IOException e) {
 			System.out.println("error my dude");
@@ -44,7 +46,7 @@ public class Enemy extends MovingObject{
 			return true;
 		return false;
 	}
-	public int getHitPoints()
+	public double getHitPoints()
 	{
 		return hitPoints;
 	}
@@ -57,6 +59,17 @@ public class Enemy extends MovingObject{
 	// switch between 2 animations 
 	public void animate() {
 		if (ani_counter > 20) {
+			animation++;
+			if (animation >= t.length) {
+				animation =0;
+			}
+			changeImage(t[animation]);
+			ani_counter=0;
+		}else {
+			ani_counter++;
+		}
+		
+		/*if (ani_counter > 20) {
 		if (animation == 1) {
 			animation = 2;
 			changeImage(t[1]);
@@ -68,7 +81,7 @@ public class Enemy extends MovingObject{
 		ani_counter=0;
 		}else {
 			ani_counter++;
-		}
+		}*/
 	}
 	public void drawImage(Graphics g)
 	{
@@ -79,10 +92,10 @@ public class Enemy extends MovingObject{
 		
 		//draw a healthbar
 		g.setColor(Color.RED);
-		g.fillRect(posx,posy-3,imageW,2);
+		g.fillRect(posx,posy-3,(int)(scale*maxHp),2);
 		g.setColor(Color.GREEN);
 		if (hitPoints >= 0) {
-			g.fillRect(posx,posy-3,scale*hitPoints,2);
+			g.fillRect(posx,posy-3,(int)(scale*hitPoints),2);
 		}
 		else {
 			g.fillRect(posx,posy-5,0,5);

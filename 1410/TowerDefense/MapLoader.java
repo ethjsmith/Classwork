@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -78,7 +77,7 @@ public class MapLoader extends JPanel {
 	}
 	public void removeTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
-			if (towers.get(z).isColliding(new MovingObject(x,y,8))) {
+			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
 				towers.remove(z);
 			}
 			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
@@ -89,12 +88,8 @@ public class MapLoader extends JPanel {
 	}
 	public Tower selectTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
-			if (towers.get(z).isColliding(new MovingObject(x,y,8))) {
+			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
 				return towers.get(z);
-				//int pwr = towers.get(z).getPowerLevel();
-				//towers.get(z).changeImage(t2);
-				//towers.get(z).upgrade();
-				//System.out.println("Upgrading tower");
 			}
 			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
 				// do some stuff to add some buttons and upgrade towers... idk
@@ -104,16 +99,15 @@ public class MapLoader extends JPanel {
 		return null;
 	}
 	public void createEnemies(int z) {
-		try {
 			while ( z >= 0) {
 				int enY = (int)((Math.random()*550)+10);
-				enemies.add(new Enemy(0, enY, ImageIO.read(new File("orc1.png")), 40, 40, 1, 0, 3));
+				enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
+				enY = (int)((Math.random()*550)+10);
+				enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
 				z--;
 			}
-		}
-		catch (IOException e) {
-			System.out.println("IO ERROR");
-		}
+			int enY = (int)((Math.random()*550)+10);
+			enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
 	}
 	public void createTower2(int x,int y) {
 		Tower tow1 = new FireTower(x,y,t1, 40,40);
@@ -135,6 +129,28 @@ public class MapLoader extends JPanel {
 			}
 			else {
 				towers.add(new FireTower(x,y,t1, 40,40));
+			}
+	}
+	public void createTower3(int x,int y) {
+		Tower tow1 = new WizardTower(x,y,t1, 40,40);
+		boolean place = true;
+			if (towers.size() > 0) {
+				for (int z=0;z<towers.size();z++) {
+					if (tow1.isColliding(towers.get(z))) {
+						System.out.println("too close to another tower");
+						place = false;
+					}
+
+				}
+				if (place) {
+					towers.add(tow1);
+				}
+				else {
+					tow1 = null;
+				}
+			}
+			else {
+				towers.add(new WizardTower(x,y,t1, 40,40));
 			}
 	}
 	public void createTower(int x, int y)

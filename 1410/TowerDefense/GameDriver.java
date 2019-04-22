@@ -39,12 +39,12 @@ public class GameDriver extends JFrame{
 		Controls.setLayout(null);
 		//Controls.setSize(200,600);
 
-		JLabel lblMoney = new JLabel("Money:" + money);
-		lblMoney.setBounds(6, 5, 45, 16);
+		JLabel lblMoney = new JLabel("Money: " + money);
+		lblMoney.setBounds(6, 5, 80, 16);
 		Controls.add(lblMoney);
 
 		JLabel lblLives = new JLabel("Lives: " + lives);
-		lblLives.setBounds(6, 22, 40, 16);
+		lblLives.setBounds(6, 22, 80, 16);
 		Controls.add(lblLives);
 		JLayeredPane layers = new JLayeredPane();
 		
@@ -151,6 +151,11 @@ public class GameDriver extends JFrame{
 		Image image2 = GIcon2.getImage();
 		Image newImage2 = image2.getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH);
 		GIcon2 = new ImageIcon(newImage2);
+		
+		ImageIcon GIcon3 = new ImageIcon("wizard1.png");
+		Image image3 = GIcon3.getImage();
+		Image newImage3 = image3.getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH);
+		GIcon3 = new ImageIcon(newImage3);
 			
 		//JButton btnStart = new JButton("Tower 0");
 		JButton btnStart = new JButton(GIcon);
@@ -173,6 +178,19 @@ public class GameDriver extends JFrame{
 		Controls.add(tower2);
 		tower2.setBounds(6,130,117,60);
 		tower2.setVisible(true);
+		
+		JButton tower3 = new JButton(GIcon3);
+		tower3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			((MapLoader)Map).createTower3(mx,my);
+			}
+		});
+		Controls.add(tower3);
+		tower3.setBounds(6,190,117,60);
+		tower3.setVisible(true);
+		
 		//upgrade a selected tower
 		btnUpgrade.addMouseListener(new MouseAdapter() {
 			@Override
@@ -193,7 +211,7 @@ public class GameDriver extends JFrame{
 			t1 = null;
 			}
 		});
-		btnStart.setBounds(6, 45, 117, 60);
+		btnStart.setBounds(6, 75, 117, 60);
 		Controls.add(btnStart);
 
 
@@ -206,7 +224,7 @@ public class GameDriver extends JFrame{
 			}
 		});
 		//btnNewButton.setBounds(6, 74, 117, 29);
-		btnNewButton.setBounds(6, 105, 117, 29);
+		btnNewButton.setBounds(6, 45, 117, 29);
 		Controls.add(btnNewButton);
 	}
 

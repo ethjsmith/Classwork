@@ -10,24 +10,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.util.*;
-
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.*;
-
 import java.awt.Color;
 
 public class FireTower extends Tower{
-
 	public FireTower(int posx, int posy, BufferedImage bi, int imageW, int imageH) {
 		super(posx, posy, bi, imageW, imageH);
 		range = hitboxRadius*2;
 		speed = 1;
 		power = 1;
+		velocity=1;
+		System.out.println(range);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
 			t[0] = ImageIO.read(new File("fire1.png"));
 			t[1] = ImageIO.read(new File("fire2.png"));
+			t[2] = ImageIO.read(new File("fire3.png"));
 			changeImage(t[0]);
 		}
 		catch (IOException e) {
@@ -35,18 +32,18 @@ public class FireTower extends Tower{
 		}
 	}
 	public void upgrade () {
-		if (level < 2) {
+		if (level < 3) {
 			level++;
-			//power++;
+			power++;
 			speed++;
+			velocity++;
 			range +=hitboxRadius;
 			this.changeImage(t[level-1]);
 		}else {
 			System.out.println("MAX LEVEL ALREADY");
 		}
 	}
-	public void drawImage(Graphics g)
-	{
+	public void drawImage(Graphics g) {
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
 		//draws all the bullets associated with a tower
 		for ( int z=bullets.size()-1;z>0;z--) {
@@ -84,10 +81,10 @@ public class FireTower extends Tower{
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				int zz = speed;
 				while (zz > 0) {
-					double vx = 1*(Math.cos(angle))+(Math.random()* .3);
-					double vy = 1*(Math.sin(angle))+(Math.random()* .3);
+					double vx = velocity*(Math.cos(angle))+(Math.random()* .3);
+					double vy = velocity*(Math.sin(angle))+(Math.random()* .3);
 
-					bullets.add(new Bullet1(midX,midY,vx,vy,this,42));
+					bullets.add(new Bullet1(midX,midY,vx,vy,this,range));
 					zz--;
 				}
 

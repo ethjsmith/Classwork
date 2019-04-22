@@ -18,6 +18,7 @@ public class Bullet1  {
 	private int midX,midY,hitboxRadius;
 	private int range;
 	private Tower parent;
+	private int bulletsize;
 
 	public Bullet1(int posX, int posY, double vx, double vy,Tower parent, int range) {
 		this.posX = (double)posX;
@@ -29,13 +30,14 @@ public class Bullet1  {
 		midY=posY+4;
 		hitboxRadius = 10;
 
+		bulletsize = 7;
 		this.range = range;
 
 	}
 	//renders our object to the screen
 	public void drawImage(Graphics g, Color c) {
 		g.setColor(c);
-		g.fillOval((int)(posX +=vx), (int)(posY+=vy), 7,7);
+		g.fillOval((int)(posX +=vx), (int)(posY+=vy), bulletsize,bulletsize);
 		midX +=vx;
 		midY += vy;
 	}
