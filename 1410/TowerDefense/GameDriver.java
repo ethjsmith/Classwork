@@ -56,7 +56,7 @@ public class GameDriver extends JFrame{
 		
 		
 		
-		JPanel Map = new MapLoader();
+		JPanel Map = new MapLoader(lblLives,lblMoney);
 		Map.setLayout(null);
 		
 		// the bounds appear to be relative

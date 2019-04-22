@@ -42,5 +42,13 @@ public class MovingObject extends MapObject {
 	public double getVy() {
 		return vy;
 	}
+	public boolean isOutside() {
+		 //if the bullet is outside the boundaries of the map, destroy it
+
+		if (midX < -10 || midX > 610 || midY < -10 || midX > 610) {
+			return true;
+		}
+		return false;
+	}
 
 }

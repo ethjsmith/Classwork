@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javax.swing.JLabel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,12 +30,17 @@ public class MapLoader extends JPanel {
 	public BufferedImage t1,t2,t3,t4;
 	//Tower t1;
 	Enemy e1;
-
-	public MapLoader(){
-
+	int money,lives;
+	public JLabel lblLives,lblMoney;
+	public MapLoader(JLabel l, JLabel m){
+		lblLives = l;
+		lblMoney = m;
 		int rows = 10;
 		int cols = 10;
-
+		
+		money = 1000000;
+		lives = 20;
+		
 		MyCanvas myCanvas = null;
 		myCanvas = new MyCanvas(rows, cols);
 		try {
@@ -110,7 +116,9 @@ public class MapLoader extends JPanel {
 			enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
 	}
 	public void createTower2(int x,int y) {
-		Tower tow1 = new FireTower(x,y,t1, 40,40);
+		if (money > 20) {
+			money-=20;
+			Tower tow1 = new FireTower(x,y,t1, 40,40);
 		boolean place = true;
 			if (towers.size() > 0) {
 				for (int z=0;z<towers.size();z++) {
@@ -130,9 +138,15 @@ public class MapLoader extends JPanel {
 			else {
 				towers.add(new FireTower(x,y,t1, 40,40));
 			}
+		}else {
+			System.out.println("not enough money");
+		}
+		
 	}
 	public void createTower3(int x,int y) {
-		Tower tow1 = new WizardTower(x,y,t1, 40,40);
+		if (money > 15) {
+			money-=15;
+			Tower tow1 = new WizardTower(x,y,t1, 40,40);
 		boolean place = true;
 			if (towers.size() > 0) {
 				for (int z=0;z<towers.size();z++) {
@@ -152,9 +166,14 @@ public class MapLoader extends JPanel {
 			else {
 				towers.add(new WizardTower(x,y,t1, 40,40));
 			}
+		}else {
+			System.out.println("not enough money");
+		}
+		
 	}
-	public void createTower(int x, int y)
-	{
+	public void createTower(int x, int y) {	
+		if (money > 10) {
+			money-=10;
 			Tower tow1 = new Tower(x,y,t1, 40,40);
 			// don't put towers on top of each other!
 			boolean place = true;
@@ -176,6 +195,10 @@ public class MapLoader extends JPanel {
 			else {
 				towers.add(new Tower(x,y,t1, 40,40));
 			}
+		}else {
+			System.out.println("not enough money");
+		}
+			
 	}
 
 	public void start()
@@ -195,6 +218,8 @@ public class MapLoader extends JPanel {
 		try{
 
 		//bullet and enemy position
+		lblMoney.setText("Money: " + money);
+		lblLives.setText("Lives: " + lives);
 		int bx = 0;
 		int by = 0;
 		int ex = 999;
@@ -203,11 +228,13 @@ public class MapLoader extends JPanel {
 					for (int z=0;z<enemies.size();z++) {
 						enemies.get(z).animate();
 						enemies.get(z).drawImage(g);
-						if (enemies.get(z).outside()) {
+						if (enemies.get(z).isOutside()) {
+							lives--;
 							enemies.remove(z);
 						}
-						if (enemies.get(z).getHitPoints() <= 0) {
+						else if (enemies.get(z).getHitPoints() <= 0) {
 							enemies.remove(z);
+							money+=5;
 						}
 					}
 				}
