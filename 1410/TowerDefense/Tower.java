@@ -28,6 +28,7 @@ public class Tower extends MapObject{
 	protected int canfire=0;
 	public BufferedImage[] t = new BufferedImage[4];
 	protected int velocity;
+	protected int bsize;
 
 	// tower stats
 	protected int power,speed,level;
@@ -40,13 +41,14 @@ public class Tower extends MapObject{
 		speed = 60;
 		power = 5;
 		level = 1;
+		bsize=7;
 		velocity=15;
 		try {
 			//initalize all of the tower images and save them as files to be accessed
-			t[0] = ImageIO.read(new File("tower1.png"));
-			t[1] = ImageIO.read(new File("tower2.png"));
-			t[2] = ImageIO.read(new File("tower3.png"));
-			t[3] = ImageIO.read(new File("tower4.png"));
+			t[0] = ImageIO.read(new File("assets/tower1.png"));
+			t[1] = ImageIO.read(new File("assets/tower2.png"));
+			t[2] = ImageIO.read(new File("assets/tower3.png"));
+			t[3] = ImageIO.read(new File("assets/tower4.png"));
 		}
 		catch (IOException e) {
 			System.out.println("Unable to generate tower due to IO exception");
@@ -97,7 +99,7 @@ public class Tower extends MapObject{
 				if (bullets.get(r).isColliding(enemies.get(z))) {
 					bullets.remove(r);
 					enemies.get(z).takeDamage(power);
-					System.out.println("hit");
+					//System.out.println("hit");
 				}
 			}
 		}
@@ -109,7 +111,7 @@ public class Tower extends MapObject{
 			if (this.isInRange(enemies.get(z))) {
 				target = enemies.get(z);
 				//System.out.println("firing");
-				fire();
+				//fire();
 
 				return true;
 			}
@@ -134,7 +136,7 @@ public class Tower extends MapObject{
 				double angle = Math.atan2((double)(predictedVy-midY),(double)(predictedVx-midX));
 				double vx = velocity*(Math.cos(angle));
 				double vy = velocity*(Math.sin(angle));
-				bullets.add(new Bullet1(midX,midY,vx,vy,this,300));
+				bullets.add(new Bullet1(midX,midY,vx,vy,this,300,bsize));
 				canfire=0;
 			}
 		}else {

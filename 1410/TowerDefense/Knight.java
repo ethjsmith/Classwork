@@ -25,9 +25,9 @@ public class Knight extends Enemy {
 		scale = imageW /maxHp;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
-		t[0] = ImageIO.read(new File("knight1.png"));
-		t[1] = ImageIO.read(new File("knight2.png"));
-		t[2] = ImageIO.read(new File("knight3.png"));
+		t[0] = ImageIO.read(new File("assets/knight1.png"));
+		t[1] = ImageIO.read(new File("assets/knight2.png"));
+		t[2] = ImageIO.read(new File("assets/knight3.png"));
 		}
 		catch (IOException e) {
 			System.out.println("error my dude");
@@ -38,7 +38,7 @@ public class Knight extends Enemy {
 		//g.drawImage(bi,posx+=vx, posy+=vy,imageW,imageH,null);
 		//midX+=vx;
 		//midY+=vy;
-		
+
 		//draw a healthbar
 		g.setColor(Color.RED);
 		g.fillRect(posx,posy-3,scale*maxHp,2);
@@ -49,7 +49,7 @@ public class Knight extends Enemy {
 		else {
 			g.fillRect(posx,posy-5,0,5);
 		}
-		
-		
+
+
 	}*/
 }

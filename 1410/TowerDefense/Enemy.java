@@ -15,14 +15,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Enemy extends MovingObject{
-	
+
 	protected double hitPoints;
 	protected double maxHp;
 	protected double scale;
 	protected int animation=1;
 	protected int ani_counter;
 	public BufferedImage[] t = new BufferedImage[2];
-	
+
 	public Enemy(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, double hitPoints)
 	{
 
@@ -33,8 +33,8 @@ public class Enemy extends MovingObject{
 		scale = imageW /maxHp;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
-		t[0] = ImageIO.read(new File("orc1.png"));
-		t[1] = ImageIO.read(new File("orc2.png"));
+		t[0] = ImageIO.read(new File("assets/orc1.png"));
+		t[1] = ImageIO.read(new File("assets/orc2.png"));
 		changeImage(t[0]);
 		}
 		catch (IOException e) {
@@ -52,11 +52,11 @@ public class Enemy extends MovingObject{
 	}
 	public void takeDamage(int dmg) {
 		//set hitpoints
-		
+
 		hitPoints -=dmg;
 	}
-	//overriding the child method 
-	// switch between 2 animations 
+	//overriding the child method
+	// switch between 2 animations
 	public void animate() {
 		if (ani_counter > 20) {
 			animation++;
@@ -68,7 +68,7 @@ public class Enemy extends MovingObject{
 		}else {
 			ani_counter++;
 		}
-		
+
 		/*if (ani_counter > 20) {
 		if (animation == 1) {
 			animation = 2;
@@ -89,7 +89,7 @@ public class Enemy extends MovingObject{
 		//g.drawImage(bi,posx+=vx, posy+=vy,imageW,imageH,null);
 		//midX+=vx;
 		//midY+=vy;
-		
+
 		//draw a healthbar
 		g.setColor(Color.RED);
 		g.fillRect(posx,posy-3,(int)(scale*maxHp),2);
@@ -100,14 +100,14 @@ public class Enemy extends MovingObject{
 		else {
 			g.fillRect(posx,posy-5,0,5);
 		}
-		
-		
+
+
 	}
 	public int getXpos()
 	{
 		return posx;
 	}
-	
+
 	public int getYpos()
 	{
 		return posy;

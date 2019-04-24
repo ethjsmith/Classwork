@@ -22,9 +22,9 @@ public class FireTower extends Tower{
 		System.out.println(range);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
-			t[0] = ImageIO.read(new File("fire1.png"));
-			t[1] = ImageIO.read(new File("fire2.png"));
-			t[2] = ImageIO.read(new File("fire3.png"));
+			t[0] = ImageIO.read(new File("assets/fire1.png"));
+			t[1] = ImageIO.read(new File("assets/fire2.png"));
+			t[2] = ImageIO.read(new File("assets/fire3.png"));
 			changeImage(t[0]);
 		}
 		catch (IOException e) {
@@ -84,7 +84,7 @@ public class FireTower extends Tower{
 					double vx = velocity*(Math.cos(angle))+(Math.random()* .3);
 					double vy = velocity*(Math.sin(angle))+(Math.random()* .3);
 
-					bullets.add(new Bullet1(midX,midY,vx,vy,this,range));
+					bullets.add(new Bullet1(midX,midY,vx,vy,this,range,bsize));
 					zz--;
 				}
 

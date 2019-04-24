@@ -40,11 +40,11 @@ public class GameDriver extends JFrame{
 		//Controls.setSize(200,600);
 
 		JLabel lblMoney = new JLabel("Money: " + money);
-		lblMoney.setBounds(6, 5, 80, 16);
+		lblMoney.setBounds(6, 5, 100, 16);
 		Controls.add(lblMoney);
 
 		JLabel lblLives = new JLabel("Lives: " + lives);
-		lblLives.setBounds(6, 22, 80, 16);
+		lblLives.setBounds(6, 22, 100, 16);
 		Controls.add(lblLives);
 		JLayeredPane layers = new JLayeredPane();
 
@@ -142,17 +142,17 @@ public class GameDriver extends JFrame{
 		//btnUpgrade.setVisible(false);
 		//btnDelete.setVisible(false);
 		//added
-		ImageIcon GIcon = new ImageIcon("tower1.png");
+		ImageIcon GIcon = new ImageIcon("assets/tower1.png");
 		Image image = GIcon.getImage();
 		Image newImage = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
 		GIcon = new ImageIcon(newImage);
 
-		ImageIcon GIcon2 = new ImageIcon("fire1.png");
+		ImageIcon GIcon2 = new ImageIcon("assets/fire1.png");
 		Image image2 = GIcon2.getImage();
 		Image newImage2 = image2.getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH);
 		GIcon2 = new ImageIcon(newImage2);
 
-		ImageIcon GIcon3 = new ImageIcon("wizard1.png");
+		ImageIcon GIcon3 = new ImageIcon("assets/wizard1.png");
 		Image image3 = GIcon3.getImage();
 		Image newImage3 = image3.getScaledInstance(40,40, java.awt.Image.SCALE_SMOOTH);
 		GIcon3 = new ImageIcon(newImage3);

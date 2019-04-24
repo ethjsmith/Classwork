@@ -20,7 +20,7 @@ public class Bullet1  {
 	private Tower parent;
 	private int bulletsize;
 
-	public Bullet1(int posX, int posY, double vx, double vy,Tower parent, int range) {
+	public Bullet1(int posX, int posY, double vx, double vy,Tower parent, int range,int size) {
 		this.posX = (double)posX;
 		this.posY = (double)posY;
 		this.vx=vx;
@@ -30,7 +30,7 @@ public class Bullet1  {
 		midY=posY+4;
 		hitboxRadius = 10;
 
-		bulletsize = 7;
+		bulletsize = size;
 		this.range = range;
 
 	}

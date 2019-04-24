@@ -30,6 +30,7 @@ public class MapLoader extends JPanel {
 	public BufferedImage t1,t2,t3,t4;
 	public int timer;
 	public boolean running;
+	public BufferedImage[] images;
 	//Tower t1;
 	Enemy e1;
 	int money,lives;
@@ -40,17 +41,17 @@ public class MapLoader extends JPanel {
 		int rows = 10;
 		int cols = 10;
 
-		money = 1000000;
+		money = 1000;
 		lives = 20;
 
 		MyCanvas myCanvas = null;
 		myCanvas = new MyCanvas(rows, cols);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
-			t1 = ImageIO.read(new File("tower1.png"));
-			t2 = ImageIO.read(new File("tower2.png"));
-			t3 = ImageIO.read(new File("tower3.png"));
-			t4 = ImageIO.read(new File("tower4.png"));
+			t1 = ImageIO.read(new File("assets/tower1.png"));
+			t2 = ImageIO.read(new File("assets/tower2.png"));
+			t3 = ImageIO.read(new File("assets/tower3.png"));
+			t4 = ImageIO.read(new File("assets/tower4.png"));
 		}
 		catch (IOException e) {
 			System.out.println("Unable to generate tower due to IO exception");
@@ -58,7 +59,7 @@ public class MapLoader extends JPanel {
 		//load tile images
 		for (int x = 0; x< rows; x++)
 			for (int y = 0; y < cols; y++)
-				myCanvas.addPicture(x, y,"grass_02_RS.png");
+				myCanvas.addPicture(x, y,"assets/grass_02_RS.png");
 
 		if (myCanvas != null){
 			this.add(myCanvas);
@@ -70,8 +71,20 @@ public class MapLoader extends JPanel {
 
 
 	//public void createTower(int x, int y, int style)
+//	public void initImages() {
+//		images = new BufferedImage[21];
+//		images[0] = ImageIO.read()
+//	}
 	public void upgradeTower(Tower t) {
-		t.upgrade();
+		int cost = t.getPowerLevel()*25;
+		if (money > cost) {
+			t.upgrade();
+			money-=cost;
+		}
+		//t.upgrade();
+		else {
+			System.out.println("Not enough money");
+		}
 	}
 	public boolean isTower(int x,int y) {
 		// is there a tower where you are clicking?
@@ -86,7 +99,10 @@ public class MapLoader extends JPanel {
 	public void removeTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
 			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
+				//get a partial refund when you destroy a tower
+				int refund = towers.get(z).getPowerLevel()*20 -15;
 				towers.remove(z);
+				money += refund;
 			}
 			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
 				// do some stuff to add some buttons and upgrade towers... idk
@@ -107,15 +123,28 @@ public class MapLoader extends JPanel {
 		return null;
 	}
 	public void createEnemies(int z) {
-			while ( z >= 0) {
-				int enY = (int)((Math.random()*550)+10);
-				enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
-				enY = (int)((Math.random()*550)+10);
-				enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
-				z--;
-			}
+			double enemyseed = Math.random();
 			int enY = (int)((Math.random()*550)+10);
-			enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
+			if (enemyseed > .5) {
+				enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
+				timer = 45;
+			} else if (enemyseed > .25){
+				enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
+				timer = 20;
+			}
+			else {
+				enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
+				timer = 150;
+			}
+			//while ( z >= 0) {
+			//	int enY = (int)((Math.random()*550)+10);
+		//		enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
+		//		enY = (int)((Math.random()*550)+10);
+		//		enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
+		//		z--;
+		//	}
+		//	int enY = (int)((Math.random()*550)+10);
+	//		enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
 	}
 
 	public void createTower(int x, int y, int type) {
@@ -176,7 +205,7 @@ public class MapLoader extends JPanel {
 		}else {
 			running = true;
 		}
-		timer = 250;
+		timer = 150;
 		//try {
 
 	//	}
@@ -201,7 +230,7 @@ public class MapLoader extends JPanel {
 		if (running) {
 			if (timer < 0) {
 				createEnemies(1);
-				timer = 250;
+				//timer = 200;
 			}
 		}
 				if (enemies.size() > 0) {
@@ -221,6 +250,7 @@ public class MapLoader extends JPanel {
 				if (towers.size() > 0 ) {
 					for (int z=0;z<towers.size();z++) {
 						towers.get(z).drawImage(g);
+						//tower.get(z).hitEnemy(enemies);
 						if (towers.get(z).checkForEnemy(enemies)) {
 							towers.get(z).fire();
 						}

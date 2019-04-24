@@ -25,10 +25,10 @@ public class Wolf extends Enemy {
 		scale = imageW /maxHp;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
-		t[0] = ImageIO.read(new File("wolf1.png"));
-		t[1] = ImageIO.read(new File("wolf2.png"));
-		t[2] = ImageIO.read(new File("wolf3.png"));
-		t[3] = ImageIO.read(new File("wolf4.png"));
+		t[0] = ImageIO.read(new File("assets/wolf1.png"));
+		t[1] = ImageIO.read(new File("assets/wolf2.png"));
+		t[2] = ImageIO.read(new File("assets/wolf3.png"));
+		t[3] = ImageIO.read(new File("assets/wolf4.png"));
 		}
 		catch (IOException e) {
 			System.out.println("error my dude");
