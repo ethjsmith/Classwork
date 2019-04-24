@@ -37,6 +37,7 @@ public class WizardTower extends Tower{
 			level++;
 			power+= 50;
 			speed-= 25;
+			velocity+=4;
 			range +=(int)(hitboxRadius*1.2);
 			this.changeImage(t[level-1]);
 		}else {

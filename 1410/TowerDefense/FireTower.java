@@ -15,7 +15,7 @@ import java.awt.Color;
 public class FireTower extends Tower{
 	public FireTower(int posx, int posy, BufferedImage bi, int imageW, int imageH) {
 		super(posx, posy, bi, imageW, imageH);
-		range = hitboxRadius*2;
+		range = hitboxRadius*20;
 		speed = 1;
 		power = 1;
 		velocity=1;

@@ -62,6 +62,7 @@ public class Tower extends MapObject{
 			level++;
 			power+=3;
 			speed-=12;
+			velocity++;
 			range +=hitboxRadius;
 			this.changeImage(t[level-1]);
 		}else {

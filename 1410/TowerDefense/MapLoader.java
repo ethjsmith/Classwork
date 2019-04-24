@@ -211,21 +211,24 @@ public class MapLoader extends JPanel {
 	//	}
 	//	catch (IOException e)
 	//	{
-			System.out.println("Unable to generate enemies due to IO exception");
+	//		System.out.println("Unable to generate enemies due to IO exception");
 	//	}
 	}
 
 	public void paint(Graphics g){
 		super.paint(g);
 		try{
-
+		if (lives < 0) {
+			System.out.println("You died, noob");
+			System.exit(0);
+		}
 		//bullet and enemy position
 		lblMoney.setText("Money: " + money);
 		lblLives.setText("Lives: " + lives);
-		int bx = 0;
-		int by = 0;
-		int ex = 999;
-		int ey = 999;
+		//int bx = 0;
+		//int by = 0;
+		//int ex = 999;
+		//int ey = 999;
 		timer--;
 		if (running) {
 			if (timer < 0) {
@@ -270,14 +273,14 @@ public class MapLoader extends JPanel {
 					}
 				}*/
 
-				if (e1 != null)
-				{
-					e1.drawImage(g);
-					ex = e1.getXpos();
-					ey = e1.getYpos();
+				//if (e1 != null)
+				//{
+				//	e1.drawImage(g);
+				//	ex = e1.getXpos();
+				//	ey = e1.getYpos();
 					//System.out.println(ex);
 					//System.out.println(ey);
-				}
+				//}
 
 				/*//check bullet and enemy position
 				if (((ex >= (bx - 5)) && (ex <= (bx + 5))) && ((ey >= (by - 5)) && (ey <= (by + 5))) )
