@@ -21,21 +21,28 @@ public class Enemy extends MovingObject{
 	protected double scale;
 	protected int animation=1;
 	protected int ani_counter;
+	public String type;
 	public BufferedImage[] t = new BufferedImage[2];
+	public int value = 0;
 
 	public Enemy(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, double hitPoints)
 	{
-
+		// this is the parent for both knight and wolf, but it is actually just an orc... that was a design choice because I don't 
+		// like classes that are explicitly abstract, and because I made Knights and wolves way later than I made orcs
+		// all the interesting stuff is in here
 		super(posx, posy, bi, imageW, imageH, vx, vy);
 		this.hitPoints = hitPoints;
 		// this stuff is for drawing the HP box
 		this.maxHp = hitPoints;
+		value = 1;
 		scale = imageW /maxHp;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
+			//enemies have an array of animations, which they cycle through in the animate method.
 		t[0] = ImageIO.read(new File("assets/orc1.png"));
 		t[1] = ImageIO.read(new File("assets/orc2.png"));
 		changeImage(t[0]);
+		type = "orc";
 		}
 		catch (IOException e) {
 			System.out.println("error my dude");
@@ -46,6 +53,9 @@ public class Enemy extends MovingObject{
 			return true;
 		return false;
 	}
+	public void die_animate() {
+		// this does nothing lol
+	}
 	public double getHitPoints()
 	{
 		return hitPoints;
@@ -55,8 +65,14 @@ public class Enemy extends MovingObject{
 
 		hitPoints -=dmg;
 	}
+	public int getScore() {
+		return value;
+	}
+	public String getType() {
+		return type;
+	}
 	//overriding the child method
-	// switch between 2 animations
+	// switch between 2(+) animations
 	public void animate() {
 		if (ani_counter > 20) {
 			animation++;
@@ -91,6 +107,7 @@ public class Enemy extends MovingObject{
 		//midY+=vy;
 
 		//draw a healthbar
+		//basically just 2 rectangles one, for maxhp, and one for currenthp
 		g.setColor(Color.RED);
 		g.fillRect(posx,posy-3,(int)(scale*maxHp),2);
 		g.setColor(Color.GREEN);

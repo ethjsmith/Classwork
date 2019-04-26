@@ -17,11 +17,14 @@ public abstract class MapObject
 	protected int midX,midY;
 	protected int hitboxRadius;
 
+
 	MapObject(int x,int y,int z) {
 		// this trash is only here because this method is abstract...
 		// I don't like abstract methods, because I needed a generic object and couldn't use
 		// this one 
 	}
+	// I wanted to use this object for corpse as well, but BABOOM, iTS ABSRACT I SHOULD HAVE JUST CHANGED IT BUT I'didnt want too 
+
 	MapObject(int posx, int posy, BufferedImage bi, int imageW, int imageH)
 	{
 		this.posx = posx;
@@ -63,6 +66,7 @@ public abstract class MapObject
 	{
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
 	}
+	// draws map objects that are corpsess
 	public int getX() {
 		return posx;
 	}

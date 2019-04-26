@@ -27,6 +27,11 @@ public class GameDriver extends JFrame{
 	public Tower t1;
 	public GameDriver() {
 
+	
+		// there is literally nothing interesting in this file, just skip it, it's just a bunch of buttons being declared
+		// and button click listeners that call functions in MapLoader() 
+		
+		
 		super("Tower Defense"); //added
 		lives = 10;
 		money = 20;
@@ -34,11 +39,15 @@ public class GameDriver extends JFrame{
 		getContentPane().setLayout(null);
 
 		JPanel Controls = new JPanel();
-		Controls.setBounds(0, 0, 120, 278);
+		Controls.setBounds(0, 0, 120, 500);
 		getContentPane().add(Controls);
 		Controls.setLayout(null);
 		//Controls.setSize(200,600);
-
+		
+		// did this to make multiline jlabel text :) 
+		JLabel insructions = new JLabel ("<html> Click anywhere<br> then click a button <br> to make a tower <br><br>click on tower <br> to delete or upgrade <br> them <br><br>Try to get High Score!</html>");
+		insructions.setBounds(6,300,120,200);
+		Controls.add(insructions);
 		JLabel lblMoney = new JLabel("Money: " + money);
 		lblMoney.setBounds(6, 5, 100, 16);
 		Controls.add(lblMoney);
@@ -49,14 +58,19 @@ public class GameDriver extends JFrame{
 		JLayeredPane layers = new JLayeredPane();
 
 		layers.setBounds(123,0,600,600);
-
-
+		
+		
+		JLabel lblScore = new JLabel("Score: " + 0);
+		lblScore.setBounds(6,250,100,16);
+		Controls.add(lblScore);
 		getContentPane().add(layers);
 
+		JLabel lblInfo = new JLabel("x");
+		lblInfo.setBounds(6,266,120,20);
+		Controls.add(lblInfo);
+		
 
-
-
-		JPanel Map = new MapLoader(lblLives,lblMoney);
+		JPanel Map = new MapLoader(lblLives,lblMoney,lblScore,lblInfo);
 		Map.setLayout(null);
 
 		// the bounds appear to be relative
@@ -80,32 +94,12 @@ public class GameDriver extends JFrame{
 		btnUpgrade.setVisible(false);
 		layers.add(btnDelete,JLayeredPane.POPUP_LAYER);
 		layers.add(btnUpgrade,JLayeredPane.POPUP_LAYER);
-		//JPanel upgrade = new JPanel();
-		//upgrade.setLayout(null);
-		//JButton btnUpgrade = new JButton("Upgrade tower");
-
-		//btnUpgrade.setLayout(null);
-		//JButton btnDelete = new JButton ("Destroy Tower");
-		//upgrade.add(btnUpgrade);
-		//btnUpgrade.setOpaque(false);
-		//Map.add(upgrade);
-		//upgrade.setOpaque(false);
-		//upgrade.setVisible(true);
-
-
-
 
 		Map.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				btnUpgrade.setVisible(false);
 				btnDelete.setVisible(false);
-			//click on the map to save X and Y coords for making a tower
-			//Point p = MouseInfo.getPointerInfo().getLocation();
-			//mx = p.x;
-			//my = p.y;
-
-			//lazy midpoint workaround for now
 			mx = e.getX()-20;
 			my = e.getY()-20;
 
@@ -116,15 +110,6 @@ public class GameDriver extends JFrame{
 				btnDelete.setBounds(e.getX(),e.getY()+20,125,20);
 				btnDelete.setVisible(true);
 			}
-			// if mx is within the bounds of a tower and y then select that tower
-			// x y width height
-			//((MapLoader)Map).selectTower(mx,my);
-			//logic structure for placing buttons
-
-			//btnUpgrade.setBounds(mx,my,200,100);
-			//btnUpgrade.setVisible(true);
-
-			//upgrade.setVisible(true);
 			System.out.println(mx +"-" + my);
 			//Map.revalidate();
 			}
@@ -134,14 +119,6 @@ public class GameDriver extends JFrame{
 
 		// determines button position based on these constraintss
 
-
-		// these buttons will be used to show on the map when you select a tower.
-
-		//Map.add(btnUpgrade);
-		//Map.add(btnDelete);
-		//btnUpgrade.setVisible(false);
-		//btnDelete.setVisible(false);
-		//added
 		ImageIcon GIcon = new ImageIcon("assets/tower1.png");
 		Image image = GIcon.getImage();
 		Image newImage = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
@@ -231,7 +208,6 @@ public class GameDriver extends JFrame{
 
 	public static void main(String[] args) {
 
-		//1. Answer the questions found in Questions.txt
 
 		GameDriver m = new GameDriver();
 		m.setSize(760, 650);

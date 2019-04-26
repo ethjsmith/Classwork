@@ -17,12 +17,15 @@ import javax.imageio.ImageIO;
 public class Knight extends Enemy {
 	public Knight(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, double hitPoints)
 	{
+		// some numbers that are slightly different from the orc ( enemy) 
 		super(posx, posy, bi, imageW, imageH, vx, vy,hitPoints);
 		this.hitPoints = hitPoints;
 		// this stuff is for drawing the HP box
 		t = new BufferedImage[3];
 		this.maxHp = hitPoints;
 		scale = imageW /maxHp;
+		type = "knight";
+		value=4;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
 		t[0] = ImageIO.read(new File("assets/knight1.png"));
@@ -33,23 +36,4 @@ public class Knight extends Enemy {
 			System.out.println("error my dude");
 		}
 	}
-/*	public void drawImage(Graphics g) {
-		super.drawImage(g);
-		//g.drawImage(bi,posx+=vx, posy+=vy,imageW,imageH,null);
-		//midX+=vx;
-		//midY+=vy;
-
-		//draw a healthbar
-		g.setColor(Color.RED);
-		g.fillRect(posx,posy-3,scale*maxHp,2);
-		g.setColor(Color.GREEN);
-		if (hitPoints >= 0) {
-			g.fillRect(posx,posy-3,scale*hitPoints,2);
-		}
-		else {
-			g.fillRect(posx,posy-5,0,5);
-		}
-
-
-	}*/
 }

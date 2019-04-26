@@ -37,9 +37,9 @@ public class Tower extends MapObject{
 	{
 		super(posx, posy, bi, imageW, imageH);
 		//b1 = new Bullet1(posx, posy, 10,10);
-		range = (int)(hitboxRadius*5);
-		speed = 60;
-		power = 5;
+		range = (int)(hitboxRadius*5.3);
+		speed = 55;
+		power = 6;
 		level = 1;
 		bsize=7;
 		velocity=15;
@@ -57,16 +57,18 @@ public class Tower extends MapObject{
 	public int getPowerLevel() {
 		return level;
 	}
-	public void upgrade () {
+	public boolean upgrade () {
 		if (level < 4) {
 			level++;
-			power+=3;
-			speed-=12;
-			velocity++;
+			power+=4;
+			speed-=13;
+			velocity+=2;
 			range +=hitboxRadius;
 			this.changeImage(t[level-1]);
+			return true;
 		}else {
 			System.out.println("MAX LEVEL ALREADY");
+			return false;
 		}
 	}
 	//Added this to override parent

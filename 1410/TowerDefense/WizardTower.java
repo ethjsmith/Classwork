@@ -1,3 +1,9 @@
+/*
+@ Author : Ethan Smith
+@ Date : 4/25/29
+@ Assignment : Tower defense
+@ File: WizardTower
+*/
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,7 +23,7 @@ public class WizardTower extends Tower{
 	public WizardTower(int posx, int posy, BufferedImage bi, int imageW, int imageH) {
 		super(posx, posy, bi, imageW, imageH);
 		range = (int)(hitboxRadius*7);
-		speed = 120;
+		speed = 125;
 		power = 100;
 		velocity=8;
 		bsize =3;
@@ -32,20 +38,24 @@ public class WizardTower extends Tower{
 			System.out.println("Unable to generate tower due to IO exception");
 		}
 	}
-	public void upgrade() {
+	//mostly the same as the upgrade function in tower
+	public boolean upgrade() {
 		if (level < 3) {
 			level++;
 			power+= 50;
-			speed-= 25;
+			speed-= 20;
 			velocity+=4;
 			range +=(int)(hitboxRadius*1.2);
 			this.changeImage(t[level-1]);
+			return true;
 		}else {
 			System.out.println("MAX LEVEL ALREADY");
+			return false;
 		}
 	}
 	public void drawImage(Graphics g)
 	{
+		//draws some things differently
 		g.drawImage(bi,posx, posy,imageW,imageH,null);
 		//draws all the bullets associated with a tower
 		for ( int z=0;z<bullets.size();z++) {
@@ -58,7 +68,28 @@ public class WizardTower extends Tower{
 		for ( int z=0;z<bullets.size();z++) {
 			//g.setColor(Color.CYAN);
 			bullets.get(z).drawImage(g,Color.CYAN);
-			g.drawLine(midX,midY,(int)bullets.get(z).getXpos(),(int)bullets.get(z).getYpos());
+			// this line is a line drawn between the projectile, and the tower, making it look like the wizard
+			//tower is firing a laser
+			
+			
+			// this is all basically a super overcomplicated way to make it look like wizards are shooting lightning
+			double angle = Math.atan2((double)((int)bullets.get(z).getYpos()-midY),(double)((int)bullets.get(z).getXpos()-midX));
+			//System.out.println(angle);
+			double dis=Math.sqrt(Math.pow(((int)bullets.get(z).getXpos()-midX),2) + Math.pow(((int)bullets.get(z).getYpos()-midY),2));
+			double vxx = dis/2*(Math.cos(angle+(Math.random()*.6)-.3));
+			double vyy =dis/2*(Math.sin(angle+(Math.random()*.6)-.3));
+			double vxx2 = dis*(Math.cos(angle+(Math.random()*.02)-.01));
+			double vyy2 = dis*(Math.sin(angle+(Math.random()*.02)-.01));
+			
+			int mpx1 = midX + (int)vxx;
+		    int mpy1 = midY + (int)vyy;
+			int mpx2 = midX + (int)vxx2;
+		    int mpy2 = midY + (int)vyy2;
+			//(int)(Math.random()*5)-5;
+			g.drawLine(midX,midY,mpx1,mpy1);
+			g.drawLine(mpx1,mpy1,mpx2,mpy2);
+			g.drawLine(mpx2,mpy2,(int)bullets.get(z).getXpos(),(int)bullets.get(z).getYpos());
+			
 
 		}
 	}

@@ -1,3 +1,9 @@
+/*
+@ Author : Ethan Smith
+@ Date : 4/25/29
+@ Assignment : Tower defense
+@ File: FireTower
+*/
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,10 +21,10 @@ import java.awt.Color;
 public class FireTower extends Tower{
 	public FireTower(int posx, int posy, BufferedImage bi, int imageW, int imageH) {
 		super(posx, posy, bi, imageW, imageH);
-		range = hitboxRadius*20;
-		speed = 1;
+		range = hitboxRadius*2;
+		speed = 2;
 		power = 1;
-		velocity=1;
+		velocity=2;
 		System.out.println(range);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
@@ -31,16 +37,18 @@ public class FireTower extends Tower{
 			System.out.println("Unable to generate tower due to IO exception");
 		}
 	}
-	public void upgrade () {
+	public boolean upgrade () {
 		if (level < 3) {
 			level++;
-			power++;
+			//power++;
 			speed++;
 			velocity++;
 			range +=hitboxRadius;
 			this.changeImage(t[level-1]);
+			return true;
 		}else {
 			System.out.println("MAX LEVEL ALREADY");
+			return false;
 		}
 	}
 	public void drawImage(Graphics g) {
@@ -51,6 +59,7 @@ public class FireTower extends Tower{
 					bullets.remove(z);
 				}
 		}
+		//makes the bullets have random colors, simulating a fireblast.
 		for ( int z=0;z<bullets.size();z++) {
 			double r = Math.random();
 			Color c;

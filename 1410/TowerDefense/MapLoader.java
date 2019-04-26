@@ -19,39 +19,52 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+// pretty sure some of these imports are duplicates... whoops
 
 import java.util.*;
 @SuppressWarnings({ "serial", "unused" })
 public class MapLoader extends JPanel {
 
 	//Instance variables
+	// arraylists for holding different types of objects
+	//bullet lists are within the individual towers
 	public ArrayList<Tower> towers = new ArrayList<Tower>(0);
 	public ArrayList<Enemy> enemies = new ArrayList<Enemy>(0);
+	public ArrayList<Corpse> dead = new ArrayList<Corpse>(0);
 	public BufferedImage t1,t2,t3,t4;
 	public int timer;
 	public boolean running;
 	public BufferedImage[] images;
+	public int score =0;
 	//Tower t1;
 	Enemy e1;
 	int money,lives;
-	public JLabel lblLives,lblMoney;
-	public MapLoader(JLabel l, JLabel m){
+	public String info;
+	public JLabel lblLives,lblMoney,lblScore,lblInfo;
+	public MapLoader(JLabel l, JLabel m,JLabel s,JLabel i){
+		// all the labels are passed in here, so that they can be updated anytime
+		lblInfo = i;
 		lblLives = l;
 		lblMoney = m;
+		lblScore = s;
+		info ="";
 		int rows = 10;
 		int cols = 10;
 
-		money = 1000;
+		money = 800;
 		lives = 20;
 
 		MyCanvas myCanvas = null;
 		myCanvas = new MyCanvas(rows, cols);
 		try {
 			//initalize all of the tower images and save them as files to be accessed
+			// and by all, I mean like 4 
 			t1 = ImageIO.read(new File("assets/tower1.png"));
 			t2 = ImageIO.read(new File("assets/tower2.png"));
 			t3 = ImageIO.read(new File("assets/tower3.png"));
 			t4 = ImageIO.read(new File("assets/tower4.png"));
+			// I could improve performance by initalizing all the images in a single array right here, and then passing them into all the objects, instead of having each object create it's images when
+			// it's created, but that sounds like a huge pain in every single way.
 		}
 		catch (IOException e) {
 			System.out.println("Unable to generate tower due to IO exception");
@@ -68,18 +81,15 @@ public class MapLoader extends JPanel {
 		//JPopupMenu upgrade = new JPopupMenu("upgrade");
 		//this.add(upgrade);
 	}
-
-
-	//public void createTower(int x, int y, int style)
-//	public void initImages() {
-//		images = new BufferedImage[21];
-//		images[0] = ImageIO.read()
-//	}
 	public void upgradeTower(Tower t) {
 		int cost = t.getPowerLevel()*25;
 		if (money > cost) {
-			t.upgrade();
-			money-=cost;
+			if (t.upgrade()) {
+				money-=cost;
+			}
+			else {
+				info = "Tower at max level already!";
+			}
 		}
 		//t.upgrade();
 		else {
@@ -96,6 +106,7 @@ public class MapLoader extends JPanel {
 		}
 		return false;
 	}
+	//remove a tower from the array of towers, killing it 
 	public void removeTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
 			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
@@ -104,49 +115,37 @@ public class MapLoader extends JPanel {
 				towers.remove(z);
 				money += refund;
 			}
-			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
-				// do some stuff to add some buttons and upgrade towers... idk
-
-			//}
 		}
 	}
+	//selects a tower, 
 	public Tower selectTower(int x,int y) {
 		for (int z=0;z<towers.size();z++) {
 			if (towers.get(z).isColliding(new MovingObject(x+5,y+15,6))) {
 				return towers.get(z);
 			}
-			//if (x > t.getX() && x < t.getX() + t.getWidth() && y > t.getY() && y < t.getY() + t.getHeight()) {
-				// do some stuff to add some buttons and upgrade towers... idk
-
-			//}
 		}
 		return null;
 	}
+	//creates random different enemies
 	public void createEnemies(int z) {
+		// Z is the difficulty and shows how often enemies appear, and affects some of their other stats
+		// Z no longer does that
+		z = (int)(z/2) + 1;
 			double enemyseed = Math.random();
 			int enY = (int)((Math.random()*550)+10);
 			if (enemyseed > .5) {
-				enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
-				timer = 45;
+				enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, (int)(Math.random()*30)+50));
+				timer = (int)45/z;
 			} else if (enemyseed > .25){
-				enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
-				timer = 20;
+				enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, (int)(Math.random()*10)+30));
+				timer = (int)20/z;
 			}
 			else {
-				enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
-				timer = 150;
+				enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, (int)(Math.random()*200)+500));
+				timer = (int)150/z;
 			}
-			//while ( z >= 0) {
-			//	int enY = (int)((Math.random()*550)+10);
-		//		enemies.add(new Enemy(0, enY, t1, 40, 40, 1, 0, 40));
-		//		enY = (int)((Math.random()*550)+10);
-		//		enemies.add(new Wolf(0, enY, t1, 40, 30, 2, 0, 40));
-		//		z--;
-		//	}
-		//	int enY = (int)((Math.random()*550)+10);
-	//		enemies.add(new Knight(0, enY, t1, 60, 60, 1, 0, 500));
 	}
-
+	//create a tower based on which button was pressed
 	public void createTower(int x, int y, int type) {
 		Tower tow1=null;
 		if (type == 1) {
@@ -155,6 +154,7 @@ public class MapLoader extends JPanel {
 				tow1 = new Tower(x,y,t1, 40,40);
 			}
 			else {
+				info = "Not enough money !";
 				System.out.println("not enough money");
 			}
 		}
@@ -164,6 +164,7 @@ public class MapLoader extends JPanel {
 				tow1 = new FireTower(x,y,t1, 40,40);
 			}
 			else {
+				info = "Not enough money !";
 				System.out.println("not enough money");
 			}
 		}
@@ -173,6 +174,7 @@ public class MapLoader extends JPanel {
 				tow1 = new WizardTower(x,y,t1, 40,40);
 			}
 			else {
+				info = "Not enough money !";
 				System.out.println("not enough money");
 			}
 		}
@@ -181,6 +183,7 @@ public class MapLoader extends JPanel {
 			if (towers.size() > 0) {
 				for (int z=0;z<towers.size();z++) {
 					if (tow1.isColliding(towers.get(z))) {
+						info = "close to other tower!";
 						System.out.println("too close to another tower");
 						place = false;
 					}
@@ -198,6 +201,7 @@ public class MapLoader extends JPanel {
 			}
 		}
 	}
+	//14 : Start the game already (starts enemies being created in the paint loop
 	public void start()
 	{
 		if (running) {
@@ -205,7 +209,8 @@ public class MapLoader extends JPanel {
 		}else {
 			running = true;
 		}
-		timer = 150;
+		timer = 10;
+		// this is a commented out try/catch block
 		//try {
 
 	//	}
@@ -218,24 +223,49 @@ public class MapLoader extends JPanel {
 	public void paint(Graphics g){
 		super.paint(g);
 		try{
+			//checks if you're dead
 		if (lives < 0) {
+			info = "You died !";
 			System.out.println("You died, noob");
+			System.out.println("Your Score was : " + score);
+			if (score > 1000) {
+				System.out.println("That's pretty good");
+			}
+			if (score > 10000) {
+				System.out.println("get a life loser");
+			}
 			System.exit(0);
 		}
-		//bullet and enemy position
+		//updates labels based on your current values
 		lblMoney.setText("Money: " + money);
 		lblLives.setText("Lives: " + lives);
-		//int bx = 0;
-		//int by = 0;
-		//int ex = 999;
-		//int ey = 999;
+		lblScore.setText("Score: " + score);
+		lblInfo.setText(info);
+
 		timer--;
+		//creates enemies occasionally
 		if (running) {
 			if (timer < 0) {
-				createEnemies(1);
+				// diff makes more enemies spawn as the game continues
+				int diff = (int) score/25;
+				if (diff > 50) {
+					diff = 50;
+				}
+				createEnemies(diff);
 				//timer = 200;
 			}
-		}
+		}		//draws the corpses
+				if (dead.size() > 0 ) {
+					for(int z=0;z<dead.size();z++) {
+						dead.get(z).drawImage(g);
+						
+					}
+					//removes corpses if there are more than 25
+					if (dead.size() > 25) {
+						dead.remove(0);
+					}
+				}
+				// draws enemies and checks if they're dead
 				if (enemies.size() > 0) {
 					for (int z=0;z<enemies.size();z++) {
 						enemies.get(z).animate();
@@ -244,12 +274,18 @@ public class MapLoader extends JPanel {
 							lives--;
 							enemies.remove(z);
 						}
+						// if enemies died to tower, make a corpse and give you a score bonus and money
 						else if (enemies.get(z).getHitPoints() <= 0) {
+							Enemy tmp = enemies.get(z);
+							Corpse c = new Corpse(tmp.getX(),tmp.getY(),t1,tmp.getHeight(),tmp.getWidth(),tmp.getType());
+							score += enemies.get(z).getScore();
+							money +=enemies.get(z).getScore();
 							enemies.remove(z);
-							money+=5;
+							dead.add(c);
 						}
 					}
 				}
+				//draw the towers, and have the towers fire
 				if (towers.size() > 0 ) {
 					for (int z=0;z<towers.size();z++) {
 						towers.get(z).drawImage(g);
@@ -259,7 +295,7 @@ public class MapLoader extends JPanel {
 						}
 					}
 				}
-
+				// some commented code that afaik isn't mine lol wtf 
 				/*if(t1 != null)
 				{
 					t1.drawImage(g);
@@ -288,7 +324,7 @@ public class MapLoader extends JPanel {
 					e1 = null;
 					//t1.destroyBullet();
 				}*/
-
+				//add a delay so the game isn't running hyperspeed mode ( it's already pretty fast) 
 				Thread.sleep(15);
 				repaint();
 		}
@@ -302,6 +338,7 @@ public class MapLoader extends JPanel {
 
 //MyCanvas taken from file reader lab
 //Notice that this too is a panel
+// None of this is mine, Ignore it 
 @SuppressWarnings("serial")
 class MyCanvas extends JPanel{
 	private BufferedImage[][] imgs;

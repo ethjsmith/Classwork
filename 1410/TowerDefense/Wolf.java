@@ -17,14 +17,23 @@ import javax.imageio.ImageIO;
 public class Wolf extends Enemy {
 	public Wolf(int posx, int posy, BufferedImage bi, int imageW, int imageH, double vx, double vy, double hitPoints)
 	{
+		
+		// fun fact, I actually drew all the sprites for the game ( and all their animations) myself... how's that for dedication?
+		
+		// that's why if you look closely, they actually look aweful :) 
+		
+		
 		super(posx, posy, bi, imageW, imageH, vx, vy,hitPoints);
 		this.hitPoints = hitPoints;
 		// this stuff is for drawing the HP box
 		t = new BufferedImage[4];
 		this.maxHp = hitPoints;
 		scale = imageW /maxHp;
+		type = "wolf";
+		value=2;
 		ani_counter = (int)(Math.random()*20)+1;
 		try {
+			//wolf's animation frames.
 		t[0] = ImageIO.read(new File("assets/wolf1.png"));
 		t[1] = ImageIO.read(new File("assets/wolf2.png"));
 		t[2] = ImageIO.read(new File("assets/wolf3.png"));

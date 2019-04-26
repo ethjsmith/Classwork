@@ -11,8 +11,8 @@ import java.awt.image.BufferedImage;
 
 public class MovingObject extends MapObject {
 	
-	private double vx;
-	private double vy;
+	protected double vx;
+	protected double vy;
 	
 	public MovingObject(int posx,int posy,int radius) {
 		// creates a generic object which isn't actually moving
