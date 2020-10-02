@@ -11,11 +11,12 @@ using namespace std;
 
 int battleNum = 0; //Driver needs access to this value
 
+
 //battle sequence fix the hit value
-void battle (character c1, character c2)
+void battle (chara c1, chara c2)
 {
 	battleNum++;
-
+	cout << c1.state << c2.state <<endl;
 	while (c1.state == alive && c2.state==alive)
 	{
 		int hitValue = 0;
@@ -40,7 +41,11 @@ void battle (character c1, character c2)
 }
 
 //determine if the character should be alive or dead
-void statusCheck(character c)
+void statusCheck(chara c)
 {
-	if (c.hitPoints >= 0) c.state=alive; else c.state=dead;
+	cout << c.name << " has " << c.hitPoints <<endl;
+	if (c.hitPoints >= 0) 
+		c.state=alive;
+	else 
+		c.state=dead;
 }

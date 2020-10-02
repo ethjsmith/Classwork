@@ -18,10 +18,11 @@ int main()
 //hero.hitpoints = 99;
 //hero.strength = 10;
 
-struct character hero2(true,99,10);
+struct chara hero2("Ethan",999,1000);
 
-struct character villan;
-villan.alive = true;
+struct chara villan("Dr Cantrell",3,3);
+//villan.alive = true;
+battle(hero2,villan);
 }
 
 //1. In Character.h create a character struct that can hold at least a status, hitPoints, and a strength value

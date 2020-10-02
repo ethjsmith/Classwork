@@ -3,23 +3,21 @@ Header file for a generic character
 */
 
 #include<string>
-
-struct character
-{
-	// fuck enums I hate them
-	enum state {alive, dead};
-	state status = alive; // <-- establish a type and then declare a var
-	//bool alive;
+using namespace std;
+enum status{alive, dead};
+struct chara {
+	string name;
+	status state;
 	int hitPoints;
 	int strength;
 	
-	character(int a, int hp, int s){
-		//alive = a;
-		state = alive;
+	chara(string n, int hp, int s){
+		name = n;
+		status state = alive;
 		hitPoints = hp;
 		strength = s;
 	}
-	
 };
+void battle(chara a, chara b);
 
-void statusCheck(character);
+STATE statusCheck(chara a);
