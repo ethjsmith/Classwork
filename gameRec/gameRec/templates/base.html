@@ -7,7 +7,8 @@
 <body>
     {% include 'navbar.html' %}
     <div class = "card">
-        {{content}}
+        {{word}}
+        {% block content %}{% endblock %}
     </div>
     <div class = "card">
 <body>
