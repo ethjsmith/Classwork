@@ -41,4 +41,9 @@ def user_register(request):
 
 # this will be a test method to display all the games in the db
 def showgames(request):
-    
+    #query here
+    gm = Game.objects.all()
+    context = {
+        "word":gm
+    }
+    return render(request,"base.html",context)
