@@ -15,8 +15,8 @@ using namespace std;
 bool charge(Customer* c, double v) {
     // charge() - accepts a customer pointer and reduces balance by sent double value, 
 // returns true if successful and false if there aren’t enough funds. Use dereferencing.
-if (c->balance >= v) {
-    c->balance -= v;
+if ((*c).balance >= v) {
+    (*c).balance -= v;
     return true;
 }
 return false;

@@ -20,8 +20,7 @@ using namespace std;
 int main(int argc, char* argv[]) {// accepts name, id, and balance ... 
     for (int z = 0; z < argc; z++){
 		cout << argv[z] << endl;
-        }
-}
+    }
     if (argc < 4) {
         cout << "not enough arguments, be sure to add Name, id, and balance" << endl;
         exit(1);
@@ -37,7 +36,9 @@ int main(int argc, char* argv[]) {// accepts name, id, and balance ...
     
     print(&c);
     charge(&c, 25.00);
+
     charge(&c, 999999.00);
+	cout << "charged some money, and then a LOT of money " << endl;
     print(&c);
     
     //charge (&d);
