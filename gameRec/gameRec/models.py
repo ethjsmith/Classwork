@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 class Game(models.Model):
     id = models.TextField(primary_key=True)
     name = models.TextField()
-    # tags
-
+    # tags not needed here, as they can be accessed from either direction via the tags table. :) 
     def __str__(self):
         return self.name
 

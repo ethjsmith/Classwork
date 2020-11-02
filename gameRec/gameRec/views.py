@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.urls import reverse_lazy
 
+from gameRec.models import *
 
 # MonkaW class instead of function? couldn't be me!
 class SignUpView(generic.CreateView):
@@ -43,7 +44,14 @@ def user_register(request):
 def showgames(request):
     #query here
     gm = Game.objects.all()
+    gp = Tag.objects.all()
+    # gm = gm + gp
+    go = ""
+    for g in gm:
+        go += str(g)
+    for g in gp:
+        go += str(g)
     context = {
-        "word":gm
+        "word":go
     }
     return render(request,"base.html",context)

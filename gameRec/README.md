@@ -1,0 +1,26 @@
+Generate some random data for the database, ( for testing)
+
+```
+from gameRec.models import Game, Tag, Gamer
+a = Game("Catan")
+a = Game(name = "Catan")
+b = Game(name = "Monopoly")
+c = Game(name = "Russian Roulette")
+d = Game(name = "BlackJack")
+e = Tag(name="Board")
+f = Tag(name="Party")
+a.save()
+b.save()
+c.save()
+d.save()
+e.save()
+f.save()
+g.save()
+e.games.add(a)
+e.games.add(b)
+f.games.add(c)
+f.games.add(d)
+e.save()
+f.save()
+exit()
+```
