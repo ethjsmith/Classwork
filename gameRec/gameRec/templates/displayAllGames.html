@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for g in games%}
+    <div class = "card">
+        <h3>{{g.name}}</h3><br>
+        {{g.description}}, Difficulty:{{g.difficulty}}<br>
+        {%for t in g.tag_set.all %}
+            Tag:[{{t.name}}:{{t.description}}]<br>
+        {% endfor %}
+    </div><br>
+{% endfor %}
+{% endblock %}

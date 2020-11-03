@@ -44,14 +44,15 @@ def user_register(request):
 def showgames(request):
     #query here
     gm = Game.objects.all()
-    gp = Tag.objects.all()
+    #print(gm)
     # gm = gm + gp
     go = ""
+    #print(gm)
     for g in gm:
-        go += str(g)
-    for g in gp:
-        go += str(g)
+    #    print(g)
+        go = go + str(g) + ", "
     context = {
-        "word":go
+    #    "word":go,
+        "games":gm,
     }
-    return render(request,"base.html",context)
+    return render(request,"displayAllGames.html",context)
