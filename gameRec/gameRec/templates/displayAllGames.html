@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+{% include 'addGame.html' %}
 {% for g in games%}
-    <div class = "card">
+    <div class = "preview">
         <h3>{{g.name}}</h3><br>
+        <img src = "{% static "" %}{{g.name}}.jpg" ><br>
+
         {{g.description}}, Difficulty:{{g.difficulty}}<br>
         {%for t in g.tag_set.all %}
             Tag:[{{t.name}}:{{t.description}}]<br>

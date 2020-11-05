@@ -1,0 +1,13 @@
+{% block add %}
+<!-- this might just end up being a form, idk -->
+<div class = "card">
+    <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
+        <select name ="newGame" id = "newGame">
+            {% for game in games %}
+                <option value = {{game.id}}>{{game.name}}</option>
+            {% endfor %}
+        </select>
+        <input type = "submit" value = "register"/>
+    </form>
+</div>
+{% endblock %}

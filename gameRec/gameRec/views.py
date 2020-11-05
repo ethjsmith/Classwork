@@ -28,10 +28,15 @@ def recommend(request):
 
 @login_required
 def user_games(request):
+    if request.method == 'POST':
+        # create a new link between current user and the selected game
+        print(request)
+    gm = Game.objects.filter(gamer=request.user.id)
     context = {
-        "word":"your games!"
+        "word":"your games!",
+        "games":gm,
     }
-    return render(request,"base.html",context)
+    return render(request,"displayAllGames.html",context)
 
 
 def user_register(request):
@@ -42,14 +47,9 @@ def user_register(request):
 
 # this will be a test method to display all the games in the db
 def showgames(request):
-    #query here
     gm = Game.objects.all()
-    #print(gm)
-    # gm = gm + gp
     go = ""
-    #print(gm)
     for g in gm:
-    #    print(g)
         go = go + str(g) + ", "
     context = {
     #    "word":go,
