@@ -29,12 +29,16 @@ def recommend(request):
 @login_required
 def user_games(request):
     if request.method == 'POST':
-        # create a new link between current user and the selected game
-        print(request)
+        request.user.gamer.games.add(request.POST.get('newGame'))
+        request.user.save()
+        # adds a new game to your list of games
+
     gm = Game.objects.filter(gamer=request.user.id)
+    g2 = Game.objects.all()
     context = {
         "word":"your games!",
-        "games":gm,
+        "yourgames":gm,
+        "games":g2,
     }
     return render(request,"displayAllGames.html",context)
 
@@ -53,6 +57,6 @@ def showgames(request):
         go = go + str(g) + ", "
     context = {
     #    "word":go,
-        "games":gm,
+        "yourgames":gm,
     }
     return render(request,"displayAllGames.html",context)

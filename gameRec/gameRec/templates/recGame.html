@@ -1,5 +1,5 @@
-{% block add %}
-<!-- this might just end up being a form, idk -->
+{% block recommend_without_profile %}
+<!-- Selector for games basically, and then on the backend it suggests a game -->
 <div class = "card">
     <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
         <select name ="newGame" id = "newGame">
@@ -7,7 +7,7 @@
                 <option value = {{game.id}}>{{game.name}}</option>
             {% endfor %}
         </select>
-        <input type = "submit" value = "Add this game!"/>
+        <input type = "submit" value = "I like this game, recommend me some similar games!"/>
     </form>
-</div>
+</div><br>
 {% endblock %}

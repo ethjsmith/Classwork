@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-{% include 'addGame.html' %}
-{% for g in yourgames%}
+{% include 'recGame.html' %}
+<div class = "card">
+get a recommendation based on the games listed on your profile
+
+</div>
+<!-- {% for g in yourgames%}
     <div class = "preview">
         <h3>{{g.name}}</h3><br>
         <img src = "{% static "" %}{{g.name}}.jpg" ><br>
@@ -12,5 +16,5 @@
             Tag:[{{t.name}}:{{t.description}}]<br>
         {% endfor %}
     </div><br>
-{% endfor %}
+{% endfor %} -->
 {% endblock %}

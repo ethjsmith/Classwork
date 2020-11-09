@@ -2,10 +2,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#Pic, <-- not in database, but an image that shares it's name with the game
-#theme, <-- This might be a tag... ( if we want it to be searchable anyways...)
-#mechanics, <-- this is also probably a tag
-#difficulty <-- int from 1 to 10?
+# Pic, <-- not in database, but an image that shares it's name with the game
+# theme, <-- This might be a tag... ( if we want it to be searchable anyways...)
+# mechanics, <-- this is also probably a tag
+# difficulty <-- int from 1 to 10?
 
 class Game(models.Model):
     id = models.AutoField(primary_key=True)
