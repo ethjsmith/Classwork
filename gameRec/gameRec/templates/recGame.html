@@ -1,13 +1,17 @@
 {% block recommend_without_profile %}
 <!-- Selector for games basically, and then on the backend it suggests a game -->
 <div class = "card">
-    <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
+    <!-- <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
         <select name ="newGame" id = "newGame">
             {% for game in games %}
                 <option value = {{game.id}}>{{game.name}}</option>
             {% endfor %}
         </select>
         <input type = "submit" value = "I like this game, recommend me some similar games!"/>
-    </form>
+
+    </form> -->
+    {% for game in games %}
+        <a href ="/rec/{{game.id}}"> {{game.name}} </a><br>
+    {% endfor %}
 </div><br>
 {% endblock %}
