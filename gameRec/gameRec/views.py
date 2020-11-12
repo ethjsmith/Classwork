@@ -6,6 +6,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 
 from gameRec.models import *
+import operator
 
 # MonkaW class instead of function? couldn't be me!
 class SignUpView(generic.CreateView):
@@ -37,10 +38,25 @@ def rec(request,id=0):
     else:
         g2 = Game.objects.filter(id=id)
     t = Tag.objects.filter(name = get_similar_game(g2)) # this might be id instead ...
-    allsuggest = Game.objects.filter(tag=t[0]).first()
+    # this has changed from a single string, to a list of tag objects... todo
+    #
+    #   TODO Fix this area ...
+    #
+    if id == "0":
+        #allsuggest = Game.objects.filter(tag=t[0]).exclude(id__in=[o.id for o in g2]).all()# for in g2.id).all()
+        allsuggest = Game.objects.filter(tag__in=[t2 for t2 in t]).exclude(id__in=[o.id for o in g2]).all()# for in g2.id).all()
+
+    else:
+        allsuggest = Game.objects.filter(tag=t[0]).exclude(id=id).all()
+    print(allsuggest)
+    if allsuggest == []: # technically this is a kind of hacky fix, that doesn't work particularly great
+    # one thing that could be added : if someone has all games of a particular type, this would also fire, so some kind of elif statement to suggest a new "genere/tag"
+        w = "We have no games to reccomend, you must have all, or most of the games in our database"
+    else:
+        w = "We recommend:"
     context = {
-        "word":"We recommend:",
-        "yourgames":g2,
+        "word":w,
+        "yourgames":allsuggest,
     }
     return render(request,"displayAllGames.html",context)
 
@@ -94,7 +110,12 @@ def get_similar_game(games_l):
                 tags[tag] = 1 # create a new tag with a count of one
 
     #max(tags.items(), key=operator.itemgetter(1))[0] # this should be the name of the tag with the highest count ?
-    print(tags)
+    #print(tags)
     ret = max(tags, key=lambda key: tags[key]) # using a lambda monkaW
-    print (ret)
-    return ret
+    #{print(k + ":" +  v) for k, v in sorted(tags.items(), key=lambda item: tags[1])}
+    sorted_d = dict(sorted(tags.items(), key=operator.itemgetter(1),reverse=True))
+    #print(sorted_d)
+    #print (ret)
+    #return ret
+    return sorted_d
+    # does this return only a signle tag? it should return the tags in an ordered list based on count, so that if the first tag has no valid results, you can continue, and try the subsequent tags in the list
