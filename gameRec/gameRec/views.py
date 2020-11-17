@@ -30,33 +30,30 @@ def recommend(request):
     return render(request,"getRect.html",context)
 
 def rec(request,id=0):
-    g2 = []
-    print("id is :" + str(id))
-    if id == "0":
-        print('id is 0')
+    g2 = [] # holds the games being passed into the selector function
+    if id == "0": # if statement checks if you're going to pass in 1 game, or many
         g2 = Game.objects.filter(gamer=request.user.id)
     else:
         g2 = Game.objects.filter(id=id)
-    t = Tag.objects.filter(name = get_similar_game(g2)) # this might be id instead ...
-    # this has changed from a single string, to a list of tag objects... todo
-    #
-    #   TODO Fix this area ...
-    #
-    if id == "0":
-        #allsuggest = Game.objects.filter(tag=t[0]).exclude(id__in=[o.id for o in g2]).all()# for in g2.id).all()
-        allsuggest = Game.objects.filter(tag__in=[t2 for t2 in t]).exclude(id__in=[o.id for o in g2]).all()# for in g2.id).all()
+    t = get_similar_game(g2)
+    print("here are tags" + str(t))
+    suggested_game = Game.objects.all().exclude(id__in=[o.id for o in g2])
+    print("possible games: " + str(suggested_game))
+    t2 = list(t)
+    print("tags as list: " + str(t2))
+    #TODO: if there's no match from the first tag, move on to the second tag :) 
+    suggested_game = suggested_game.filter(tag = list(t)[0]).all()
+    #if (suggested_game):
+    print("Game based on tags: " + str(suggested_game))
 
-    else:
-        allsuggest = Game.objects.filter(tag=t[0]).exclude(id=id).all()
-    print(allsuggest)
-    if allsuggest == []: # technically this is a kind of hacky fix, that doesn't work particularly great
+    if not suggested_game:
     # one thing that could be added : if someone has all games of a particular type, this would also fire, so some kind of elif statement to suggest a new "genere/tag"
         w = "We have no games to reccomend, you must have all, or most of the games in our database"
     else:
         w = "We recommend:"
     context = {
         "word":w,
-        "yourgames":allsuggest,
+        "yourgames":suggested_game,
     }
     return render(request,"displayAllGames.html",context)
 
