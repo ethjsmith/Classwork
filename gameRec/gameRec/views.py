@@ -37,12 +37,16 @@ def rec(request,id=0):
         g2 = Game.objects.filter(id=id)
     t = get_similar_game(g2)
     print("here are tags" + str(t))
-    suggested_game = Game.objects.all().exclude(id__in=[o.id for o in g2])
-    print("possible games: " + str(suggested_game))
+    possible_games = Game.objects.all().exclude(id__in=[o.id for o in g2])
+    print("possible games: " + str(possible_games))
     t2 = list(t)
     print("tags as list: " + str(t2))
-    #TODO: if there's no match from the first tag, move on to the second tag :) 
-    suggested_game = suggested_game.filter(tag = list(t)[0]).all()
+    #TODO: if there's no match from the first tag, move on to the second tag :)
+    suggested_game = possible_games.filter(tag = list(t)[0]).all()
+    while (not suggested_game and len(t) > 1):
+        del t[list(t)[0]]
+        print("all tags, minus first" + str(t))
+        suggested_game = possible_games.filter(tag = list(t)[0]).all()
     #if (suggested_game):
     print("Game based on tags: " + str(suggested_game))
 
@@ -114,5 +118,6 @@ def get_similar_game(games_l):
     #print(sorted_d)
     #print (ret)
     #return ret
+    #print(sorted_d)
     return sorted_d
     # does this return only a signle tag? it should return the tags in an ordered list based on count, so that if the first tag has no valid results, you can continue, and try the subsequent tags in the list
