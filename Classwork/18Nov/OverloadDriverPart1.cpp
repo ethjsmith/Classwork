@@ -1,3 +1,8 @@
+// Ethan Smith
+// C++ (CS3150)
+// Complete the demo code assignment
+//
+//
 //Demo code for operator overload in C++
 
 #include <iostream>
@@ -13,20 +18,21 @@ using namespace std;
 class Point
 {
 	private: 
-		int x,y;	
+			
 
 	public:
-
+		int x,y;
 		Point();
 		Point(int, int);
 		void showPoint();
 		Point operator=(const Point &);
 		Point operator+=(const Point &);
-		friend Line;
-		friend Point operator+(const Point &, const Point &); // set this function ( which isn't really part of the point class kek) as a friend so it can access private variables
-		friend Point operator-(const Point &, const Point &);
-		friend bool operator==(const Point &, const Point &);
-		friend bool operator!=(const Point &, const Point &);
+		// friend Line l;
+		// friend Point operator+(const Point &, const Point &); // set this function ( which isn't really part of the point class kek) as a friend so it can access private variables
+		// friend Point operator-(const Point &, const Point &);
+		// friend bool operator==(const Point &, const Point &);
+		// friend bool operator!=(const Point &, const Point &);
+
 		//Point operator+(const Point &, const Point &);
 };
 
@@ -34,7 +40,7 @@ Point::Point():x(0),y(0){}
 Point::Point(int x, int y): x(x), y(y){}
 void Point::showPoint(){cout << x << " " << y << endl;}
 Point Point::operator=(const Point & p2){
-	x=p2.x; // why is this ok as private? 
+	x=p2.x;
 	y=p2.y;
 	return *this;
 }
@@ -65,7 +71,7 @@ bool operator!=(const Point &p1, const Point &p2) {
 Point Point::operator+=(const Point &p){
 	x = x + p.x;
 	y = y + p.y;
-	return this;
+	return *this;
 }
 
 
@@ -74,9 +80,10 @@ Point Point::operator+=(const Point &p){
 class Line
 {
 	private: 
-		Point p1, p2;
+		
 
 	public:
+		Point p1, p2;
 		Line();
 		Line(Point, Point);
 		void showLine();
@@ -94,13 +101,13 @@ double Line::getLength(){
 	return sqrt(pow((p2.x-p1.x),2) + pow((p2.y-p1.y),2));
 }
 //16. Implement the <> operators for lines based on line length
-bool operator>(const Line &l1,const Line &l2){
+bool operator>(Line &l1,Line &l2){
 	if (l1.getLength() > l2.getLength()) {
 		return true;
 	}
 	return false;
 }
-bool operator<(const Line &l1,const Line &l2){
+bool operator<(Line &l1,Line &l2){
 	if (l1.getLength() < l2.getLength()) {
 		return true;
 	}
