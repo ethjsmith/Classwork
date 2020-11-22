@@ -52,6 +52,7 @@ class Line
 		friend ostream& operator<<(ostream&, Line&);
 		friend istream& operator>>(istream&, Line&);
 		Line operator++();
+		Point operator[](int);
 };
 
 
@@ -138,7 +139,13 @@ Line Line::operator++(){
 Line::Line(Point p1, Point p2):p1(p1),p2(p2){}
 Line::Line(){}		// why don't I need to construct the points?
 void Line::showLine(){p1.showPoint(); p2.showPoint();}
-
+Point Line::operator[](int s){
+    if(not s) {
+        return p1;
+    }else{
+        return p2;
+    }
+}
 int main()
 {
 	//PART 1
