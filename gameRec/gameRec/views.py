@@ -49,7 +49,8 @@ def rec(request,id=0):
         suggested_game = possible_games.filter(tag = list(t)[0]).all()
     #if (suggested_game):
     print("Game based on tags: " + str(suggested_game))
-
+    #User.objects.all().order_by('date_joined', '-last_login')
+    sg = suggested_game.order_by('difficulty')[:1]
     if not suggested_game:
     # one thing that could be added : if someone has all games of a particular type, this would also fire, so some kind of elif statement to suggest a new "genere/tag"
         w = "We have no games to reccomend, you must have all, or most of the games in our database"
@@ -57,7 +58,7 @@ def rec(request,id=0):
         w = "We recommend:"
     context = {
         "word":w,
-        "yourgames":suggested_game,
+        "yourgames":sg,
     }
     return render(request,"displayAllGames.html",context)
 
