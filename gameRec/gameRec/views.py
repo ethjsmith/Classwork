@@ -64,7 +64,13 @@ def rec(request,id=0):
 
 @login_required
 def user_games(request):
+    print( "yeah ")
     if request.method == 'POST':
+        if hasattr(request.user, "gamer") == False: # initalize the "GAMER" in you :)
+            newgamer= Gamer(user=request.user)
+            newgamer.save()
+            #request.user.save()
+            print ("making user into a gamer")
         request.user.gamer.games.add(request.POST.get('newGame'))
         request.user.save()
         # adds a new game to your list of games
