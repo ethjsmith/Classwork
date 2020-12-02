@@ -64,18 +64,19 @@ def rec(request,id=0):
 
 @login_required
 def user_games(request):
-    print( "yeah ")
+    u = request.user
     if request.method == 'POST':
-        if hasattr(request.user, "gamer") == False: # initalize the "GAMER" in you :)
-            newgamer= Gamer(user=request.user)
-            newgamer.save()
-            #request.user.save()
+        print (hasattr(u,"gamer"))
+        if hasattr(u, "gamer") == False: # initalize the "GAMER" in you :)
             print ("making user into a gamer")
-        request.user.gamer.games.add(request.POST.get('newGame'))
-        request.user.save()
+            newgamer= Gamer(user=u)
+            newgamer.save()
+        u.gamer.games.add(request.POST.get('newGame'))
+        u.save()
+        print ('added ' + request.POST.get('newGame'))
         # adds a new game to your list of games
 
-    gm = Game.objects.filter(gamer=request.user.id)
+    gm = Game.objects.filter(gamer=request.user.gamer.id) # error was here LOL was checking against the wrong ID so it worked if the user and gamer were in sync (RARE)
     g2 = Game.objects.all()
     context = {
         "word":"your games!",
@@ -101,6 +102,7 @@ def showgames(request):
     #    "word":go,
         "yourgames":gm,
     }
+    test_view() # this tests some database stuff :^)
     return render(request,"displayAllGames.html",context)
 
 def get_similar_game(games_l):
@@ -128,3 +130,12 @@ def get_similar_game(games_l):
     #print(sorted_d)
     return sorted_d
     # does this return only a signle tag? it should return the tags in an ordered list based on count, so that if the first tag has no valid results, you can continue, and try the subsequent tags in the list
+def test_view():
+    # this isn't even a view lmao... its testing an odd bug
+
+    u = User.objects.all()
+    for usr in u:
+        print(usr)
+        if hasattr(usr,"gamer"): # if the user is linked to a gamer with games, print those 
+            for g in usr.gamer.games.all():
+                print(g)
