@@ -22,6 +22,12 @@ def homepage(request):
 
 @login_required
 def recommend(request):
+    u = request.user
+    print (hasattr(u,"gamer"))
+    if hasattr(u, "gamer") == False: # initalize the "GAMER" in you :)
+        print ("making user into a gamer")
+        newgamer= Gamer(user=u)
+        newgamer.save()
     g2 = Game.objects.all()
     context = {
         "word":"Reccomendation page!",
@@ -87,11 +93,6 @@ def user_games(request):
     return render(request,"displayAllGames.html",context)
 
 
-def user_register(request):
-    context = {
-        "word":"Register!"
-    }
-    return render(request,"base.html",context)
 
 # this will be a test method to display all the games in the db
 def showgames(request):
