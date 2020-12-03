@@ -65,12 +65,13 @@ def rec(request,id=0):
 @login_required
 def user_games(request):
     u = request.user
+    print (hasattr(u,"gamer"))
+    if hasattr(u, "gamer") == False: # initalize the "GAMER" in you :)
+        print ("making user into a gamer")
+        newgamer= Gamer(user=u)
+        newgamer.save()
     if request.method == 'POST':
-        print (hasattr(u,"gamer"))
-        if hasattr(u, "gamer") == False: # initalize the "GAMER" in you :)
-            print ("making user into a gamer")
-            newgamer= Gamer(user=u)
-            newgamer.save()
+
         u.gamer.games.add(request.POST.get('newGame'))
         u.save()
         print ('added ' + request.POST.get('newGame'))
@@ -136,6 +137,6 @@ def test_view():
     u = User.objects.all()
     for usr in u:
         print(usr)
-        if hasattr(usr,"gamer"): # if the user is linked to a gamer with games, print those 
+        if hasattr(usr,"gamer"): # if the user is linked to a gamer with games, print those
             for g in usr.gamer.games.all():
                 print(g)
