@@ -98,8 +98,9 @@ def user_games(request):
 def showgames(request):
     gm = Game.objects.all()
     go = ""
-    for g in gm:
+    for g in gm: # what does this do ? 
         go = go + str(g) + ", "
+    print (gm)
     context = {
     #    "word":go,
         "yourgames":gm,
@@ -138,6 +139,7 @@ def test_view():
     u = User.objects.all()
     for usr in u:
         print(usr)
+        print("---------------------------------")
         if hasattr(usr,"gamer"): # if the user is linked to a gamer with games, print those
             for g in usr.gamer.games.all():
                 print(g)

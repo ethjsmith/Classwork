@@ -4,7 +4,6 @@ Here's some useful dev stuff, for setting up and running the database.
 
 creating a database from scratch: ( after a database change because im not fucking migrating a database with 3 entries in it) ( even though django makes that pretty easy )
 ```python
-python manage.py migrate # possibly you don't even need this one :^)
 python manage.py makemigrations gameRec
 python manage.py migrate
 ```
