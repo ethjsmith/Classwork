@@ -16,7 +16,7 @@ class SignUpView(generic.CreateView):
 
 def homepage(request):
     context = {
-        "word":"Homepage!"
+        "word":"Welcome to our boardgame recommendation website!, to get started, create an account, or login, and then head to the 'Get a recommendation' tab to find some cool new board games!"
     }
     return render(request,"base.html",context)
 
@@ -30,7 +30,7 @@ def recommend(request):
         newgamer.save()
     g2 = Game.objects.all()
     context = {
-        "word":"Reccomendation page!",
+        "word":"Get a game recommendation!",
         "games":g2,
     }
     return render(request,"getRect.html",context)
@@ -56,15 +56,10 @@ def rec(request,id=0):
     #if (suggested_game):
     print("Game based on tags: " + str(suggested_game))
     #User.objects.all().order_by('date_joined', '-last_login')
-    sg = suggested_game.order_by('difficulty')[:1]
-    if not suggested_game:
-    # one thing that could be added : if someone has all games of a particular type, this would also fire, so some kind of elif statement to suggest a new "genere/tag"
-        w = "We have no games to reccomend, you must have all, or most of the games in our database"
-    else:
-        w = "We recommend:"
+    #sg = suggested_game.order_by('difficulty')[:1] # Disabling this for now, it's not the intended behavior the team wants
     context = {
-        "word":w,
-        "yourgames":sg,
+        "yourgames":suggested_game,
+        "type":2,
     }
     return render(request,"displayAllGames.html",context)
 
@@ -89,6 +84,7 @@ def user_games(request):
         "word":"your games!",
         "yourgames":gm,
         "games":g2,
+        "type":1, #this is a template check for what it displays near the top
     }
     return render(request,"displayAllGames.html",context)
 
@@ -98,7 +94,7 @@ def user_games(request):
 def showgames(request):
     gm = Game.objects.all()
     go = ""
-    for g in gm: # what does this do ? 
+    for g in gm: # what does this do ?
         go = go + str(g) + ", "
     print (gm)
     context = {

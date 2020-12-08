@@ -2,12 +2,13 @@
 <!-- this might just end up being a form, idk -->
 <div class = "card">
     <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
+        Want to add a game to your inventory? do that here! 
         <select name ="newGame" id = "newGame">
             {% for game in games %}
                 <option value = {{game.id}}>{{game.name}}</option>
             {% endfor %}
         </select>
-        <input type = "submit" value = "Add this game!"/>
+        <input type = "submit" value = "Add to library!"/>
     </form>
-</div>
+</div><br>
 {% endblock %}
