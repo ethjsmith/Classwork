@@ -38,7 +38,7 @@ def recommend(request):
 def rec(request,id=0):
     g2 = [] # holds the games being passed into the selector function
     if id == "0": # if statement checks if you're going to pass in 1 game, or many
-        g2 = Game.objects.filter(gamer=request.user.id)
+        g2 = Game.objects.filter(gamer=request.user.gamer.id)
     else:
         g2 = Game.objects.filter(id=id)
     t = get_similar_game(g2)
