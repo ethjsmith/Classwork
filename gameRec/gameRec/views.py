@@ -48,19 +48,19 @@ def rec(request,id=0):
     else:
         g2 = Game.objects.filter(id=id)
     t = get_similar_game(g2)
-    print("here are tags" + str(t))
+    #print("here are tags" + str(t))
     possible_games = Game.objects.all().exclude(id__in=[o.id for o in g2])
-    print("possible games: " + str(possible_games))
+    #print("possible games: " + str(possible_games))
     t2 = list(t)
-    print("tags as list: " + str(t2))
+    #print("tags as list: " + str(t2))
     #TODO: if there's no match from the first tag, move on to the second tag :)
     suggested_game = possible_games.filter(tag = list(t)[0]).all()
     while (not suggested_game and len(t) > 1):
         del t[list(t)[0]]
-        print("all tags, minus first" + str(t))
+        #print("all tags, minus first" + str(t))
         suggested_game = possible_games.filter(tag = list(t)[0]).all()
     #if (suggested_game):
-    print("Game based on tags: " + str(suggested_game))
+    #print("Game based on tags: " + str(suggested_game))
     #User.objects.all().order_by('date_joined', '-last_login')
     #sg = suggested_game.order_by('difficulty')[:1] # Disabling this for now, it's not the intended behavior the team wants
     context = {
@@ -72,16 +72,16 @@ def rec(request,id=0):
 @login_required
 def user_games(request):
     u = request.user
-    print (hasattr(u,"gamer"))
+    #print (hasattr(u,"gamer"))
     if hasattr(u, "gamer") == False: # initalize the "GAMER" in you :)
-        print ("making user into a gamer")
+        #print ("making user into a gamer")
         newgamer= Gamer(user=u)
         newgamer.save()
     if request.method == 'POST':
 
         u.gamer.games.add(request.POST.get('newGame'))
         u.save()
-        print ('added ' + request.POST.get('newGame'))
+        #print ('added ' + request.POST.get('newGame'))
         # adds a new game to your list of games
 
     gm = Game.objects.filter(gamer=request.user.gamer.id) # error was here LOL was checking against the wrong ID so it worked if the user and gamer were in sync (RARE)
@@ -102,7 +102,7 @@ def showgames(request):
     go = ""
     for g in gm: # what does this do ?
         go = go + str(g) + ", "
-    print (gm)
+    #print (gm)
     context = {
     #    "word":go,
         "yourgames":gm,
@@ -113,11 +113,11 @@ def showgames(request):
 def get_similar_game(games_l):
     # for games in the games list, count up the total of each "tag", and then select the highest rated game with that tag
 
-    print(games_l)
-    print ("above are the games I got ")
+    #print(games_l)
+    #print ("above are the games I got ")
     tags = {}
     for g in games_l: # this might need modification, what if a single game is passed in?
-        print (g)
+        #print (g)
         for tag in g.tag_set.all():
             if tag in tags:
                 tags[tag] = tags[tag] + 1 # increment the tag counter
@@ -125,7 +125,7 @@ def get_similar_game(games_l):
                 tags[tag] = 1 # create a new tag with a count of one
 
     #max(tags.items(), key=operator.itemgetter(1))[0] # this should be the name of the tag with the highest count ?
-    #print(tags)
+    ##print(tags)
     ret = max(tags, key=lambda key: tags[key]) # using a lambda monkaW
     #{print(k + ":" +  v) for k, v in sorted(tags.items(), key=lambda item: tags[1])}
     sorted_d = dict(sorted(tags.items(), key=operator.itemgetter(1),reverse=True))
