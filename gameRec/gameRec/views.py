@@ -29,9 +29,15 @@ def recommend(request):
         newgamer= Gamer(user=u)
         newgamer.save()
     g2 = Game.objects.all()
+    # hasgames = 0 # check if the user has any games in their library, and render the page differently
+    # if g2:
+    #     hasgames = 1
+    hasgames = Game.objects.filter(gamer=request.user.gamer.id)
+    print(hasgames)
     context = {
         "word":"Get a game recommendation!",
         "games":g2,
+        "hasgames":hasgames,
     }
     return render(request,"getRect.html",context)
 
