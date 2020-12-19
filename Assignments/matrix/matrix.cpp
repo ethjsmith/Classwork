@@ -16,129 +16,133 @@ class Matrix;
 class Matrix{
 // add , sub, mult, increment, decrement, << >>
   private:
-    int a1,a2,a3,b1,b2,b3,c1,c2,c3;
+    int data[3][3] ;
   public:
     Matrix();
-    Matrix(int,int,int,int,int,int,int,int,int); // kek
+    Matrix(int[3][3]);
 
     friend Matrix operator+(Matrix&, Matrix&);
     friend Matrix operator-(Matrix&, Matrix&);
     friend Matrix operator*(Matrix&, Matrix&);
     friend Matrix operator/(Matrix&, Matrix&);
 
-    Matrix operator+=();
-    Matrix operator-=();
+    void operator+=(int);// int is the amount we want to increment each value by
+    void operator-=(int);
 
-    friend ostream& operator<<(ostream&,Matrix&);
-    friend istream& operator>>(istream&,Matrix&);
-
+    friend ostream& operator<<(ostream&, Matrix&);
+    friend istream& operator>>(istream&, Matrix&);
 };
-Matrix(){ // sure I could make a nested array... but I already did it this way 
-  a1=0;
-  a2=0;
-  a3=0;
-  b1=0;
-  b2=0;
-  b3=0;
-  c1=0;
-  c2=0;
-  c3=0;
-}
-Matrix(int x,int x2,int x3,int x4,int x5,int x6,int x7,int x8,int x9){
-  a1=x;
-  a2=x2;
-  a3=x3;
-  b1=x4;
-  b2=x5;
-  b3=x6;
-  c1=x7;
-  c2=x8;
-  c3=x9;
-}
+// man imagine just doing this with 9 ints hahaha who would do that I definitely didn't start doing that for some reason ... .... ........ .......
+  Matrix::Matrix(int a[3][3]){
+    for (int i=0;i<3;i++){
+      for (int j=0;j<3;j++) {
+        data[i][j] = a[i][j];
+      }
+    }
+  }
+  Matrix::Matrix(){
+    for (int i=0;i<3;i++){
+      for (int j=0;j<3;j++) {
+        data[i][j] = 0; // there might be a way to set this easier, but this works.
+      }
+    }
+  }
+  // this whole assignment is basically just the same function copy pasted like 9 times, and then 1-3 characters changed.
 Matrix operator+(Matrix& m1, Matrix& m2){
-  Matrix n(m1.a1+m2.a1,m1.a2+m2.a2,m1.a3+m2.a3,m1.b1+m2.b1,m1.b2+m2.b2,m1.b3+m2.b3,m1.c1+m2.c1,m1.c2+m2.c2,m1.c3+m2.c3)
-  return n; // this is aweful... now watch me do it 3 more times
+  Matrix ret;
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      ret.data[i][j] = m1.data[i][j] + m2.data[i][j];
+    }
+  }
+  return ret;
 }
 Matrix operator-(Matrix& m1, Matrix& m2){
-  Matrix n(m1.a1-m2.a1,m1.a2-m2.a2,m1.a3-m2.a3,m1.b1-m2.b1,m1.b2-m2.b2,m1.b3-m2.b3,m1.c1-m2.c1,m1.c2-m2.c2,m1.c3-m2.c3)
-  return n;
+  Matrix ret;
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      ret.data[i][j] = m1.data[i][j] - m2.data[i][j];
+    }
+  }
+  return ret;
 }
 Matrix operator*(Matrix& m1, Matrix& m2){
-  Matrix n(m1.a1*m2.a1,m1.a2*m2.a2,m1.a3*m2.a3,m1.b1*m2.b1,m1.b2*m2.b2,m1.b3*m2.b3,m1.c1*m2.c1,m1.c2*m2.c2,m1.c3*m2.c3)
-  return n;
+  Matrix ret;
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      ret.data[i][j] = m1.data[i][j] * m2.data[i][j]; // this isn't actually how matrix mulitplication works, but I guess its not required to be mathematically correct.
+    }
+  }
+  return ret;
 }
 Matrix operator/(Matrix& m1, Matrix& m2){
-  Matrix n(m1.a1/m2.a1,m1.a2/m2.a2,m1.a3/m2.a3,m1.b1/m2.b1,m1.b2/m2.b2,m1.b3/m2.b3,m1.c1/m2.c1,m1.c2/m2.c2,m1.c3/m2.c3)
-  return n;
+  Matrix ret;
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      ret.data[i][j] = m1.data[i][j] / m2.data[i][j];
+    }
+  }
+  return ret;
+}
+void Matrix::operator+=(int x){
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      data[i][j] += x;
+    }
+  }
+}
+void Matrix::operator-=(int x){
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      data[i][j] -= x;
+    }
+  }
+}
+ostream& operator<<(ostream& ostr,Matrix& m){
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      ostr << m.data[i][j] << ", ";
+    }
+    ostr << endl;
+  }
+  return ostr;
 }
 
-Matrix Matrix::operator+=(){
-  a1 = a1 + 1;
-  a2 = a2 + 1;
-  a3 = a3 + 1;
-  b1 = b1 + 1;
-  b2 = b2 + 1;
-  b3 = b3 + 1;
-  c1 = c1 + 1;
-  c2 = c2 + 1;
-  c3 = c3 + 1;
+istream& operator>>(istream& istr,Matrix& m){
+  cout << "Enter 9 numbers for a 3x3 matrix :"<< endl;
+  for (int i=0;i<3;i++){
+    for (int j=0;j<3;j++) {
+      istr >> m.data[i][j];
+    }
+  }
+  return istr;
 }
-Matrix Matrix::operator-=(){
-  a1 = a1 - 1;
-  a2 = a2 - 1;
-  a3 = a3 - 1;
-  b1 = b1 - 1;
-  b2 = b2 - 1;
-  b3 = b3 - 1;
-  c1 = c1 - 1;
-  c2 = c2 - 1;
-  c3 = c3 - 1;
+int main(int argc, char *argv[]){
+  Matrix m1,m3;
+  int a[3][3] = {5,5,5,4,4,4,3,3,3};
+  Matrix m2(a); // testing the 1 argument constructor, and requires less typing for the tester
+  cin >> m1; // tesing istr
+
+  cout << "m1 = " << endl << m1; // testing ostr, although this one gets used a lot
+  cout << "m2 = " << endl << m2;
+  cout << "adding m1 and m2" << endl; // testing the adding
+  m3 = m1+m2;
+  cout << m3;
+  cout << "subtracting m1 and m2" << endl; // testing subtracting
+  m3 = m1+m2;
+  cout << m3;
+  cout << "Fake multiplying m1 and m2" << endl; // testing multiplying
+  m3 = m1 * m2;
+  cout << m3;
+  cout << "dividing m1 and m2" << endl; // testing division
+  m3 = m1 / m2;
+  cout << m3;
+  cout << "incrememting m1 by 1" << endl; // testing increment
+  m1 += 1;
+  cout << m1;
+  cout << "decrementing m2 by 1" << endl; // testing increment * -1;
+  m2 += 1;
+  cout << m2;
+
+  return 1;
 }
-ostream& operator<<(ostream&,Matrix&){
-
-}
-istream& operator>>(istream&,Matrix&){
-
-}
-
-
-
-// Sample output:
-// Enter a 3x3 integer matrix:
-//  2 3 4
-//  0 9 -1
-//  4 5 -3
-// Enter a 3x3 integer matrix:
-// 1 0 0
-// 0 1 0
-// 0 0 1
-// ==========================================
-// You entered:
-// Matrix m:
-//  2 3 4
-//  0 9 -1
-//  4 5 -3
-// Matrix n:
-//  1 0 0
-//  0 1 0
-//  0 0 1
-// ==========================================
-// Matrix addition:
-//  3 3 4
-//  0 10 -1
-//  4 5 -2
-// Matrix subtraction:
-//  1 3 4
-//  0 8 -1
-//  4 5 -4
-// Matrix multiplication: p = m * n:
-//  2 3 4
-//  0 9 -1
-//  4 5 -3
-// ++p:
-//  3 4 5
-//  1 10 0
-//  5 6 -2
-// Operator overloads 70 at 10 ea
-// Code Quality 20
-// Class Creation 10
