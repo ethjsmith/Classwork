@@ -1,0 +1,14 @@
+<! doctype html>
+<html>
+{% load static %}
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class = "card">
+        {{word}}
+    </div>
+        {% block content %}{% endblock %}
+<body>
+    </html>

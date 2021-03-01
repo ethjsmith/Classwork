@@ -18,4 +18,11 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.homepage),
+    path('accounts/',include('django.contrib.auth.urls')), # login and signup features
+    path('signup/',SignUpView.as_view(), name = 'signup'),
+    # need paths for
+    # seeing articles and announcements
+    # creating articles and announcements
+    # signing up for notifications 
 ]
