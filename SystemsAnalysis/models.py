@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
     poster = models.OneToOneField(User, on_delete=models.CASCADE)
-    title = models.TextField() # could be Char field instead , which is more space efficent, but we're running this in sqlite3 so lol who cares. 
+    title = models.TextField() # could be Char field instead , which is more space efficent, but we're running this in sqlite3 so lol who cares.
     content = models.TextField() # Text field has no max length, and even if you set one, it isn't enforced LOL
     image = models.ImageField() # I don't know how this works, but I'm adding it :)
     type = models.IntegerField()
@@ -24,3 +24,24 @@ class Member(models.Model): # this basically just extends the user class, allowi
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     permission = models.IntegerField()
+    email = models.TextField()
+    phone = models.TextField()
+    email_notif = models.BooleanField()
+    phone_notif = models.BooleanField() # putting this extra thing in in case we need it
+
+class Image(models.Model): # image class, following a tutorial online :) subject to change
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images')
+
+    def __str__(self):
+        return self.title
+
+# creating the database looks like this
+#`python manage.py makemigrations SystemsAnalysis`
+#`python manage.py migrate `
+#`python manage.py shell`
+
+#then you can insert some data into the db with
+#`from SystemsAnalysis.models import Post, Comment, Member, Image `
+
+# and then start creating sample data.

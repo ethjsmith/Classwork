@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from .views import SignUpView
 
@@ -27,6 +29,10 @@ urlpatterns = [
     # seeing articles and announcements
     # creating articles and announcements
     # signing up for notifications
+    path('upload/',views.image_upload_view),
 
     # admin page for managing site content, and giving users permissions
-]
+] # one of the form things... will need to change in prod mode
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
