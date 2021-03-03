@@ -23,11 +23,13 @@ class Comment(models.Model):
 class Member(models.Model): # this basically just extends the user class, allowing permissions, so that only people with a certain power level can create announcements vs blog posts vs comments
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    permission = models.IntegerField()
-    email = models.TextField()
-    phone = models.TextField()
-    email_notif = models.BooleanField()
-    phone_notif = models.BooleanField() # putting this extra thing in in case we need it
+    permission = models.IntegerField(null=True,blank=True,default = 0)
+    email = models.TextField(null=True,blank=True)
+    phone = models.TextField(null=True,blank=True)
+    email_notif = models.BooleanField(null=True,blank=True,default = False)
+    phone_notif = models.BooleanField(null=True,blank=True,default = False) # putting this extra thing in in case we need it
+    def __str__(self):
+        return f"{self.id}, {self.user}, {self.permission}, {self.email}, {self.phone}, {self.phone_notif}"
 
 class Image(models.Model): # image class, following a tutorial online :) subject to change
     title = models.CharField(max_length=200)

@@ -1,13 +1,13 @@
 <div class = 'topnav'>
     <a href = '/'>Home</a>
-    <a href = '/Announcements'>See Announcements</a>
-    <a href = '/Blogs'> Blog Posts </a>
+    <a href = '/articles/1'>Announcements</a>
+    <a href = '/articles/0'> Blog Posts </a>
 
     {% if user.is_authenticated %}
-        <a href = '/account' style="float:right;"><div class= 'a' style="float:right;"> User:{{request.user}} </div></a>
+        <a href = '/accounts/profile/' style="float:right;"><div class= 'a' style="float:right;"> User:{{request.user}} </div></a>
         <a href="{% url 'logout' %}"style="float:right;">Log Out</a>
     {% else %}
-        <a href = '/account' style="float:right;"><div class= 'a' style="float:right;"> Not Logged In </div></a>
+        <a href = '/accounts/profile/' style="float:right;"><div class= 'a' style="float:right;"> Not Logged In </div></a>
         <a href = "/signup" style="float:right;"> Register for an account </a>
         <a href="{% url 'login' %}"style="float:right;">Log In</a>
 

@@ -12,7 +12,7 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+""" # why does django give a section for howto here, but not in ANY other files? like... a models helper would be kinda nice, those things are a HUGE pain to write. 
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
@@ -23,8 +23,12 @@ from .views import SignUpView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
+    path("accounts/profile/",views.userpage),
     path('accounts/',include('django.contrib.auth.urls')), # login and signup features
     path('signup/',SignUpView.as_view(), name = 'signup'),
+    path('a/',views.testview),
+    path('articles/<str:type>',views.posts),
+    path('create/',views.create),
     # need paths for
     # seeing articles and announcements
     # creating articles and announcements
