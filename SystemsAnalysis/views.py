@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.urls import reverse_lazy
 
 from SystemsAnalysis.models import *
-import operator  # I just imported everything from an older project :^)
+import operator , datetime # I just imported everything from an older project :^)
 from SystemsAnalysis.forms import ImageForm, UserData,Article
 
 class SignUpView(generic.CreateView):
@@ -29,17 +30,12 @@ def home(request):
     return render(request,"base.html",context)
 
 def posts(request,type=0):# arg set so you only have to set it for announcements ?
-    if type =="1":
-        print("select and display articles")
-        #return render (request, 'base.html',c) # placeholder, this will *probably* error
-        return render(request,"base.html",{"word":"Announcements :)"})
-    elif type == "0":
-        print("select and display announcements")
-        #return render (request, 'base.html',c)
-        return render(request,"base.html",{"word":"Blog Posts :)"})
-    else:
-        # this is an error state
-        return render(request,"base.html",{"word":"ERROR :)"})
+    pst = Post.objects.filter(type=type)
+    return render(request,"overview.html",{"articles":pst}) # LOL this is ... good
+
+def post(request,id=0):
+    p = Post.objects.filter(id=id)
+    return render(request,"post.html",{"post":p[0]})
 
 def article (request):
     context = {
@@ -65,8 +61,10 @@ def userpage(request):
             u.member.phone_notif = form.cleaned_data['phone_notify']
             u.member.save()
             print(u.member)
+            messages.add_message(request,messages.INFO, "User data updated")
         else:
             print("FORM NOT VALID LOLOL!!!!")
+            messages.add_message(request,messages.ERROR, "information not valid")
     else:
         form = UserData()
     return render(request,"form.html",{'form':form})
@@ -79,10 +77,22 @@ def notifications(request):
 @login_required
 def create(request):
     if request.method == 'POST':
-        form = Article(request.POST)
+        form = Article(request.POST,request.FILES)
         if form.is_valid():
             print("resolve input ")
-
+            d = datetime.datetime.now()
+            newArticle = Post(
+                poster = request.user,
+                title = form.cleaned_data['title'],
+                content = form.cleaned_data['body'],
+                image = form.cleaned_data['image'],
+                type = form.cleaned_data['type'],
+                posted = d,
+            )
+            newArticle.save()
+            messages.add_message(request,messages.INFO, "New Article created!")
+        else:
+            messages.add_message(request,messages.ERROR, "Form data invalid! ")
     else:
         form = Article()
     return render(request,"form.html",{"form":form})

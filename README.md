@@ -2,7 +2,7 @@
 Repo for  IS3100 Systems Analysis and Design Project
 if we build the site before we make the design documents, then we won't have to think much about the design documents :)
 
-#TODO:
+# TODO:
 
 Development:
 * [x] Initalize Django
@@ -10,16 +10,17 @@ Development:
 * [x] create database
 * [ ] **Article logic ( announcements are/should just be renamed articles really )**
   * [x] page for generating new articles/announcements
-  * [ ] page for displaying all articles/announcements
+  * [x] page for displaying all articles/announcements
   * [ ] individual article page templates
   * [ ] commenting templates at the end of articles/announcements
+  * [x] These bulletpoints really reduce how much work this section was, so Im adding some extra ones to make myself feel better :) 
 * [ ] disable django built in admin? ( because I've never used it lol)
 * [ ] **email/text notifications**
   * [ ] build email/text script
   * [x] figure out how it will attach to web app (IE how does script fire, do we need a database change for it ? )
   * [ ] integrate it into web app
 * [ ] admin page
-* [ ] initialize user accounts
+* [x] initialize user accounts
 * [ ] user comment engine
 
 Deployment:
@@ -35,4 +36,4 @@ Deployment:
 
 # Known Bugs:
 
-* [ ] Fix logout functionality
+* [x] Fix logout functionality

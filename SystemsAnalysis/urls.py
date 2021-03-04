@@ -12,11 +12,13 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-""" # why does django give a section for howto here, but not in ANY other files? like... a models helper would be kinda nice, those things are a HUGE pain to write. 
+""" # why does django give a section for howto here, but not in ANY other files? like... a models helper would be kinda nice, those things are a HUGE pain to write.
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 from .views import SignUpView
 
@@ -29,6 +31,7 @@ urlpatterns = [
     path('a/',views.testview),
     path('articles/<str:type>',views.posts),
     path('create/',views.create),
+    path('post/<str:id>',views.post), # the naming convention on this is VERY bad :)
     # need paths for
     # seeing articles and announcements
     # creating articles and announcements
@@ -37,6 +40,8 @@ urlpatterns = [
 
     # admin page for managing site content, and giving users permissions
 ] # one of the form things... will need to change in prod mode
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
