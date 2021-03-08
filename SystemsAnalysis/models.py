@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
-    poster = models.OneToOneField(User, on_delete=models.CASCADE)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField() # could be Char field instead , which is more space efficent, but we're running this in sqlite3 so lol who cares.
     content = models.TextField() # Text field has no max length, and even if you set one, it isn't enforced LOL
     image = models.ImageField(upload_to='images', null=True, blank=True) # I don't know how this works, but I'm adding it :)
@@ -18,7 +18,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    poster = models.OneToOneField(User, on_delete=models.CASCADE)
+    poster = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     posted = models.DateTimeField()

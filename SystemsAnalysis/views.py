@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 
 from SystemsAnalysis.models import *
 import operator , datetime # I just imported everything from an older project :^)
-from SystemsAnalysis.forms import ImageForm, UserData,Article
+from SystemsAnalysis.forms import ImageForm, UserData,Article,Addcomment
 
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
@@ -24,10 +24,7 @@ def testview(request):
     return render(request,"base.html",{"word":g})
 
 def home(request):
-    context = {
-        "word":"Welcome to the SUU cyber website "
-    }
-    return render(request,"base.html",context)
+    return render(request,"base.html",{"word":"Welcome to the SUU cyber website "})
 
 def posts(request,type=0):# arg set so you only have to set it for announcements ?
     pst = Post.objects.filter(type=type)
@@ -35,7 +32,19 @@ def posts(request,type=0):# arg set so you only have to set it for announcements
 
 def post(request,id=0):
     p = Post.objects.filter(id=id)
-    return render(request,"post.html",{"post":p[0]})
+    c = Comment.objects.filter(article = p[0].id)
+    if request.method == "POST":
+        form = Addcomment(request.POST)
+        if form.is_valid():
+            q = Comment(
+                poster = request.user,
+                article=p[0],
+                posted = datetime.datetime.now(),
+                content = form.cleaned_data['body']
+            )
+            q.save()
+    form = Addcomment()
+    return render(request,"post.html",{"post":p[0],"comments":c,"form":form})
 
 def article (request):
     context = {

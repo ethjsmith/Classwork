@@ -8,7 +8,8 @@ class ImageForm(forms.ModelForm):
 class UserData(forms.Form):
 
     # password = forms.CharField(label = "new password")
-    # password2 = forms.CharField(label = "confirm new password")
+    # password2 = forms.CharField(label = "confirm new password") # will fix this later or something idk
+    #
 
     email = forms.CharField(label = "email address", max_length = 100)
     email_notify = forms.BooleanField(required = False)
@@ -21,3 +22,6 @@ class Article(forms.Form):
     body = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20}),label = "body of article")
     image = forms.ImageField()
     # this needs some way to add the images... I almost wish we just hadn't done that lol
+class Addcomment(forms.Form):
+    body = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20}),label = "Enter a Comment!")
+    # what a great form...
