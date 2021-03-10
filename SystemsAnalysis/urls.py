@@ -32,6 +32,7 @@ urlpatterns = [
     path('articles/<str:type>',views.posts),
     path('create/',views.create),
     path('post/<str:id>',views.post), # the naming convention on this is VERY bad :)
+    path('noti/', views.notifications),
     # need paths for
     # seeing articles and announcements
     # creating articles and announcements

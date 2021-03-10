@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from SystemsAnalysis.models import *
 import operator , datetime # I just imported everything from an older project :^)
 from SystemsAnalysis.forms import ImageForm, UserData,Article,Addcomment
+from SystemsAnalysis.notification import validateEmail, sendEmail,sendNotification
 
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
@@ -78,10 +79,11 @@ def userpage(request):
         form = UserData()
     return render(request,"form.html",{'form':form})
 @login_required
-def notifications(request):
+def notifications(request): # this function is really just a test of the notification system... mo
     context = {
         "word":"update notification settings here"
     }
+    sendNotification('ethan@esmithy.net',"hello world")
     return render(request,"base.html",context)
 @login_required
 def create(request):
@@ -100,6 +102,10 @@ def create(request):
             )
             newArticle.save()
             messages.add_message(request,messages.INFO, "New Article created!")
+            ppl = Member.objects.query(email_notif = True) # this will take a minute to run?
+            for p in ppl: # might work better if run as a subprocess? less waiting time probably 
+                sendNotification(p.email,"A new announcement has been posted on the cyber site! go check it out now!")
+
         else:
             messages.add_message(request,messages.ERROR, "Form data invalid! ")
     else:
