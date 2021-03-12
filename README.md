@@ -15,10 +15,10 @@ Development:
   * [x] commenting templates at the end of articles/announcements
   * [x] These bulletpoints really reduce how much work this section was, so Im adding some extra ones to make myself feel better :)
 * [ ] disable django built in admin? ( because I've never used it lol)
-* [ ] **email/text notifications**
-  * [ ] build email/text script
+* [x] **email/text notifications**
+  * [x] build email/text script
   * [x] figure out how it will attach to web app (IE how does script fire, do we need a database change for it ? )
-  * [ ] integrate it into web app
+  * [x] integrate it into web app
 * [ ] admin page
 * [x] initialize user accounts
 * [x] user comment engine
@@ -46,4 +46,12 @@ Deployment:
 
 * [x] Fix logout functionality
 * [ ] Various style inconsistencies
-* [ ] bugs where you can submit data to an invisible form manually (Security vuln? )
+* [ ] bugs where you can submit data to an invisible form manually (Security vuln? ) < is this known? I don't remember it lol > 
+* [ ] can't change email or phone, have to do both
+* [ ] Member object isn't created when user account is... would require overridering somehting idk hajkdhsjkdfhkas
+
+# additional functionality ( as required by requirements document)
+* [ ] permission system
+* [ ] users update profile information
+* [ ] Administrators delete comments and articles
+* [ ] club contact info page

@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -16,6 +16,21 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+
+
+def above_zero(user): # hahaha this doesn't work, and I am unmotivated right now sadge
+    print(user)
+    for m in Member.objects.all():
+        print(m)
+    q = Member.objects.filter(user=user)
+    print(q)
+    if q[0].permission > 0:
+        return True
+    #messages.add_message(request,messages.ERROR, "you don't have enough privilege to view this page")
+    print("NO ACCESS FOR NOOBS :)")
+    return redirect("/accounts/profile/")
+#@login_required
+#@user_passes_test(above_zero)
 def testview(request):
     a = Member.objects.all()
     g = ""
@@ -102,8 +117,8 @@ def create(request):
             )
             newArticle.save()
             messages.add_message(request,messages.INFO, "New Article created!")
-            ppl = Member.objects.query(email_notif = True) # this will take a minute to run?
-            for p in ppl: # might work better if run as a subprocess? less waiting time probably 
+            ppl = Member.objects.filter(email_notif = True) # this will take a minute to run?
+            for p in ppl: # might work better if run as a subprocess? less waiting time probably
                 sendNotification(p.email,"A new announcement has been posted on the cyber site! go check it out now!")
 
         else:
