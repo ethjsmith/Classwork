@@ -16,21 +16,15 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+def allo(user):
+    z = Member.objects.filter(user=user)
+    if len(z) > 0:
+        if z[0].permission > 0:
+            return True
+    return False
 
-
-def above_zero(user): # hahaha this doesn't work, and I am unmotivated right now sadge
-    print(user)
-    for m in Member.objects.all():
-        print(m)
-    q = Member.objects.filter(user=user)
-    print(q)
-    if q[0].permission > 0:
-        return True
-    #messages.add_message(request,messages.ERROR, "you don't have enough privilege to view this page")
-    print("NO ACCESS FOR NOOBS :)")
-    return redirect("/accounts/profile/")
 #@login_required
-#@user_passes_test(above_zero)
+@user_passes_test(allo)
 def testview(request):
     a = Member.objects.all()
     g = ""
@@ -38,6 +32,19 @@ def testview(request):
         print(u)
         g = g + str(u)
     return render(request,"base.html",{"word":g})
+@login_required
+@user_passes_test(allo)
+def del(request,type,id):
+    # an engine for deleting user content, only available to admins
+    if type == "comment":
+        z = Comment.objects.filter(id=id).delete()
+    elif type == "post":
+        z = Post.objects.filter(id=id).delete()
+    elif type == "user":
+        z = User.objects.filter(id=id).delete() # I don't know if this one will work kek
+    else:
+        println("error ")
+    return redirect("/") # go back to whatever page sent you, which I haven't made yet so rn it doesn't do that . 
 
 def home(request):
     return render(request,"base.html",{"word":"Welcome to the SUU cyber website "})
