@@ -33,6 +33,7 @@ urlpatterns = [
     path('create/',views.create),
     path('post/<str:id>',views.post), # the naming convention on this is VERY bad :)
     path('noti/', views.notifications),
+    path('contact/', views.contact),
     path('test/', views.testview),
     # need paths for
     # seeing articles and announcements

@@ -11,10 +11,18 @@ class UserData(forms.Form):
     # password2 = forms.CharField(label = "confirm new password") # will fix this later or something idk
     #
 
-    email = forms.CharField(label = "email address", max_length = 100)
+    email = forms.CharField(label = "email address", max_length = 100,required=False)
     email_notify = forms.BooleanField(required = False)
-    phone = forms.CharField(label = "phone number", max_length = 20) # hmm
+    phone = forms.CharField(label = "phone number", max_length = 20,required=False) # hmm
     phone_notify = forms.BooleanField(required = False)
+    # profile update stuff...
+    # things that this should do : nickname/name change
+    name = forms.CharField(label = "update your username", required=False)
+    # add picture
+    profile_pic = forms.ImageField(required=False)
+    # contact info EZ/done
+
+
 class Article(forms.Form):
     title = forms.CharField(label = "title")
     ty = ((0, "Article"), (1, "Announcement"))

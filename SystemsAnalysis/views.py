@@ -32,9 +32,10 @@ def testview(request):
         print(u)
         g = g + str(u)
     return render(request,"base.html",{"word":g})
+
 @login_required
 @user_passes_test(allo)
-def del(request,type,id):
+def dele(request,type,id):
     # an engine for deleting user content, only available to admins
     if type == "comment":
         z = Comment.objects.filter(id=id).delete()
@@ -44,7 +45,7 @@ def del(request,type,id):
         z = User.objects.filter(id=id).delete() # I don't know if this one will work kek
     else:
         println("error ")
-    return redirect("/") # go back to whatever page sent you, which I haven't made yet so rn it doesn't do that . 
+    return redirect("/") # go back to whatever page sent you, which I haven't made yet so rn it doesn't do that .
 
 def home(request):
     return render(request,"base.html",{"word":"Welcome to the SUU cyber website "})
@@ -52,6 +53,14 @@ def home(request):
 def posts(request,type=0):# arg set so you only have to set it for announcements ?
     pst = Post.objects.filter(type=type)
     return render(request,"overview.html",{"articles":pst}) # LOL this is ... good
+
+def contact(request):
+    admins = Member.objects.filter(permission=1)
+    word = "To get in contact with the club, you can email us at suucdcclub@gmail.com, or you could contact the officers:"# # this is JUST BAD lol
+    for a in admins:
+        u = a.user
+        word += f"{u.name} at {a.email}"
+    return render(request,"base.html",{"word":word})
 
 def post(request,id=0):
     p = Post.objects.filter(id=id)
@@ -87,10 +96,14 @@ def userpage(request):
         if form.is_valid():
             print("VALID FORM :) thats good ")
             print(form.cleaned_data)
-            u.member.email = form.cleaned_data['email']
-            u.member.email_notif = form.cleaned_data['email_notify']
-            u.member.phone = form.cleaned_data['phone'] # might have to validate this, turn it into only numbers or something ?
+            u.member.email_notif = form.cleaned_data['email_notify'] # this might be bad, it will set it regardless of if thats what you wanted?
             u.member.phone_notif = form.cleaned_data['phone_notify']
+            if form.cleaned_data['email'] != "": # this is untested, but maybe will fix so you can leave fields empty :^)
+                u.member.email = form.cleaned_data['email']
+            if form.cleaned_data['phone'] != "":
+                u.member.phone = form.cleaned_data['phone'] # might have to validate this, turn it into only numbers or something ?
+            #TODO add the other untested fields to member 
+
             u.member.save()
             print(u.member)
             messages.add_message(request,messages.INFO, "User data updated")

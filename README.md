@@ -46,12 +46,12 @@ Deployment:
 
 * [x] Fix logout functionality
 * [ ] Various style inconsistencies
-* [ ] bugs where you can submit data to an invisible form manually (Security vuln? ) < is this known? I don't remember it lol > 
-* [ ] can't change email or phone, have to do both
+* [ ] bugs where you can submit data to an invisible form manually (Security vuln? ) < is this known? I don't remember it lol >
+* [x] can't change email or phone, have to do both
 * [ ] Member object isn't created when user account is... would require overridering somehting idk hajkdhsjkdfhkas
 
 # additional functionality ( as required by requirements document)
 * [ ] permission system
 * [ ] users update profile information
 * [ ] Administrators delete comments and articles
-* [ ] club contact info page
+* [x] club contact info page ( HAHA its so bad , but technically done)
