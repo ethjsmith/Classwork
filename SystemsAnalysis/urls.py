@@ -23,7 +23,9 @@ from . import views
 from .views import SignUpView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/',views.adm),
+    path('del/<str:type>/<str:id>/<str:power>', views.dele),
+    path('makeadmin/<str:id>',views.makeadmin),
     path('', views.home),
     path("accounts/profile/",views.userpage),
     path('accounts/',include('django.contrib.auth.urls')), # login and signup features

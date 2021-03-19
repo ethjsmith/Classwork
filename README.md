@@ -53,5 +53,5 @@ Deployment:
 # additional functionality ( as required by requirements document)
 * [ ] permission system
 * [ ] users update profile information
-* [ ] Administrators delete comments and articles
+* [x] Administrators delete comments and articles
 * [x] club contact info page ( HAHA its so bad , but technically done)

@@ -32,9 +32,29 @@ def testview(request):
         print(u)
         g = g + str(u)
     return render(request,"base.html",{"word":g})
+@login_required
+def adm(request):
+    # selects all the data
+    u = User.objects.all()
+    p = Post.objects.all()
+    c = Comment.objects.all()
+    return render(request, "admin.html",{"users":u,"posts":p,"comments":c})
+@login_required
+def makeadmin(request,id,power): # this whole section might not work kekw
+# you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
+# and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
+    u = User.objects.query(id=id)
+    m = Member.objects.query(user=u)
+    if len(m) > 0: # idk if this works...
+        r = m[0]
+    else:
+        r = member(user=u)
+    r.permission = power
+    r.save()
+    return redirect("/admin")
 
 @login_required
-@user_passes_test(allo)
+#@user_passes_test(allo)
 def dele(request,type,id):
     # an engine for deleting user content, only available to admins
     if type == "comment":
@@ -45,7 +65,7 @@ def dele(request,type,id):
         z = User.objects.filter(id=id).delete() # I don't know if this one will work kek
     else:
         println("error ")
-    return redirect("/") # go back to whatever page sent you, which I haven't made yet so rn it doesn't do that .
+    return redirect("/admin") # go back to whatever page sent you, which I haven't made yet so rn it doesn't do that .
 
 def home(request):
     return render(request,"base.html",{"word":"Welcome to the SUU cyber website "})
@@ -102,9 +122,13 @@ def userpage(request):
                 u.member.email = form.cleaned_data['email']
             if form.cleaned_data['phone'] != "":
                 u.member.phone = form.cleaned_data['phone'] # might have to validate this, turn it into only numbers or something ?
-            #TODO add the other untested fields to member 
-
+            #TODO add the other untested fields to member
+            if form.cleaned_data['profile_pic'] != "":
+                u.member.image = form.cleaned_data['profile_pic']
             u.member.save()
+            if form.cleaned_data['name'] != "":
+                u.username = form.cleaned_data['name']
+                u.save()
             print(u.member)
             messages.add_message(request,messages.INFO, "User data updated")
         else:

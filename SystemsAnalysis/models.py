@@ -31,6 +31,7 @@ class Member(models.Model): # this basically just extends the user class, allowi
     phone = models.TextField(null=True,blank=True)
     email_notif = models.BooleanField(null=True,blank=True,default = False)
     phone_notif = models.BooleanField(null=True,blank=True,default = False) # putting this extra thing in in case we need it
+    image = models.ImageField(upload_to='images', null=True, blank=True) # I don't know how this works, but I'm adding it :)
     def __str__(self):
         return f"{self.id}, {self.user}, {self.permission}, {self.email}, {self.phone}, {self.phone_notif}"
 
