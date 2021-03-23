@@ -26,7 +26,7 @@ public class Hashes {
 	}
 
 	public static void testArrayList(String filename) {
-		System.out.println("Testing ArrayList on " + filename);
+		System.out.println("ArrayList: " + filename);
 		try {
 			Scanner in = new Scanner(new File(filename));
 			//Maybe you need to read it in as UTF-8 NO
@@ -49,7 +49,7 @@ public class Hashes {
 					k += totalTime;
 				}
 			}
-			System.out.println("Intersertion takes an average of " + (k/avgtime) + " MS");
+			System.out.println("Intersertion:" + (k/avgtime) + " MS");
 			//Add something to an ArrayList, see if we can find it
 			//String s = "Hello%-";
 			
@@ -65,16 +65,16 @@ public class Hashes {
 			
 			startTime = System.nanoTime();
 			if(a.contains("the")) {
-				System.out.println("\tThe word was found");
+				//System.out.println("\tThe word was found");
 			}
 			endTime   = System.nanoTime();
 			totalTime = endTime - startTime;
 			
-			System.out.println(totalTime + " MS is the time it took to find ");
+			System.out.println("find" + totalTime + " MS ");
 			
 			
 			
-			System.out.println("\tThere are " + a.size() + " unique words");
+			//System.out.println("\tThere are " + a.size() + " unique words");
 			
 			in.close();
 		} catch (FileNotFoundException e) {
@@ -85,7 +85,7 @@ public class Hashes {
 	}
 
 	public static void testHashMap(String filename) {
-		System.out.println("Testing HashMap on " + filename);
+		System.out.println("HashMap " + filename);
 		try {
 			Scanner in = new Scanner(new File(filename));
 			//Maybe you need to read it in as UTF-8
@@ -104,7 +104,7 @@ public class Hashes {
 				totalTime = endTime - startTime;
 				k += totalTime;
 			}
-			System.out.println("Intersertion takes an average of " + (k/avgtime) + " MS");
+			System.out.println("Intersertion:" + (k/avgtime) + " MS");
 	//Add something to an ArrayList, see if we can find it
 			
 			
@@ -127,14 +127,14 @@ public class Hashes {
 			//Hopefully it is constant, meaning no matter how large it is, this method takes the same time
 			startTime = System.nanoTime();
 			if(h.containsKey("hello")) {
-				System.out.println("\tThe word was found");
+				//System.out.println("\tThe word was found");
 			}
 			endTime   = System.nanoTime();
 			totalTime = endTime - startTime;
 			
-			System.out.println(totalTime + " MS is the time it took to find ");
+			System.out.println("find " + totalTime + " MS");
 			
-			System.out.println("\tThere are " + h.size() + " unique words");
+			//System.out.println("\tThere are " + h.size() + " unique words");
 			
 			in.close();
 		} catch (FileNotFoundException e) {
