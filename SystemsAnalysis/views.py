@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from django.urls import reverse_lazy
+from django.contrib.auth.signals import user_logged_in
+
 
 from SystemsAnalysis.models import *
 import operator , datetime # I just imported everything from an older project :^)
@@ -16,6 +18,19 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
+def makeNewMember(sender,user,request,**kwargs):
+    messages.add_message(request,messages.INFO, "Successful login!")
+    print("A user has logged in, checking if they have a member")
+    q = Member.objects.filter(user=user)
+    if len(q) > 0:
+        print("profile exists")
+    else:
+        print("making a new member profile ")
+        z = Member(user=user,permission=0)
+        z.save()
+    # yep
+user_logged_in.connect(makeNewMember) # this checks if you have a member account every time a user logs in
+
 def allo(user):
     z = Member.objects.filter(user=user)
     if len(z) > 0:
@@ -23,7 +38,11 @@ def allo(user):
             return True
     return False
 
-#@login_required
+@login_required
+def me(request):
+    m = Member.objects.filter(user=request.user)
+    return render(request,"userPage.html",{"member":m[0]})
+
 @user_passes_test(allo)
 def testview(request):
     a = Member.objects.all()
@@ -110,7 +129,7 @@ def userpage(request):
     if request.method == 'POST': # handle form input here :) # this needs more work rn
         form = UserData(request.POST)
         u = request.user
-        if hasattr(u,"member") == False:
+        if hasattr(u,"member") == False: # I don't think it's possible for this to run anymore, should probably remove 
             ext = Member(user = u,permission= 0)
             ext.save()
         if form.is_valid():

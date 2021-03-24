@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- assuming we have a "post" object -->
+user:{{user}}
+<div class = card><h3>memberInfo:{{member }}</h3></div>
+<br>
+img:<img src = "{{member.image.url}}"><br> url:{{member.image.url}}<!-- some kind of styling here? -->
+<div class = card>
+  {{post.content}}
+</div>
+
+{% include 'comment.html' %}
+{% endblock %}

@@ -23,6 +23,7 @@ from . import views
 from .views import SignUpView
 
 urlpatterns = [
+    path('me/',views.me),
     path('admin/',views.adm),
     path('del/<str:type>/<str:id>/<str:power>', views.dele),
     path('makeadmin/<str:id>',views.makeadmin),
