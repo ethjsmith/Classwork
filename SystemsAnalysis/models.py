@@ -1,29 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# does the standard user need to be extended? for now I don't think so
+
 
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.TextField() # could be Char field instead , which is more space efficent, but we're running this in sqlite3 so lol who cares.
+    title = models.TextField() # could be Char field instead ?
     content = models.TextField() # Text field has no max length, and even if you set one, it isn't enforced LOL
-    image = models.ImageField(upload_to='images', null=True, blank=True) # I don't know how this works, but I'm adding it :)
+    image = models.ImageField(upload_to='images', null=True, blank=True)
     type = models.IntegerField()
-    # should there be more, like a date ? I think django has built in dat functions
+    #I think django has a builtin date field
     posted = models.DateTimeField()
 
     def __str__(self):
         return f"{self.title}: by {self.poster}"
 
-class Comment(models.Model):
+class Comment(models.Model): #TODO check if cascade delete works as intended
     id = models.AutoField(primary_key=True)
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     posted = models.DateTimeField()
 
-class Member(models.Model): # this basically just extends the user class, allowing permissions, so that only people with a certain power level can create announcements vs blog posts vs comments
+class Member(models.Model):
+    # this basically just extends the builtin user class, allowing permissions, so that only people with a certain power level can create announcements vs blog posts vs comments
+    # also adds all of the notification functionality and ability to set a profile picture, which is one of our requirements.
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     permission = models.IntegerField(null=True,blank=True,default = 0)
@@ -34,13 +36,6 @@ class Member(models.Model): # this basically just extends the user class, allowi
     image = models.ImageField(upload_to='images', null=True, blank=True,default='/images/default_pfp.jpeg') # I don't know how this works, but I'm adding it :)
     def __str__(self):
         return f"{self.id}, {self.user}, {self.permission}, {self.email}, {self.phone}, {self.phone_notif}"
-
-class Image(models.Model): # image class, following a tutorial online :) subject to change
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='images')
-
-    def __str__(self):
-        return self.title
 
 # creating the database looks like this
 #`python manage.py makemigrations SystemsAnalysis`

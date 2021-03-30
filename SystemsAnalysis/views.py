@@ -10,7 +10,7 @@ from django.contrib.auth.signals import user_logged_in
 
 from SystemsAnalysis.models import *
 import operator , datetime, threading # I just imported everything from an older project :^)
-from SystemsAnalysis.forms import ImageForm, UserData,Article,Addcomment
+from SystemsAnalysis.forms import UserData,Article,Addcomment
 from SystemsAnalysis.notification import validateEmail, sendEmail,sendNotification
 
 class SignUpView(generic.CreateView):
@@ -62,8 +62,8 @@ def adm(request):
 def makeadmin(request,id,power): # this whole section might not work kekw
 # you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
-    u = User.objects.query(id=id)
-    m = Member.objects.query(user=u)
+    u = User.objects.filter(id=id)
+    m = Member.objects.filter(user=u)
     if len(m) > 0: # idk if this works...
         r = m[0]
     else:
@@ -198,17 +198,3 @@ def create(request):
     else:
         form = Article()
     return render(request,"form.html",{"form":form})
-
-# Image uploading function
-def image_upload_view(request):
-    """Process images uploaded by users"""
-    if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Get the current instance object to display in the template
-            img_obj = form.instance
-            return render(request, 'testform.html', {'form': form, 'img_obj': img_obj})
-    else:
-        form = ImageForm()
-    return render(request, 'testform.html', {'form': form})

@@ -3,7 +3,7 @@
   <br>
   <h3>USERS:</h3><br>
   {% for user in users %}
-    {{user.username}} <a href = "/del/user/{{user.id}}"> Delete {{user.username}} </a>  -- OR -- <a href = "/makeadmin/{{user.id}}"> Promote {{user.username}} to admin </a> <br>  
+    {{user.username}} <a href = "/del/user/{{user.id}}"> Delete {{user.username}} </a>  -- OR -- <a href = "/makeadmin/{{user.id}}/1"> Promote {{user.username}} to admin </a> <br>  
   {% endfor %}
   <br>
   <h3>POSTS:</h3><br>

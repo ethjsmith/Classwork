@@ -26,7 +26,7 @@ urlpatterns = [
     path('me/',views.me),
     path('admin/',views.adm),
     path('del/<str:type>/<str:id>/<str:power>', views.dele),
-    path('makeadmin/<str:id>',views.makeadmin),
+    path('makeadmin/<str:id>/<str:power>',views.makeadmin),
     path('', views.home),
     path("accounts/profile/",views.userpage),
     path('accounts/',include('django.contrib.auth.urls')), # login and signup features
@@ -38,11 +38,6 @@ urlpatterns = [
     path('noti/', views.notifications),
     path('contact/', views.contact),
     path('test/', views.testview),
-    # need paths for
-    # seeing articles and announcements
-    # creating articles and announcements
-    # signing up for notifications
-    path('upload/',views.image_upload_view),
 
     # admin page for managing site content, and giving users permissions
 ] # one of the form things... will need to change in prod mode
