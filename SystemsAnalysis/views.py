@@ -63,13 +63,9 @@ def makeadmin(request,id,power): # this whole section might not work kekw
 # you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
     u = User.objects.filter(id=id)
-    m = Member.objects.filter(user=u)
-    if len(m) > 0: # idk if this works...
-        r = m[0]
-    else:
-        r = member(user=u)
-    r.permission = power
-    r.save()
+    r = Member.objects.filter(user=u[0])
+    r[0].permission = power
+    r[0].save()
     return redirect("/admin")
 
 @login_required
@@ -156,6 +152,7 @@ def userpage(request):
     else:
         form = UserData()
     return render(request,"form.html",{'form':form})
+
 @login_required
 def notifications(request): # this function is really just a test of the notification system... mo
     context = {
@@ -163,7 +160,9 @@ def notifications(request): # this function is really just a test of the notific
     }
     sendNotification('ethan@esmithy.net',"hello world")
     return render(request,"base.html",context)
+
 @login_required
+@user_passes_test(allo,login_url="/")
 def create(request):
     if request.method == 'POST':
         form = Article(request.POST,request.FILES)
