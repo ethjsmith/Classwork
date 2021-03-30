@@ -27,7 +27,7 @@ class Article(forms.Form):
     title = forms.CharField(label = "title")
     ty = ((0, "Article"), (1, "Announcement"))
     type = forms.ChoiceField(choices=ty)
-    body = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20}),label = "body of article")
+    body = forms.CharField(widget=forms.Textarea(attrs={"rows":20, "cols":20}),label = "body of article")
     image = forms.ImageField()
     # this needs some way to add the images... I almost wish we just hadn't done that lol
 class Addcomment(forms.Form):

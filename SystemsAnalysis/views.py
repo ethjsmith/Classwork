@@ -9,7 +9,7 @@ from django.contrib.auth.signals import user_logged_in
 
 
 from SystemsAnalysis.models import *
-import operator , datetime # I just imported everything from an older project :^)
+import operator , datetime, threading # I just imported everything from an older project :^)
 from SystemsAnalysis.forms import ImageForm, UserData,Article,Addcomment
 from SystemsAnalysis.notification import validateEmail, sendEmail,sendNotification
 
@@ -129,7 +129,7 @@ def userpage(request):
     if request.method == 'POST': # handle form input here :) # this needs more work rn
         form = UserData(request.POST)
         u = request.user
-        if hasattr(u,"member") == False: # I don't think it's possible for this to run anymore, should probably remove 
+        if hasattr(u,"member") == False: # I don't think it's possible for this to run anymore, should probably remove
             ext = Member(user = u,permission= 0)
             ext.save()
         if form.is_valid():
@@ -168,7 +168,7 @@ def create(request):
     if request.method == 'POST':
         form = Article(request.POST,request.FILES)
         if form.is_valid():
-            print("resolve input ")
+            print("resolve input ") # some kinds of data validation would be good ...
             d = datetime.datetime.now()
             newArticle = Post(
                 poster = request.user,
@@ -181,8 +181,17 @@ def create(request):
             newArticle.save()
             messages.add_message(request,messages.INFO, "New Article created!")
             ppl = Member.objects.filter(email_notif = True) # this will take a minute to run?
+            threads = []
+            if newArticle.type == 1:
+                ty = "announcement"
+            else:
+                ty = "article"
+
             for p in ppl: # might work better if run as a subprocess? less waiting time probably
-                sendNotification(p.email,"A new announcement has been posted on the cyber site! go check it out now!")
+                t = threading.Thread(target=sendNotification, args=(p.email,f"A new {ty} has been posted on the SUU cybersecurity club site! It's called {newArticle.title}, and is written by {newArticle.poster}. Go check it out now!"))
+                # threads.add(t)  # I don't know if this is required ... ?
+                t.start()
+                #sendNotification(p.email,"A new announcement has been posted on the cyber site! go check it out now!")
 
         else:
             messages.add_message(request,messages.ERROR, "Form data invalid! ")
