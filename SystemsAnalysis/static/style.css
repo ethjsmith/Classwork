@@ -169,6 +169,19 @@ h2,h3,h6 {
  text-decoration: none;
  display: block;
 }
+.crop {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.img-crop { /* Do I need this one? who knows*/
+  display:inline;
+  margin: 0:auto;
+  height:100%;
+  width:auto;
+}
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}

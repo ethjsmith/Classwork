@@ -44,6 +44,7 @@ def me(request):
     m = Member.objects.filter(user=request.user)
     return render(request,"userPage.html",{"member":m[0]})
 
+@login_required
 @user_passes_test(allo)
 def testview(request):
     a = Member.objects.all()
@@ -52,14 +53,18 @@ def testview(request):
         print(u)
         g = g + str(u)
     return render(request,"base.html",{"word":g})
+
 @login_required
+@user_passes_test(allo,login_url="/")
 def adm(request):
     # selects all the data
     u = User.objects.all()
     p = Post.objects.all()
     c = Comment.objects.all()
     return render(request, "admin.html",{"users":u,"posts":p,"comments":c})
+
 @login_required
+@user_passes_test(allo,login_url="/")
 def makeadmin(request,id,power): # this whole section might not work kekw
 # you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
@@ -67,12 +72,12 @@ def makeadmin(request,id,power): # this whole section might not work kekw
     r = Member.objects.filter(user=u[0])
     t = r[0]
     t.permission = power
-    print(f"setting {t}'s power to {power}")
+    # print(f"setting {t}'s power to {power}")
     t.save()
     return redirect("/admin")
 
 @login_required
-#@user_passes_test(allo)
+@user_passes_test(allo,login_url="/")
 def dele(request,type,id):
     # an engine for deleting user content, only available to admins
     if type == "comment":
@@ -103,6 +108,10 @@ def contact(request):
 def post(request,id=0):
     p = Post.objects.filter(id=id)
     c = Comment.objects.filter(article = p[0].id)
+    c2 = []
+    for co in c:
+        op = Member.objects.filter(user=co.poster)
+        c2.append(op[0])
     if request.method == "POST":
         form = Addcomment(request.POST)
         if form.is_valid():
@@ -114,7 +123,7 @@ def post(request,id=0):
             )
             q.save()
     form = Addcomment()
-    return render(request,"post.html",{"post":p[0],"comments":c,"form":form})
+    return render(request,"post.html",{"post":p[0],"comments":c,"member":c2,"form":form})
 
 def article (request):
     context = {
@@ -128,6 +137,7 @@ def userpage(request):
     if request.method == 'POST': # handle form input here :) # this needs more work rn
         form = UserData(request.POST)
         u = request.user
+        m = Member.objects.filter(user=u).first() #??
         if hasattr(u,"member") == False: # I don't think it's possible for this to run anymore, should probably remove
             ext = Member(user = u,permission= 0)
             ext.save()

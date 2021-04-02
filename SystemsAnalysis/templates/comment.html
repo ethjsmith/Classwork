@@ -2,7 +2,14 @@
 <h4>User Comments:</h4> <br>
 {% for comment in comments %}
 <div class = "card" >
-{{comment.content}} <br><div style = "text-align:right;" >Posted by: {{comment.poster}} on {{comment.posted|date:"N j, Y"}}</div>
+{{comment.content}} <br>
+<div style = "text-align:right;" >
+  <div class = "crop">
+    {% with in=forloop.counter.0 %}
+    <img class = "img-crop" src ="{{member.in.image.url}}">member.in:{{member.in}}
+    {% endwith %}
+  </div>
+  Posted by: {{comment.poster}} on {{comment.posted|date:"N j, Y"}}</div>
 </div><br>
 {% endfor %}
 
