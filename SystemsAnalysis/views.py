@@ -33,9 +33,10 @@ user_logged_in.connect(makeNewMember) # this checks if you have a member account
 
 def allo(user):
     z = Member.objects.filter(user=user)
-    if len(z) > 0:
-        if z[0].permission > 0:
-            return True
+    print(z)
+    if int(z[0].permission) == 1:
+        print("successful allo test")
+        return True
     return False
 
 @login_required
@@ -64,8 +65,10 @@ def makeadmin(request,id,power): # this whole section might not work kekw
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
     u = User.objects.filter(id=id)
     r = Member.objects.filter(user=u[0])
-    r[0].permission = power
-    r[0].save()
+    t = r[0]
+    t.permission = power
+    print(f"setting {t}'s power to {power}")
+    t.save()
     return redirect("/admin")
 
 @login_required
