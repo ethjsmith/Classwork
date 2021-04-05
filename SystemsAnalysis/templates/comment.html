@@ -1,16 +1,19 @@
 <br>
+{% load dumbWorkaround %}
+{% load index %}
 <h4>User Comments:</h4> <br>
 {% for comment in comments %}
 <div class = "card" >
-{{comment.content}} <br>
+{{comment.content}}
 <div style = "text-align:right;" >
-  <div class = "crop">
-    {% with in=forloop.counter.0 %}
-    <img class = "img-crop" src ="{{member.in.image.url}}">member.in:{{member.in}}
-    {% endwith %}
+  <div class = "crop" style = "float:right;">
+    <!--{% with in=forloop.counter.0 %}-->
+    <img class = "img-crop" src ="{{member|dumbWorkaround:forloop.counter0}}">member.in:{{member.in}}
+
+    <!--{% endwith %} -->
   </div>
   Posted by: {{comment.poster}} on {{comment.posted|date:"N j, Y"}}</div>
-</div><br>
+ <br><br></div><br>
 {% endfor %}
 
 <!-- if user is logged in, allow posting new comment -->

@@ -55,7 +55,7 @@ def testview(request):
     return render(request,"base.html",{"word":g})
 
 @login_required
-@user_passes_test(allo,login_url="/")
+#@user_passes_test(allo,login_url="/")
 def adm(request):
     # selects all the data
     u = User.objects.all()
@@ -64,7 +64,7 @@ def adm(request):
     return render(request, "admin.html",{"users":u,"posts":p,"comments":c})
 
 @login_required
-@user_passes_test(allo,login_url="/")
+#@user_passes_test(allo,login_url="/")
 def makeadmin(request,id,power): # this whole section might not work kekw
 # you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
@@ -107,11 +107,7 @@ def contact(request):
 
 def post(request,id=0):
     p = Post.objects.filter(id=id)
-    c = Comment.objects.filter(article = p[0].id)
-    c2 = []
-    for co in c:
-        op = Member.objects.filter(user=co.poster)
-        c2.append(op[0])
+
     if request.method == "POST":
         form = Addcomment(request.POST)
         if form.is_valid():
@@ -122,6 +118,11 @@ def post(request,id=0):
                 content = form.cleaned_data['body']
             )
             q.save()
+    c = Comment.objects.filter(article = p[0].id)
+    c2 = []
+    for co in c:
+        op = Member.objects.filter(user=co.poster)
+        c2.append(op[0])
     form = Addcomment()
     return render(request,"post.html",{"post":p[0],"comments":c,"member":c2,"form":form})
 
@@ -135,15 +136,13 @@ def article (request):
 @login_required
 def userpage(request):
     if request.method == 'POST': # handle form input here :) # this needs more work rn
-        form = UserData(request.POST)
+        form = UserData(request.POST,request.FILES)
         u = request.user
         m = Member.objects.filter(user=u).first() #??
         if hasattr(u,"member") == False: # I don't think it's possible for this to run anymore, should probably remove
             ext = Member(user = u,permission= 0)
             ext.save()
         if form.is_valid():
-            print("VALID FORM :) thats good ")
-            print(form.cleaned_data)
             u.member.email_notif = form.cleaned_data['email_notify'] # this might be bad, it will set it regardless of if thats what you wanted?
             u.member.phone_notif = form.cleaned_data['phone_notify']
             if form.cleaned_data['email'] != "": # this is untested, but maybe will fix so you can leave fields empty :^)
@@ -151,20 +150,20 @@ def userpage(request):
             if form.cleaned_data['phone'] != "":
                 u.member.phone = form.cleaned_data['phone'] # might have to validate this, turn it into only numbers or something ?
             #TODO add the other untested fields to member
-            if form.cleaned_data['profile_pic'] != "":
+            if form.cleaned_data['profile_pic']:
                 u.member.image = form.cleaned_data['profile_pic']
+            else:
+                print("no file, or file not valid??!?")
             u.member.save()
             if form.cleaned_data['name'] != "":
                 u.username = form.cleaned_data['name']
                 u.save()
-            print(u.member)
             messages.add_message(request,messages.INFO, "User data updated")
         else:
-            print("FORM NOT VALID LOLOL!!!!")
             messages.add_message(request,messages.ERROR, "information not valid")
     else:
         form = UserData()
-    return render(request,"form.html",{'form':form})
+    return render(request,"user.html",{'form':form,'member':request.user.member})
 
 @login_required
 def notifications(request): # this function is really just a test of the notification system... mo

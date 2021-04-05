@@ -170,8 +170,8 @@ h2,h3,h6 {
  display: block;
 }
 .crop {
-  width: 100px;
-  height: 100px;
+  width: 35px;
+  height: 35px;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
