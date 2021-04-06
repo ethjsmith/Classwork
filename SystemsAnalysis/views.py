@@ -55,7 +55,7 @@ def testview(request):
     return render(request,"base.html",{"word":g})
 
 @login_required
-#@user_passes_test(allo,login_url="/")
+@user_passes_test(allo,login_url="/")
 def adm(request):
     # selects all the data
     u = User.objects.all()
@@ -64,7 +64,7 @@ def adm(request):
     return render(request, "admin.html",{"users":u,"posts":p,"comments":c})
 
 @login_required
-#@user_passes_test(allo,login_url="/")
+@user_passes_test(allo,login_url="/")
 def makeadmin(request,id,power): # this whole section might not work kekw
 # you pass in the user id, and the new admin power so IE /makeadmin/1/1 makes userid 1 have power 1 ( they are admin)
 # and /makeadmin/4/0 takes adminpowers away from userid 4...   /makeadmin/3/6 might work I don't remember how admin is checked if its ==1 or >0
