@@ -100,10 +100,11 @@ def posts(request,type=0):# arg set so you only have to set it for announcements
 def contact(request):
     admins = Member.objects.filter(permission=1)
     word = "To get in contact with the club, you can email us at suucdcclub@gmail.com, or you could contact the officers:"# # this is JUST BAD lol
-    for a in admins:
-        u = a.user
-        word += f"{u.name} at {a.email}"
-    return render(request,"base.html",{"word":word})
+    # for a in admins:
+    #     u = a.user
+    #     print(u)
+    #     word += f"{u} at {a.email}"
+    return render(request,"contact.html",{"word":word,"admins":admins})
 
 def post(request,id=0):
     p = Post.objects.filter(id=id)
