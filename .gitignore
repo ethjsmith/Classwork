@@ -1,5 +1,5 @@
 *.pyc
 __pycache__
-/media/images/*
-!/media/images/default_pfp.jpg
+media/images/*
+!media/images/default_pfp.jpeg
 migrations
