@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "853085670582",
+    "project_id": "classwork-3a665",
+    "storage_bucket": "classwork-3a665.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853085670582:android:4ebc847000bd5403082a17",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853085670582-95qnkjj9n82h4u4me84g936ja9ije5si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV5ESw2-FgHsMsAq1zHKj9e8LESSyPsPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853085670582-95qnkjj9n82h4u4me84g936ja9ije5si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
