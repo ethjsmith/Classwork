@@ -4,3 +4,4 @@ media/images/*
 !media/images/default_pfp.jpeg
 db.sqlite3
 migrations
+*.sock

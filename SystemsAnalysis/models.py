@@ -8,7 +8,7 @@ class Post(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField() # could be Char field instead ?
     content = models.TextField() # Text field has no max length, and even if you set one, it isn't enforced LOL
-    image = models.ImageField(upload_to='images', null=True, blank=True)
+    image = models.ImageField(upload_to='media/images', null=True, blank=True)
     type = models.IntegerField()
     #I think django has a builtin date field
     posted = models.DateTimeField()
@@ -33,7 +33,7 @@ class Member(models.Model):
     phone = models.TextField(null=True,blank=True)
     email_notif = models.BooleanField(null=True,blank=True,default = False)
     phone_notif = models.BooleanField(null=True,blank=True,default = False) # putting this extra thing in in case we need it
-    image = models.ImageField(upload_to='images', null=True, blank=True,default='/images/default_pfp.jpeg') # I don't know how this works, but I'm adding it :)
+    image = models.ImageField(upload_to='media/images', null=True, blank=True,default='media/images/default_pfp.jpeg') # I don't know how this works, but I'm adding it :)
     def __str__(self):
         return f"{self.id}, {self.user}, {self.permission}, {self.email}, {self.phone}, {self.phone_notif}"
 
