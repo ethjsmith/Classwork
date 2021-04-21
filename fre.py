@@ -10,7 +10,7 @@ window = pyglet.window.Window()
 
 gravity = Vector3(0, -2, 0)
 
-tex = pyglet.image.load('fireparticle.png').get_texture()
+tex = pyglet.image.load('images/fire.png').get_texture()
 
 batch = pyglet.graphics.Batch()
 class par(pyglet.sprite.Sprite):
@@ -44,7 +44,7 @@ class particleSystem:
        self.addParticles(num)
    def addParticles(self, num):
        for i in range(0,num):
-           p = par(Vector3(300,100,0),batch,tex)
+           p = particle(Vector3(300,100,0))
            self.particles.append(p)
    def draw(self):
        glColor3f(1,1,1)
@@ -75,15 +75,15 @@ class particleSystem:
                del self.particles[i]
                self.addParticles(1)
 
-systems = [particleSystem(200)]
+systems = [particleSystem(10000)]
 
 
 @window.event
 def on_draw():
    glClear(GL_COLOR_BUFFER_BIT)
-   batch.draw()
-   #for s in systems:
-#       s.draw()
+#   batch.draw()
+   for s in systems:
+       s.draw()
 
 
 def update(dt):
