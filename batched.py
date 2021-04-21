@@ -29,8 +29,8 @@ def generator(num, source_coords):
         x,y = source_coords
         newParticle = PhysicsObject(img=img_fire,x=x,y=y,batch=fire_batch)
         # particle behavior is declared here , also right now the generator creates only a set number of particles
-        newParticle.velocity_x = random()*50
-        newParticle.velocity_y = random()*50
+        newParticle.velocity_x = (random()-.5)*50
+        newParticle.velocity_y = (random()-.5)*50
         obj.append(newParticle)
     return obj
 
@@ -47,8 +47,10 @@ center(img_fire)
 game_window = pyglet.window.Window(800,800)
 
 fire_batch = pyglet.graphics.Batch()
-
-a = generator(10000,[400,400]) # generates 10 particles, centered at 50,50
+if len(sys.argv) < 2:
+    print("enter a number of sprites to generate, up to about 20000")
+    exit()
+a = generator(int(sys.argv[1]),[400,400]) # generates 10 particles, centered at 50,50
 # WHY tf does pyglet use a standard catesian graphing coordinate system?? NOBODY does that
 
 @game_window.event

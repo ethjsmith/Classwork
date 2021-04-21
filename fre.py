@@ -74,8 +74,10 @@ class particleSystem:
            if (self.particles[i].removeTime <= t) or (self.particles[i].pos[1] < 0):
                del self.particles[i]
                self.addParticles(1)
-
-systems = [particleSystem(10000)]
+if len(sys.argv) < 2:
+    print("enter a number of sprites to generate, up to about 20000")
+    exit()
+systems = [particleSystem(int(sys.argv[1]))]
 
 
 @window.event
