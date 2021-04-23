@@ -78,7 +78,7 @@ def makeadmin(request,id,power): # this whole section might not work kekw
 
 @login_required
 @user_passes_test(allo,login_url="/")
-def dele(request,type,id):
+def dele(request,type,id,power):
     # an engine for deleting user content, only available to admins
     if type == "comment":
         z = Comment.objects.filter(id=id).delete()
