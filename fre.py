@@ -10,7 +10,11 @@ window = pyglet.window.Window()
 
 gravity = Vector3(0, -2, 0)
 
-tex = pyglet.image.load('images/fire.png').get_texture()
+
+
+tex = pyglet.resource.image("images/fire.png") # this one looks WAY nicer
+#tex = pyglet.image.load('images/fire.png').get_texture() # but this is the original
+
 
 batch = pyglet.graphics.Batch()
 class par(pyglet.sprite.Sprite):

@@ -8,14 +8,20 @@ class PhysicsObject(pyglet.sprite.Sprite):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-
+        self.startx = 0
+        self.starty = 0
         self.velocity_x = 0.0
         self.velocity_y = 0.0
-
+        self.life = 0
+        #self.die = time.time() + abs(gauss(0.0,100))
     def update(self, dt): # dt is "delta time" ( or the time step... this looks a bit like calc and I dont like it )
+        self.life += randint(-10,20)
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
-
+        if (self.x > 800) or (self.y > 800) or (self.life > 150):
+            self.life = 0
+            self.x = self.startx
+            self.y = self.starty
 
 #  sets anchor point correctly to center of img, instead of edge
 def center(img):
@@ -23,21 +29,38 @@ def center(img):
     img.anchor_y = img.height // 2
 
 # generates a number of particles at a point, and defines their movement behavior
+def genNew ():
+    pz = PhysicsObject(img=img_fire,x=400,y=400,batch=fire_batch)
+    return pz
 def generator(num, source_coords):
     obj = []
     for i in range(num):
         x,y = source_coords
+        x = gauss(x,34)
+        y = gauss(y,32)
         newParticle = PhysicsObject(img=img_fire,x=x,y=y,batch=fire_batch)
         # particle behavior is declared here , also right now the generator creates only a set number of particles
         newParticle.velocity_x = (random()-.5)*50
-        newParticle.velocity_y = (random()-.5)*50
+        newParticle.velocity_y = (random())*750
+        newParticle.startx = x
+        newParticle.starty = y
+        newParticle.rotation = randint(0,360)
+        newParticle.scale_x = .1
+        newParticle.scale_y = .1
+        newParticle.color = (abs(x)+abs(y),abs(x)+abs(y)/2,0) # everything added in here makes the system look nicer, but run slower
         obj.append(newParticle)
     return obj
 
 # function to allow all objects to change. relies on the fact that a is a public variable holding a list of PhysicsObjects
 def update(dt):
+    t = time.time()
     for obj in a:
         obj.update(dt)
+        # for i in range(len(a)-1,-1,-1):
+        #     if (a[i].die <= t):
+        #         #del a[i]
+        #         a[i] = genNew()
+
 
 pyglet.resource.path = ['images'] # lol
 pyglet.resource.reindex()
@@ -50,7 +73,7 @@ fire_batch = pyglet.graphics.Batch()
 if len(sys.argv) < 2:
     print("enter a number of sprites to generate, up to about 20000")
     exit()
-a = generator(int(sys.argv[1]),[400,400]) # generates 10 particles, centered at 50,50
+a = generator(int(sys.argv[1]),[400,200]) # generates 10 particles, centered at 50,50
 # WHY tf does pyglet use a standard catesian graphing coordinate system?? NOBODY does that
 
 @game_window.event
