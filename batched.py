@@ -8,21 +8,29 @@ class PhysicsObject(pyglet.sprite.Sprite):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
-        self.startx = 0
-        self.starty = 0
+        self.startx = self.x
+        self.starty = self.y
         self.velocity_x = 0.0
         self.velocity_y = 0.0
         self.life = 0
+        self.maxlife = gauss(150,25)
         #self.die = time.time() + abs(gauss(0.0,100))
     def update(self, dt): # dt is "delta time" ( or the time step... this looks a bit like calc and I dont like it )
-        self.life += randint(-10,20)
+        self.life += gauss(10,6)
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
-        if (self.x > 800) or (self.y > 800) or (self.life > 150):
-            self.life = 0
-            self.x = self.startx
-            self.y = self.starty
-
+        if (self.x > 800) or (self.y > 800) or (self.life > self.maxlife):
+            # self.life = 0
+            # self.x = self.startx
+            # self.y = self.starty
+            self.re_init()
+    def re_init(self):
+        self.rotation = randint(0,360)
+        self.velocity_x =(random()-.5)*50
+        self.velocity_y =(random())*750
+        self.x = self.startx
+        self.y = self.starty
+        self.life = 0
 #  sets anchor point correctly to center of img, instead of edge
 def center(img):
     img.anchor_x = img.width // 2
@@ -42,12 +50,17 @@ def generator(num, source_coords):
         # particle behavior is declared here , also right now the generator creates only a set number of particles
         newParticle.velocity_x = (random()-.5)*50
         newParticle.velocity_y = (random())*750
-        newParticle.startx = x
-        newParticle.starty = y
         newParticle.rotation = randint(0,360)
         newParticle.scale_x = .1
         newParticle.scale_y = .1
-        newParticle.color = (abs(x)+abs(y),abs(x)+abs(y)/2,0) # everything added in here makes the system look nicer, but run slower
+        # this line makes a color based on how far the particle is from the emitter, further particles are more red, closer are more yellow/orange
+        newParticle.color = (255,255-((abs(source_coords[0] - x) + abs(source_coords[1] - y))*2),0) # everything added in here makes the system look nicer, but run slower
+
+        # x = 200
+        (abs(source_coords[0] - x) + abs(source_coords[1] - y))/2
+        # Y = 200
+
+
         obj.append(newParticle)
     return obj
 
@@ -65,7 +78,7 @@ def update(dt):
 pyglet.resource.path = ['images'] # lol
 pyglet.resource.reindex()
 
-img_fire = pyglet.resource.image("fire.png")
+img_fire = pyglet.resource.image("whitefire.png")
 center(img_fire)
 game_window = pyglet.window.Window(800,800)
 
