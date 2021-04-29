@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- some kind of check here  to include addgame only if it's needed -->
+{% if type == 1 %}
+{% include 'addGame.html' %}
+{% elif type == 2 %}
+  {% if yourgames%}
+    <div class = "card"> <h3>Here is some games we recommend, based on similar game mechanics or settings!</h3></div><br>
+  {% else%}
+    <div class = "card"> <h3>We have no games to reccomend, you must have all, or most of the games in our database</h3></div><br>
+  {% endif%}
+{% endif %}
+{% for g in yourgames%}
+    <div class = "preview">
+      <img src = "{% static "" %}{{g.name}}.jpg" ><br>
+        <h3>{{g.name}}</h3><br>
+
+        <div style ="text-align:center;">{{g.description}}</div><br> <div style = "text-align:right;"><h4>Difficulty:{{g.difficulty}}</h4></div>
+        <div style = "text-align:left;">
+        <b>Game details:</b><br>
+        {%for t in g.tag_set.all %}
+            <b>{{t.name}} :</b>  {{t.description}}<br>
+        {% endfor %}
+        </div>
+
+    </div><br>
+{% endfor %}
+{% endblock %}

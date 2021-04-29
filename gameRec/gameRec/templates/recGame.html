@@ -1,0 +1,24 @@
+{% block recGame %}
+<!-- Selector for games basically, and then on the backend it suggests a game -->
+<div class = "card">
+    <!-- <form method = "POST" enctype = "multipart/form-data">{% csrf_token %}
+        <select name ="newGame" id = "newGame">
+            {% for game in games %}
+                <option value = {{game.id}}>{{game.name}}</option>
+            {% endfor %}
+        </select>
+        <input type = "submit" value = "I like this game, recommend me some similar games!"/>
+
+    </form> -->
+  <div class="dropdown">
+    <button class="dropbtn">Get a reccomendation based on a single game</button>
+    <div class = "dropdown-content">
+    {% for game in games %}
+
+        <a href ="/rec/{{game.id}}"> {{game.name}} </a>
+
+    {% endfor %}
+    </div>
+  </div>
+</div><br>
+{% endblock %}

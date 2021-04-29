@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<select name = "games">
+    {% for gm in games%}
+        <option value = "{{gm}}">{{gm}}</option>
+    {% endfor %}
+</select>
+{% endblock %}

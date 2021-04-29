@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% include 'recGame.html' %}
+<h2> OR </h2>
+
+{% if hasgames%}
+<div class = "card">
+  <button class="dropbtn"><a href = /rec/0> get a recommendation based on the games listed on your profile </a></button>
+  <!--get a recommendation based on the games listed on your profile <a href = /rec/0> HERE </a>  Old System here -->
+</div>
+{% else %}
+<div class = "card">
+  <button class="dropbtn"><a href = /mygames> Go add some games to your profile we can generate suggestions based on them! </a></button>
+  <!--get a recommendation based on the games listed on your profile <a href = /rec/0> HERE </a>  Old System here -->
+</div>
+{% endif %}
+<!--
+  <div class = "card">
+    <button class="dropbtn"><a href = /rec/0> get a recommendation based on the games listed on your profile </a></button>
+  </div>
+-->
+  <!--get a recommendation based on the games listed on your profile <a href = /rec/0> HERE </a>  Old System here -->
+<!-- {% for g in yourgames%}
+    <div class = "preview">
+        <h3>{{g.name}}</h3><br>
+        <img src = "{% static "" %}{{g.name}}.jpg" ><br> hahaha this is the worst thing you'll ever see
+
+        {{g.description}}, Difficulty:{{g.difficulty}}<br>
+        {%for t in g.tag_set.all %}
+            Tag:[{{t.name}}:{{t.description}}]<br>
+        {% endfor %}
+    </div><br>
+{% endfor %} -->
+{% endblock %}
