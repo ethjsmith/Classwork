@@ -1,0 +1,46 @@
+
+//Instructions:
+//1. Fix any errors in main before proceeding. I've put in 5 unique errors. 10 pts
+//When you get it fixed main.cpp should compile just fine.
+ 
+		/* Compile here. Maybe save a backup. */
+ 
+//2. Move the following and make sure everything still compiles and runs:
+     //constants -> constants.h
+     //gravity struct -> planets.h
+     //currentCal -> functions.cpp
+     //Planet enum -> planets.h
+     //all functions -> functions.cpp - 10 pts
+
+//Tip: main isn't the only place you'll need to add includes
+
+		/* Compile here. Maybe save a backup. */
+
+//3. Change the Gravity struct to a namespace - 5 pts
+
+		/* Compile here. Maybe save a backup. */
+ 
+//4. Correctly implement header guards everywhere that's appropriate - 5 pts
+//5. Edit the switch statement to correctly use the gravity namespace - 10 pts
+
+		/* Compile here. Maybe save a backup. */
+
+//6. Pass an enum planet to getGravity instead of an int and replace the numbers in case # to planets - 10 pts
+//#6 is a little tricky. Save it for last. you don't actually have to do it to get full points.
+
+//7. Make sure it still compiles and runs. At least a 10 point deduction if it doesn't.
+//8. Use code quality 10 pts
+
+
+//Tip: use the compiler to your advantage
+//Tip: you'll have to type cast to make main work. Consider how enums are stored
+//Tip: 60 points possible with a max score of 50
+//Tip: Don't make all your changes at once. After a change make it work. That way you'll get partial credit.
+
+/* 
+Tip: 
+
+Calorie computation:
+energy (in joules) = mass (Your weight in kg) * gravity * distance (distance you bench pressed)
+1 J = 0.2390057361 cal (th)
+*/

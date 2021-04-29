@@ -1,0 +1,22 @@
+//Explain the following code segments
+//1.
+int a = 4; 
+int& b = x; ( maybe = a? ) 
+//2. 
+int* c = 45; 
+*c = 40; 
+//3.
+int d = 0x4567; 
+int* e = 0x4567; 
+int& f = 0x4567
+//4. 
+int eg= 777; 
+int* pg = &e; 
+int** ppg = pe; 
+int*** pppg = ppe;  
+//5. 
+++(*pg); 
+//6. 
+cout << ***pppg << endl;
+cout << **ppg << endl; 
+cout << *ppg << endl;

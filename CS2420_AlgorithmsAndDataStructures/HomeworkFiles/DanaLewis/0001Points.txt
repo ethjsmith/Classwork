@@ -1,0 +1,2 @@
+Time , Heart Rate BPM , Insulin Level mIU/L
+20:25 , 103 , 116
