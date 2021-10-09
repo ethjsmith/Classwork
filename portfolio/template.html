@@ -1,35 +1,42 @@
 <!--
 Student Name: Ethan Smith
 File Name: template.html
-Date: 9/11/2021
+Date: 10/8/2021
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>template</title>
    <meta charset="utf-8">
+   <link rel="stylesheet" href="css/styles.css">
+
 </head>
 <body>
 <!-- Header gives the name of the page-->
-<header>
-<h1> Ethan Smith</h1>
-<img src = "images/EthanSmithPicture.jpg" alt="A Picture of Ethan Smith" height ="500px" width ="500px">
-<p>To show off my website.</p>
-</header>
-<!--Navigation gives basic navigation functionality -->
-<nav>
-<p>
-  <a href = "index.html"> Home</a> &nbsp; &nbsp;
-  <a href = "portfolio.html">Portfolio</a> &nbsp; &nbsp;
-  <a href = "about.html">About Me</a> &nbsp; &nbsp;
-  <a href = "projects.html">Projects</a> </p>
-</nav>
+<div class="float">
+  <header>
+    <h1> Ethan Smith</h1>
+    <img id = "topimg" src = "images/EthanSmithPicture.jpg" alt="A Picture of Ethan Smith">
+    <p>Welcome to my resume site</p>
+  </header>
+  <!--Navigation gives basic navigation functionality -->
+  <nav>
+    <ul>
+      <li><a href = "index.html"> Home</a></li>
+      <li><a href = "portfolio.html">Portfolio</a></li>
+      <li><a href = "about.html">About Me</a> </li>
+      <li><a href = "projects.html">Projects</a></li>
+    </ul>
+  </nav>
+</div>
 <!--main: displays the content unique to this page -->
-<main>
-welcome to my &copy;ool website ! have a look around
-</main>
+<main class="content">
+welcome to my &copy;ool website! have a look around
+<br>
+Template page
+</main >
 <footer>
-<a href = "mailto: ethan@esmithy.net">ethan@esmithy.net</a>
+Contact:<a id="mail" href="mailto: ethan@esmithy.net">ethan@esmithy.net</a>
 </footer>
 </body>
 

@@ -1,39 +1,42 @@
 <!--
 Student Name: Ethan Smith
 File Name: template.html
-Date: 9/11/2021
+Date: 10/8/2021
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>About Me</title>
+  <title>template</title>
    <meta charset="utf-8">
+   <link rel="stylesheet" href="css/styles.css">
+
 </head>
 <body>
 <!-- Header gives the name of the page-->
-<header>
-<h1> About Me</h1>
-<img src = "images/EthanSmithPicture.jpg" alt="A Picture of Ethan Smith" height ="500px" width ="500px">
-<p>To show off my website.</p>
-</header>
-<!--Navigation gives basic navigation functionality -->
-<nav>
-<p>
-  <a href = "index.html"> Home</a> &nbsp; &nbsp;
-  <a href = "portfolio.html">Portfolio</a> &nbsp; &nbsp;
-  <a href = "about.html">About Me</a> &nbsp; &nbsp;
-  <a href = "projects.html">Projects</a> </p>
-</nav>
-<!--main: displays the content unique to this page -->
-<main>
-welcome to my &copy;ool website ! have a look around
-<div id = "Contact">
-Contact me at ethan@esmithy.net. There is no other way in the world to contact me, but you can find SUU here
-<div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Southern%20Utah%20University&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.online-timer.net"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><a href="https://www.embedgooglemap.net">add map to website</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div></div> <!-- thanks to google for providing this code snippet --> 
+<div class="float">
+  <header>
+    <h1> Ethan Smith</h1>
+    <img id = "topimg" src = "images/EthanSmithPicture.jpg" alt="A Picture of Ethan Smith">
+    <p>Welcome to my resume site</p>
+  </header>
+  <!--Navigation gives basic navigation functionality -->
+  <nav>
+    <ul>
+      <li><a href = "index.html"> Home</a></li>
+      <li><a href = "portfolio.html">Portfolio</a></li>
+      <li><a href = "about.html">About Me</a> </li>
+      <li><a href = "projects.html">Projects</a></li>
+    </ul>
+  </nav>
 </div>
-</main>
+<!--main: displays the content unique to this page -->
+<main class="content">
+welcome to my &copy;ool website! have a look around
+<br>
+Template page
+</main >
 <footer>
-<a href = "mailto: ethan@esmithy.net">ethan@esmithy.net</a>
+Contact:<a id="mail" href="mailto:ethan@esmithy.net">ethan@esmithy.net</a>
 </footer>
 </body>
 
