@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- assuming we have a "post" object -->
+<div class = card><h3>{{post.title }}</h3>
+Posted by {{post.poster}} on {{post.posted|date:"N j, Y"}}
+</div>
+<br>
+<img src = "{{post.image.url}}" class = "regimage" ><br> <!-- some kind of styling here? -->
+<div class = card>
+  {{post.content}}
+</div>
+
+{% include 'comment.html' %}
+{% endblock %}

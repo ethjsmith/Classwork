@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+{% for u in admins%}
+<div class = "card">
+  <img src = "{{u.image.url}}"class = "crop" style="float:left;">
+  <h4>
+     &nbsp;&nbsp;&nbsp;{{u.user}}
+  </h4>
+  <br>
+  <div style="float:right;">
+    Email: {{u.email}}<br>
+    Phone: {{u.phone}}
+  </div>
+  <br>
+</div>
+<br>
+{% endfor%}
+
+{% block extent %}{% endblock %}
+{% endblock %}

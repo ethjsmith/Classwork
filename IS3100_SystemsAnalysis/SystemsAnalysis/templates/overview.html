@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+  {% for article in articles %}
+   <!-- some kind of styling here? -->
+    <a href = "/post/{{article.id}}" style="text-decoration:none;color:black;">
+      <div class = preview>
+       <img src = "{{article.image.url}}">
+       <h3>{{article.title}}</h3><br>
+       posted by {{article.poster}} on {{article.posted|date:"N j, Y"}}
+     </div>
+   </a><br>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,25 @@
+<br>
+{% load dumbWorkaround %}
+<h4>User Comments:</h4> <br>
+{% for comment in comments %}
+<div class = "card" >
+{{comment.content}}
+<div style = "text-align:right;" >
+  <div class = "crop" style = "float:right;">
+    <!--{% with in=forloop.counter.0 %}-->
+    <img class = "img-crop" src ="{{member|dumbWorkaround:forloop.counter0}}">member.in:{{member.in}}
+
+    <!--{% endwith %} -->
+  </div>
+  Posted by: {{comment.poster}} on {{comment.posted|date:"N j, Y"}}</div>
+ <br><br></div><br>
+{% endfor %}
+
+<!-- if user is logged in, allow posting new comment -->
+{% if user.is_authenticated %}
+  <form method = "POST" enctype="multipart/form-data"> <!-- could somehow import the form class? -->
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Submit">
+  </form>
+{% endif %}

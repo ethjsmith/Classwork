@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+media/images/*
+media/*
+!media/images/default_pfp.jpeg
+db.sqlite3
+migrations
+*.sock
