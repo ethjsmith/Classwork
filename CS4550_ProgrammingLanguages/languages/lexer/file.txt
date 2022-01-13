@@ -1,0 +1,7 @@
+# this is a comment and it is going to be ignored
+
+x = 22 + 44 ;
+"Hi there!!!" ;
+DEFINE x1 = "Hi there";
+UPDATE x1 = "see you later";
+PRINT "Hi"

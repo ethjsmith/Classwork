@@ -1,0 +1,5 @@
+S->WXYZ
+W->YZ|wW
+X->x
+Y->yY|@
+Z->zZ|@
