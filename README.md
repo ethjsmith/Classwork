@@ -1,13 +1,15 @@
-<<<<<<< HEAD
 # Classwork
-A repo to store all the old repos containing classwork. classes I'm currently in will stay active, but once Im done I'll migrate them to here
+A repo to store all classwork. classes I'm currently in will stay in their own repo, but once Im done I'll merge them to here
 =======
-# webProg
-This repo contains most of my classwork for the Fall 2021 semester,
-includes
-CS 4350 ( Web Programming )
-CS 4550 ( Programming Languages)
-IS 2000 ( Web Development )
-CS 3700 ( Digital Forensics )*
-MATH 2270 ( Linear algebra )*
->>>>>>> webprog/main
+# How to merge
+
+take everything from the class ( project-a), and put it into a folder called CS###_ClassName ( don't forget .gitignore and readme)
+
+Merge `project-a` into `project-b` ( from [stackoverflow](https://stackoverflow.com/questions/1425892/how-do-you-merge-two-git-repositories) )
+```
+cd path/to/project-b
+git remote add project-a /path/to/project-a
+git fetch project-a --tags
+git merge --allow-unrelated-histories project-a/master # or whichever branch you want to merge
+git remote remove project-a
+```

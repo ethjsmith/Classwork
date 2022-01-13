@@ -1,3 +1,10 @@
+# IS 3100 - Systems Analysis and Design
+3 Credit(s)
+
+Practical introduction to major phases, activities, tools, and techniques of systems analysis, design, and development, emphasizing the role of systems analysts in organizations and dynamic, business environments. Students develop analytical, problem-solving, decision-making, and critical-thinking skills.
+
+
+
 # SystemsAnalysis
 Repo for  IS3100 Systems Analysis and Design Project
 if we build the site before we make the design documents, then we won't have to think much about the design documents :)
